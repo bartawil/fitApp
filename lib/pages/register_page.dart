@@ -5,22 +5,22 @@ import 'package:flutter_demo/components/my_button.dart';
 import 'package:flutter_demo/components/my_textfield.dart';
 import 'package:flutter_demo/components/square_tile.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  const LoginPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   // text editing controller
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
-  // sign in
-  void signUserIn() async {
+  // sign up
+  void signUserUp() async {
     //loading
     showDialog(
       context: context, 
@@ -31,18 +31,24 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
 
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text, 
-      password: passwordController.text,
-      );
-      // pop loading
-      // ignore: use_build_context_synchronously
+    // check if password confirmed
+    if (passwordController.text == confirmPasswordController.text){
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text, 
+          password: passwordController.text,
+        );
+        // pop loading
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+      } on FirebaseAuthException {
+        // pop loading
+        Navigator.pop(context);
+        invalidInputMessage('Invaild Email or Password');
+      }
+    } else {
       Navigator.pop(context);
-    } on FirebaseAuthException {
-      // pop loading
-      Navigator.pop(context);
-      invalidInputMessage('Invaild Email or Password');
+      invalidInputMessage("Passwords dismatch!");
     }
   }
 
@@ -76,11 +82,11 @@ class _LoginPageState extends State<LoginPage> {
                   size: 100,
                 ),
         
-                const SizedBox(height: 50),
+                const SizedBox(height: 25),
         
                 // welcome back
                 Text(
-                  "Welcome back!",
+                  "New? Let's create an account",
                   style: TextStyle(
                     color: Colors.grey[700],
                     fontSize: 16,
@@ -95,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: 'Email',
                   obscureText: false,
                 ),
-        
+
                 const SizedBox(height: 10),
         
                 // password
@@ -104,29 +110,22 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: 'Password',
                   obscureText: true,
                 ),
-            
-                const SizedBox(height: 15),
         
-                // forgot
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Forgot Password ?',
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                    ],
-                  ),
+                const SizedBox(height: 10),
+        
+                // confirm password
+                MyTextField(
+                  controller: confirmPasswordController,
+                  hintText: 'Confirm Password',
+                  obscureText: true,
                 ),
         
-                const SizedBox(height: 15),
+                const SizedBox(height: 25),
             
                 // button
                 MyButton(
-                  text: 'Sign In',
-                  onTap: signUserIn,
+                  text: 'Sign Up',
+                  onTap: signUserUp,
                 ),
         
                 const SizedBox(height: 50),
@@ -161,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
             
-                const SizedBox(height: 50),
+                const SizedBox(height: 40),
         
                 // google  and apple
                 const Row(
@@ -178,21 +177,21 @@ class _LoginPageState extends State<LoginPage> {
                 ),
         
         
-                const SizedBox(height: 50),
+                const SizedBox(height: 40),
             
                 // register now
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Not a member?',
+                      'Already a member?',
                       style: TextStyle(color: Colors.grey[700]),
                       ),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap,
                       child: const Text(
-                        'Register now',
+                        'Login now',
                         style: TextStyle(
                           color: Colors.blue, 
                           fontWeight: FontWeight.bold,
