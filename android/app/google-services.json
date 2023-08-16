@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1006287327456",
+    "project_id": "barfitapp",
+    "storage_bucket": "barfitapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006287327456:android:74fa529113505928e94085",
+        "android_client_info": {
+          "package_name": "com.example.flutter_demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1006287327456-ncb8oa5jme7dfd15ptdkiioi7daafb68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPwiNfY2HQsbgVt8JZbRjAbZpRsn27hXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1006287327456-ncb8oa5jme7dfd15ptdkiioi7daafb68.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1006287327456-0cd3f357ebghhektcnbel18acnljjp6i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterDemoBt"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
