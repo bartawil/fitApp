@@ -20,7 +20,9 @@ class HomePage extends StatelessWidget {
             icon: const Icon(Icons.logout),
           )
         ],
+        backgroundColor: Colors.black,
       ),
+      backgroundColor: Colors.grey[300],
       body: Center(child: Text("logged In: ${user.email!}", style: const TextStyle(fontSize: 20),)),
     );
   }
