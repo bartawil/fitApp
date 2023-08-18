@@ -8,8 +8,6 @@ class SquareTile extends StatelessWidget {
     required this.imagePath,
     required this.onTap,
   });
-    
-
 
   @override
   Widget build(BuildContext context) {

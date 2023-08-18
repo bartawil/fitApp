@@ -6,6 +6,8 @@ import 'package:flutter_demo/components/my_textfield.dart';
 import 'package:flutter_demo/components/square_tile.dart';
 import 'package:flutter_demo/services/auth_service.dart';
 
+import 'forgot_password_page.dart';
+
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
   const LoginPage({super.key, required this.onTap});
@@ -114,9 +116,17 @@ class _LoginPageState extends State<LoginPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        'Forgot Password ?',
-                        style: TextStyle(color: Colors.grey[600]),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, 
+                            MaterialPageRoute(builder: (context) {
+                              return const ForgotPasswordPage();
+                          }));
+                        },
+                        child: Text(
+                          'Forgot Password ?',
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
                       ),
                     ],
                   ),
