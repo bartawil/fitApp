@@ -11,6 +11,9 @@ dependencies:
     sdk: flutter
   equatable: ^2.0.5
 
+  #Firebase
+  firebase_auth: ^4.8.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
