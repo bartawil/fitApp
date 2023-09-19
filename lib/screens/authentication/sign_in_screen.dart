@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:flutter_demo/components/strings.dart';
-import 'package:flutter_demo/components/textfield.dart';
+
+import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
+import '../../components/strings.dart';
+import '../../components/textfield.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -28,20 +26,20 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return BlocListener<SignInBloc, SignInState>(
       listener: (context, state) {
-        if (state is SignInSuccess) {
-          setState(() {
-            signInRequired = false;
-          });
-        } else if (state is SignInProcess) {
-          setState(() {
-            signInRequired = true;
-          });
-        } else if (state is SignInFailure) {
-          setState(() {
-            signInRequired = false;
-            _errorMsg = 'Invalid email or password';
-          });
-        }
+        if(state is SignInSuccess) {
+					setState(() {
+					  signInRequired = false;
+					});
+				} else if(state is SignInProcess) {
+					setState(() {
+					  signInRequired = true;
+					});
+				} else if(state is SignInFailure) {
+					setState(() {
+					  signInRequired = false;
+						_errorMsg = 'Invalid email or password';
+					});
+				}
       },
       child: Form(
           key: _formKey,
@@ -49,22 +47,22 @@ class _SignInScreenState extends State<SignInScreen> {
             children: [
               const SizedBox(height: 20),
               SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
                 child: MyTextField(
-                  controller: emailController,
-                  hintText: 'Email',
-                  obscureText: false,
-                  keyboardType: TextInputType.emailAddress,
-                  prefixIcon: const Icon(CupertinoIcons.mail_solid),
-                  errorMsg: _errorMsg,
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return 'Please fill in this field';
-                    } else if (!emailRexExp.hasMatch(val)) {
-                      return 'Please enter a valid email';
-                    }
-                    return null;
-                  },
-                ),
+                    controller: emailController,
+                    hintText: 'Email',
+                    obscureText: false,
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: const Icon(CupertinoIcons.mail_solid),
+                    errorMsg: _errorMsg,
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return 'Please fill in this field';
+                      } else if (!emailRexExp.hasMatch(val)) {
+                        return 'Please enter a valid email';
+                      }
+                      return null;
+                    }),
               ),
               const SizedBox(height: 10),
               SizedBox(
