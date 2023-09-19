@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:flutter_demo/blocs/sign_up_bloc/bloc/sign_up_bloc.dart';
+import 'package:flutter_demo/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:flutter_demo/screens/authentication/sign_in_screen.dart';
 import 'package:flutter_demo/screens/authentication/sign_up_screen.dart';
 
