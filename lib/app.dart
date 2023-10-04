@@ -5,9 +5,10 @@ import 'package:user_repository/user_repository.dart';
 
 import 'app_view.dart';
 
-class MainApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
 	final UserRepository userRepository;
-  const MainApp(this.userRepository, {super.key});
+  
+  const MyApp(this.userRepository, {super.key});
 
   @override
   Widget build(BuildContext context) {

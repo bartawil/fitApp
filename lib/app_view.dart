@@ -21,7 +21,7 @@ class MyAppView extends StatelessWidget {
 			theme: ThemeData(
         colorScheme: const ColorScheme.light(
           background: Colors.white,
-          onBackground: Colors.black,
+          onBackground: Color.fromARGB(255, 40, 23, 23),
           primary: Color.fromRGBO(206, 147, 216, 1),
           onPrimary: Colors.black,
           secondary: Color.fromRGBO(244, 143, 177, 1),
@@ -33,7 +33,7 @@ class MyAppView extends StatelessWidget {
 			),
 			home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
 				builder: (context, state) {
-					if(state.status == AuthenticationStatus.authenticated) {
+					if (state.status == AuthenticationStatus.authenticated) {
 						return MultiBlocProvider(
 								providers: [
 									BlocProvider(

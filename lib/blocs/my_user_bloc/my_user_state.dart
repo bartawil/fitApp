@@ -3,7 +3,6 @@ part of 'my_user_bloc.dart';
 enum MyUserStatus { success, loading, failure }
 
 class MyUserState extends Equatable {
-
 	final MyUserStatus status;
   final MyUser? user;
 
