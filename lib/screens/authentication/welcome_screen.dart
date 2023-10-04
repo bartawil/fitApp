@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/screens/authentication/sign_in_screen.dart';
 import 'package:flutter_demo/screens/authentication/sign_up_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../blocs/authentication_bloc/authentication_bloc.dart';
 import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
@@ -42,10 +43,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
 						padding: const EdgeInsets.symmetric(horizontal: 20),
 						child: Column(
 							children: [
-								const Text(
-									'Welcome Back !',
-									style: TextStyle(
-										fontSize: 24,
+                Transform.rotate(
+                  angle: 135 * 3.141592653589793 / 180, // Rotate by 45 degrees (in radians)
+                  child: const Icon(
+                    Icons.fitness_center_rounded,
+                    size: 100,
+                  ),
+                ),
+                SizedBox(height: 10),
+								Text(
+									'Welcome!',
+									style: GoogleFonts.bebasNeue(
+										fontSize: 52,
 										fontWeight: FontWeight.bold
 									),
 								),

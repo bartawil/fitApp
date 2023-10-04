@@ -249,6 +249,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 								!signUpRequired
 									? SizedBox(
 											width: MediaQuery.of(context).size.width * 0.9,
+                      height: 50,
 											child: TextButton(
 												onPressed: () {
 													if (_formKey.currentState!.validate()) {
@@ -274,7 +275,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 													backgroundColor: Theme.of(context).colorScheme.primary,
 													foregroundColor: Colors.white,
 													shape: RoundedRectangleBorder(
-														borderRadius: BorderRadius.circular(60)
+														borderRadius: BorderRadius.circular(12)
 													)
 												),
 												child: const Padding(
