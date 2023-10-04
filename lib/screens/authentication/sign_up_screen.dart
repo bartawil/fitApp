@@ -20,7 +20,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 	final passwordController = TextEditingController();
 	bool obscurePassword = true;
 	IconData iconPassword = CupertinoIcons.eye_fill;
-	final nameController = TextEditingController();
+	final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
 	bool signUpRequired = false;
 
 	bool containsUpperCase = false;
@@ -210,8 +211,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
 								SizedBox(
 									width: MediaQuery.of(context).size.width * 0.9,
 									child: MyTextField(
-										controller: nameController,
-										hintText: 'Name',
+										controller: firstNameController,
+										hintText: 'First Name',
+										obscureText: false,
+										keyboardType: TextInputType.name,
+										prefixIcon: const Icon(CupertinoIcons.person_fill),
+										validator: (val) {
+											if(val!.isEmpty) {
+												return 'Please fill in this field';													
+											} else if(val.length > 30) {
+												return 'Name too long';
+											}
+											return null;
+										}
+									),
+								),
+                const SizedBox(height: 10),
+								SizedBox(
+									width: MediaQuery.of(context).size.width * 0.9,
+									child: MyTextField(
+										controller: lastNameController,
+										hintText: 'Last Name',
 										obscureText: false,
 										keyboardType: TextInputType.name,
 										prefixIcon: const Icon(CupertinoIcons.person_fill),
@@ -228,14 +248,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
 								SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 								!signUpRequired
 									? SizedBox(
-											width: MediaQuery.of(context).size.width * 0.5,
+											width: MediaQuery.of(context).size.width * 0.9,
 											child: TextButton(
 												onPressed: () {
 													if (_formKey.currentState!.validate()) {
 														MyUser myUser = MyUser.empty;
 														myUser = myUser.copyWith(
 															email: emailController.text,
-															name: nameController.text,
+															firstName: firstNameController.text,
+                              lastName: lastNameController.text,
 														);
 		
 														setState(() {

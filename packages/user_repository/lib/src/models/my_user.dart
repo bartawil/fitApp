@@ -5,13 +5,15 @@ import '../entities/entities.dart';
 class MyUser extends Equatable {
 	final String id;
 	final String email;
-	final String name;
+	final String firstName;
+  final String lastName;
 	String? picture;
 
 	MyUser({
 		required this.id,
 		required this.email,
-		required this.name,
+		required this.firstName,
+    required this.lastName,
 		this.picture,
 	});
 
@@ -19,7 +21,8 @@ class MyUser extends Equatable {
   static final empty = MyUser(
 		id: '', 
 		email: '',
-		name: '', 
+		firstName: '',
+    lastName: '', 
 		picture: ''
 	);
 
@@ -27,13 +30,15 @@ class MyUser extends Equatable {
 	MyUser copyWith({
     String? id,
     String? email,
-    String? name,
+    String? firstName,
+    String? lastName,
     String? picture,
   }) {
     return MyUser(
       id: id ?? this.id,
       email: email ?? this.email,
-      name: name ?? this.name,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
       picture: picture ?? this.picture,
     );
   }
@@ -48,7 +53,8 @@ class MyUser extends Equatable {
     return MyUserEntity(
       id: id,
       email: email,
-      name: name,
+      firstName: firstName,
+      lastName: lastName,
       picture: picture,
     );
   }
@@ -57,13 +63,14 @@ class MyUser extends Equatable {
     return MyUser(
       id: entity.id,
       email: entity.email,
-      name: entity.name,
+      firstName: entity.firstName,
+      lastName: entity.lastName,
       picture: entity.picture,
     );
   }
 
 
 	@override
-	List<Object?> get props => [id, email, name, picture];
+	List<Object?> get props => [id, email, firstName, lastName, picture];
 	
 }

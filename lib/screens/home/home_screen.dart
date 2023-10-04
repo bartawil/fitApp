@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
 											const SizedBox(width: 10),
 											Text(
-												"Welcome ${state.user!.name}"
+												"Welcome ${state.user!.firstName}"
 											)
 										],
 									);
@@ -254,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
 																		crossAxisAlignment: CrossAxisAlignment.start,
 																		children: [
 																			Text(
-																				state.posts[i].myUser.name,
+																				state.posts[i].myUser.firstName,
 																				style: const TextStyle(
 																					fontWeight: FontWeight.bold,
 																					fontSize: 18
