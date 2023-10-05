@@ -74,9 +74,10 @@ class FirebaseUserRepository implements UserRepository {
   Future<void> resetPassword(String email) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
+      final errorMessage = e.message;
       log(e.toString());
-			rethrow;
+      throw CustomFirebaseAuthException(errorMessage!); 
     }
   }
 
@@ -125,4 +126,10 @@ class FirebaseUserRepository implements UserRepository {
 	}
 
 
+}
+
+class CustomFirebaseAuthException implements Exception {
+  final String message;
+
+  CustomFirebaseAuthException(this.message);
 }

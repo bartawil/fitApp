@@ -50,7 +50,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                     size: 100,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 								Text(
 									'Welcome!',
 									style: GoogleFonts.bebasNeue(
