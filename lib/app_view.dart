@@ -4,6 +4,7 @@ import 'package:flutter_demo/blocs/get_post_bloc/get_post_bloc.dart';
 import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:flutter_demo/blocs/reset_password_bloc/reset_password_bloc.dart';
 import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:flutter_demo/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
 import 'package:flutter_demo/screens/authentication/welcome_screen.dart';
 import 'package:post_repository/post_repository.dart';

@@ -130,41 +130,41 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               const SizedBox(height: 8),
               !signInRequired
-                  ? SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 50,
-                      child: TextButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            context.read<SignInBloc>().add(SignInRequired(
-                                emailController.text,
-                                passwordController.text
-                              )
-                            );
-                          }
-                        },
-                        style: TextButton.styleFrom (
-                            elevation: 3.0,
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primary,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12))),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 25, vertical: 5),
-                          child: Text(
-                            'Sign In',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        )
-                      ),
-                    )
-                  : const CircularProgressIndicator()
+                ? SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: 50,
+                    child: TextButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          context.read<SignInBloc>().add(SignInRequired(
+                              emailController.text,
+                              passwordController.text
+                            )
+                          );
+                        }
+                      },
+                      style: TextButton.styleFrom (
+                          elevation: 3.0,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12))),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 5),
+                        child: Text(
+                          'Sign In',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      )
+                    ),
+                  )
+                : const CircularProgressIndicator()
             ],
           )),
     );

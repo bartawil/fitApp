@@ -94,12 +94,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
 												),
 												child: const SignInScreen(),
 											),
-											BlocProvider<SignUpBloc>(
-												create: (context) => SignUpBloc(
-													userRepository: context.read<AuthenticationBloc>().userRepository
-												),
-												child: const SignUpScreen(),
-											),
+                      const SignUpScreen()
 										]
 									),
 								)
