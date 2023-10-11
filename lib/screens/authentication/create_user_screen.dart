@@ -18,7 +18,8 @@ class CreateUserScreen extends StatefulWidget {
 
 class _CreateUserScreenState extends State<CreateUserScreen> {
   final _formKey = GlobalKey<FormState>();
-  
+
+  String? _errorMsg;
   bool signUpRequired = false;
   
   final firstNameController = TextEditingController();
@@ -39,7 +40,17 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 					  signUpRequired = true;
 					});
 				} else if (state is SignUpFailure) {
-					return;
+					setState(() {
+            signUpRequired = false;
+            if (state.message != null) {
+              _errorMsg = state.message!;
+            }
+            showDialog(context: context, builder: (context) {
+              return AlertDialog(
+                content: Text(_errorMsg!),
+              );
+            });
+          });
 				} 
       },
       child: Form(

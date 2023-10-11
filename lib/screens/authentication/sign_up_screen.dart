@@ -100,7 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return 'Please enter a valid password';
                   }
                   if (passwordController.text != confirmPasswordController.text) {
-                    return 'Paswwords must match!';
+                    return 'Passwords must match!';
                   }
                   return null;
                 }

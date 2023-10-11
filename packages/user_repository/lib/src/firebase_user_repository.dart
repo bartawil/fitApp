@@ -41,9 +41,10 @@ class FirebaseUserRepository implements UserRepository {
 			);
 
 			return myUser;
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
+      final errorMessage = e.message;
       log(e.toString());
-			rethrow;
+      throw CustomFirebaseAuthException(errorMessage!);
     }
   }
 

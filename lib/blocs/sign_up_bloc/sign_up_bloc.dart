@@ -18,8 +18,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 				MyUser user = await _userRepository.signUp(event.user, event.password);
 				await _userRepository.setUserData(user);
         emit(SignUpSuccess());
-      } catch (e) {
-        emit(SignUpFailure());
+      } on CustomFirebaseAuthException catch (e) {
+        emit(SignUpFailure(e.message.toString()));
       }
     });
   }
