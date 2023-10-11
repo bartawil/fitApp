@@ -5,7 +5,7 @@ import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart'
 import 'package:flutter_demo/screens/authentication/create_user_screen.dart';
 
 import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
-import '../../components/strings.dart';
+import '../../components/constants.dart';
 import '../../components/textfield.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -34,6 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           children: [
             const SizedBox(height: 20),
+            // Email text field
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
               child: MyTextField(
@@ -53,6 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             const SizedBox(height: 10),
+            // Password text field
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
               child: MyTextField(
@@ -72,6 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             const SizedBox(height: 10),
+            // Confirm password text field
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
               child: MyTextField(
@@ -111,6 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               width: MediaQuery.of(context).size.width * 0.9,
               height: 50,
               child: TextButton(
+                // Go to create user Form
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     Navigator.push(context, 

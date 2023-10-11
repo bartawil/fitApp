@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../blocs/authentication_bloc/authentication_bloc.dart';
 import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
-import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -23,7 +22,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
     super.initState();
     tabController = TabController(
       initialIndex: 0,
-      length: 2,
+      length: 2, // Initialize the TabController with two tabs.
       vsync: this,
     );
   }

@@ -6,7 +6,7 @@ import 'package:flutter_demo/blocs/reset_password_bloc/reset_password_bloc.dart'
 import 'package:flutter_demo/screens/authentication/forgot_password_screen.dart';
 
 import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
-import '../../components/strings.dart';
+import '../../components/constants.dart';
 import '../../components/textfield.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -18,12 +18,15 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
   String? _errorMsg;
-  bool obscurePassword = true;
   IconData iconPassword = CupertinoIcons.eye_fill;
-  bool signInRequired = false;
+
+  bool obscurePassword = true; // Boolean to control password visibility.
+  bool signInRequired = false; // Boolean to track if sign-in is in progress.
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +52,7 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             children: [
               const SizedBox(height: 20),
+              // Email text field
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: MyTextField(
@@ -68,6 +72,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     }),
               ),
               const SizedBox(height: 10),
+              // Password text field
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: MyTextField(
@@ -85,6 +90,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     }
                     return null;
                   },
+                  // Suffix icon to toggle password visibility
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
@@ -101,12 +107,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               const SizedBox(height: 8),
+              // Forgot password text
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 5.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
+                      // Navigate to forgot password screen
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return BlocProvider<ResetPasswordBloc>(
@@ -129,11 +137,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               const SizedBox(height: 8),
+              // If sign-in is in progress, show circular progress indicator.
+              // else Authenticate user and go to Home screen.
               !signInRequired
                 ? SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: 50,
                     child: TextButton(
+                      // Authenticate user
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           context.read<SignInBloc>().add(SignInRequired(

@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:flutter_demo/components/textfield.dart';
-import 'package:flutter_demo/screens/home/home_screen.dart';
 import 'package:user_repository/user_repository.dart';
 
 class CreateUserScreen extends StatefulWidget {
   final String userEmail;
   final String userPassword;
-
+  
   const CreateUserScreen({super.key, required String email, required String password}) : userEmail = email, userPassword = password;
 
   @override
@@ -33,6 +32,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
         if (state is SignUpSuccess) {
 					setState(() {
 					  signUpRequired = false;
+            // Go Back to Welcome Screen (SignUp toggle).
             Navigator.pop(context);
 					});
 				} else if (state is SignUpProcess) {
@@ -42,6 +42,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 				} else if (state is SignUpFailure) {
 					setState(() {
             signUpRequired = false;
+            // Create an alert dialog to display the error message.
             if (state.message != null) {
               _errorMsg = state.message!;
             }
@@ -63,7 +64,8 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 10),
-								SizedBox(
+								// First Name text field
+                SizedBox(
 									width: MediaQuery.of(context).size.width * 0.9,
 									child: MyTextField(
 										controller: firstNameController,
@@ -82,7 +84,8 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 									),
 								),
                 const SizedBox(height: 10),
-								SizedBox(
+								// Last Name text field
+                SizedBox(
 									width: MediaQuery.of(context).size.width * 0.9,
 									child: MyTextField(
 										controller: lastNameController,
@@ -101,6 +104,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 									),
 								),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                // Create the user account
                 !signUpRequired
 									? SizedBox(
 											width: MediaQuery.of(context).size.width * 0.9,
@@ -108,12 +112,14 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 											child: TextButton(
 												onPressed: () {
 													if (_formKey.currentState!.validate()) {
+                            // Create a new MyUser object with the email and user details.
                             MyUser myUser = MyUser.empty;
 														myUser = myUser.copyWith(
 															email: widget.userEmail,
 															firstName: firstNameController.text,
                               lastName: lastNameController.text,
 														);
+                            // Create user by email and password.
 														setState(() {           
 															context.read<SignUpBloc>().add(
 																SignUpRequired(

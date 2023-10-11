@@ -8,10 +8,8 @@ import 'package:flutter_demo/blocs/get_post_bloc/get_post_bloc.dart';
 import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter_demo/screens/home/post_screen.dart';
 import 'package:post_repository/post_repository.dart';
-import 'package:user_repository/user_repository.dart';
 import '../../blocs/my_user_bloc/my_user_bloc.dart';
 import '../../blocs/update_user_info_bloc/update_user_info_bloc.dart';
-import 'package:post_repository/post_repository.dart';
 import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {

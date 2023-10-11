@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/reset_password_bloc/reset_password_bloc.dart';
-import 'package:flutter_demo/components/strings.dart';
+import 'package:flutter_demo/components/constants.dart';
 import 'package:flutter_demo/components/textfield.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -15,7 +15,9 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
+
   String? _errorMsg;
+
   bool resetPasswordRequired = false;
   
   @override
@@ -59,6 +61,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 20),
+              // Email text field
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: SizedBox(
@@ -82,6 +85,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
               ),
               const SizedBox(height: 20),
+              // Check if the user can reset password
               !resetPasswordRequired
                 ?  SizedBox(
                     child: TextButton(

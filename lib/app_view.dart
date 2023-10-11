@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/get_post_bloc/get_post_bloc.dart';
 import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
-import 'package:flutter_demo/blocs/reset_password_bloc/reset_password_bloc.dart';
 import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:flutter_demo/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
 import 'package:flutter_demo/screens/authentication/welcome_screen.dart';
 import 'package:post_repository/post_repository.dart';
-import 'package:user_repository/user_repository.dart';
 
 import 'blocs/authentication_bloc/authentication_bloc.dart';
 import 'screens/home/home_screen.dart';
@@ -21,6 +18,7 @@ class MyAppView extends StatelessWidget {
     return MaterialApp(
 			debugShowCheckedModeBanner: false,
 			title: 'fitApp',
+      // Define the app's colors
 			theme: ThemeData(
         colorScheme: const ColorScheme.light(
           background: Colors.white,
@@ -33,10 +31,11 @@ class MyAppView extends StatelessWidget {
           error: Colors.red,
 					outline: Color(0xFF424242)
         ),
-			),
+			), 
 			home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
 				builder: (context, state) {
-					if (state.status == AuthenticationStatus.authenticated) {
+					// If the user is authenticated, build the home screen with multiple Bloc providers.
+          if (state.status == AuthenticationStatus.authenticated) {
 						return MultiBlocProvider(
 								providers: [
 									BlocProvider(
@@ -65,6 +64,7 @@ class MyAppView extends StatelessWidget {
 							child: const HomeScreen(),
 						);
 					} else {
+            // If the user is not authenticated, show the Sign-in\up options on WelcomeScreen.
 						return const WelcomeScreen();
 					}
 				}
