@@ -9,6 +9,7 @@ class MyUserEntity extends Equatable {
   final String age;
   final String height;
   final String weight;
+  final String gender;
 	final String? picture;
 
 	const MyUserEntity({
@@ -20,6 +21,7 @@ class MyUserEntity extends Equatable {
     required this.age,
     required this.height, 
     required this.weight,
+    required this.gender,
 		this.picture,
 	});
 
@@ -33,6 +35,7 @@ class MyUserEntity extends Equatable {
       'age': age, 
       'height': height, 
       'weight': weight, 
+      'gender': gender,
       'picture': picture,
     };
   }
@@ -47,6 +50,7 @@ class MyUserEntity extends Equatable {
       age: doc['age'] as String,
       height: doc['height'] as String,
       weight: doc['weight'] as String,
+      gender: doc['gender'] as String,
       picture: doc['picture'] as String?
     );
   }
@@ -54,7 +58,7 @@ class MyUserEntity extends Equatable {
 	@override
 	List<Object?> get props => [
     id, email, firstName, lastName, phoneNumber, 
-    age, height, weight, picture];
+    age, height, weight, gender, picture];
 
 	@override
   String toString() {
@@ -67,6 +71,7 @@ class MyUserEntity extends Equatable {
       age: $age
       height: $height
       weight: $weight
+      gender: $gender
       picture: $picture
     }''';
   }

@@ -1,3 +1,6 @@
+import 'dart:math';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +24,8 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 
   String? _errorMsg;
   bool signUpRequired = false;
+  List<String> gender = ['male', 'female']; 
+  String genderValue = 'male';
   
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
@@ -68,7 +73,15 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
           body: Center(
             child: Column(
               children: [
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
+                SizedBox(
+                  child: CircleAvatar(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    radius: 65,
+                    backgroundImage: NetworkImage('https://banner2.cleanpng.com/20180410/bbw/kisspng-avatar-user-medicine-surgery-patient-avatar-5acc9f7a7cb983.0104600115233596105109.jpg'),
+                  ),
+                ),
+                const SizedBox(height: 20),
 								// First Name text field
                 SizedBox(
 									width: MediaQuery.of(context).size.width * 0.9,
@@ -211,6 +224,46 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
                     }
 									),
 								),
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ListTile(
+                              title: const Text('male'),
+                              leading: Radio(
+                                value: gender[0],
+                                groupValue: genderValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    genderValue = value.toString();
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: ListTile(
+                              title: const Text('female'),
+                              leading: Radio(
+                                value: gender[1],
+                                groupValue: genderValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    genderValue = value.toString();
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 // Create the user account
                 !signUpRequired
@@ -230,6 +283,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
                               age: ageController.text,
                               height: heightController.text,
                               weight: weightController.text,
+                              gender: genderValue,
 														);
                             // Create user by email and password.
 														setState(() {           

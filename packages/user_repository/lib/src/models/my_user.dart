@@ -11,6 +11,7 @@ class MyUser extends Equatable {
   final String age;
   final String height;
   final String weight;
+  final String gender;
 	String? picture;
 
 	MyUser({
@@ -22,6 +23,7 @@ class MyUser extends Equatable {
     required this.age,
     required this.height,
     required this.weight,
+    required this.gender,
 		this.picture,
 	});
 
@@ -35,6 +37,7 @@ class MyUser extends Equatable {
     age: '',
     height: '',
     weight: '',
+    gender: '',
 		picture: ''
 	);
 
@@ -48,6 +51,7 @@ class MyUser extends Equatable {
     String? age,
     String? height,
     String? weight,
+    String? gender,
     String? picture,
   }) {
     return MyUser(
@@ -59,6 +63,7 @@ class MyUser extends Equatable {
       age: age ?? this.age,
       height: height ?? this.height,
       weight: weight ?? this.weight,
+      gender: gender ?? this.gender,
       picture: picture ?? this.picture,
     );
   }
@@ -79,6 +84,7 @@ class MyUser extends Equatable {
       age: age,
       height: height,
       weight: weight,
+      gender: gender,
       picture: picture,
     );
   }
@@ -93,6 +99,7 @@ class MyUser extends Equatable {
       age: entity.age,
       height: entity.height,
       weight: entity.weight,
+      gender: entity.gender,
       picture: entity.picture,
     );
   }
@@ -101,6 +108,6 @@ class MyUser extends Equatable {
 	@override
 	List<Object?> get props => [
     id, email, firstName, lastName, phoneNumber, 
-    age, height, weight, picture];
+    age, height, weight, gender, picture];
 	
 }
