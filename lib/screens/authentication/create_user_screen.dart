@@ -1,12 +1,17 @@
-import 'dart:math';
-import 'dart:developer';
+import 'dart:ffi';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:flutter_demo/blocs/sign_up_bloc/sign_up_bloc.dart';
+import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
 import 'package:flutter_demo/components/constants.dart';
+import 'package:flutter_demo/components/imagepicker.dart';
 import 'package:flutter_demo/components/textfield.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:user_repository/user_repository.dart';
 
 class CreateUserScreen extends StatefulWidget {
@@ -22,10 +27,10 @@ class CreateUserScreen extends StatefulWidget {
 class _CreateUserScreenState extends State<CreateUserScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String? _errorMsg;
   bool signUpRequired = false;
   List<String> gender = ['male', 'female']; 
   String genderValue = 'male';
+  String? _errorMsg;
   
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
@@ -33,7 +38,6 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
   final ageController = TextEditingController();
   final heightController = TextEditingController();
   final weightController = TextEditingController();
-  
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +78,11 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                SizedBox(
-                  child: CircleAvatar(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    radius: 65,
-                    backgroundImage: NetworkImage('https://banner2.cleanpng.com/20180410/bbw/kisspng-avatar-user-medicine-surgery-patient-avatar-5acc9f7a7cb983.0104600115233596105109.jpg'),
+                Transform.rotate(
+                  angle: 135 * 3.141592653589793 / 180, // Rotate by 45 degrees (in radians)
+                  child: const Icon(
+                    Icons.fitness_center_rounded,
+                    size: 125,
                   ),
                 ),
                 const SizedBox(height: 20),

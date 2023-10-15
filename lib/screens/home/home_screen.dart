@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
 					backgroundColor: Theme.of(context).colorScheme.background,
 					floatingActionButton: BlocBuilder<MyUserBloc, MyUserState>(
 						builder: (context, state) {
-							if(state.status == MyUserStatus.success) {
+							if (state.status == MyUserStatus.success) {
 								return FloatingActionButton(
 									onPressed: () {
 										Navigator.push(
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
 						backgroundColor: Theme.of(context).colorScheme.background,
 						title: BlocBuilder<MyUserBloc, MyUserState>(
 							builder: (context, state) {
-								if(state.status == MyUserStatus.success) {
+								if (state.status == MyUserStatus.success) {
 									return Row(
 										children: [
 											state.user!.picture == ""
