@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/sign_up_bloc/sign_up_bloc.dart';
+import 'package:flutter_demo/components/constants.dart';
 import 'package:flutter_demo/components/textfield.dart';
 import 'package:user_repository/user_repository.dart';
 
@@ -23,6 +24,10 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
   
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final ageController = TextEditingController();
+  final heightController = TextEditingController();
+  final weightController = TextEditingController();
   
 
   @override
@@ -103,6 +108,109 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 										}
 									),
 								),
+                const SizedBox(height: 10),
+								// Phone number text field
+                SizedBox(
+									width: MediaQuery.of(context).size.width * 0.9,
+									child: MyTextField(
+										controller: phoneNumberController,
+										hintText: 'Phone Number',
+										obscureText: false,
+										keyboardType: TextInputType.number,
+										prefixIcon: const Icon(CupertinoIcons.phone_fill),
+										validator: (val) {
+											if (val!.isEmpty) {
+												return 'Please fill in this field';													
+											} else if (!israeliPhoneNumberRexExp.hasMatch(val)) {
+                        return 'Please enter a valid phone number';
+                      } else if (val.length < 10 || val.length > 10) {
+                        return 'Please enter a valid phone number';
+                      }
+											return null;
+										}
+									),
+								),
+                const SizedBox(height: 10),
+								// age text field
+                SizedBox(
+									width: MediaQuery.of(context).size.width * 0.9,
+									child: MyTextField(
+										controller: ageController,
+										hintText: 'Age',
+										obscureText: false,
+										keyboardType: TextInputType.number,
+										prefixIcon: const Icon(CupertinoIcons.chart_bar_alt_fill),
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return 'Please fill in this field';
+                      } else {
+                        try {
+                          double age = double.parse(val);
+                          if (age < 16 || age > 120) {
+                            return 'Age must be between 16 and 120';
+                          }
+                        } catch (e) {
+                          return 'Please enter a valid number';
+                        }
+                      }
+                      return null;
+                    }
+									),
+								),
+                const SizedBox(height: 10),
+								// heigh text field
+                SizedBox(
+									width: MediaQuery.of(context).size.width * 0.9,
+									child: MyTextField(
+										controller: heightController,
+										hintText: 'Height in centimeters',
+										obscureText: false,
+										keyboardType: TextInputType.number,
+										prefixIcon: const Icon(CupertinoIcons.chart_bar_alt_fill),
+										validator: (val) {
+                      if (val!.isEmpty) {
+                        return 'Please fill in this field';
+                      } else {
+                        try {
+                          double age = double.parse(val);
+                          if (age < 120 || age > 250) {
+                            return 'Please enter a valid height';
+                          }
+                        } catch (e) {
+                          return 'Please enter a valid number';
+                        }
+                      }
+                      return null;
+                    }
+									),
+								),
+                const SizedBox(height: 10),
+								// weight text field
+                SizedBox(
+									width: MediaQuery.of(context).size.width * 0.9,
+									child: MyTextField(
+										controller: weightController,
+										hintText: 'Weight in kilograms',
+										obscureText: false,
+										keyboardType: TextInputType.number,
+										prefixIcon: const Icon(CupertinoIcons.chart_bar_alt_fill),
+										validator: (val) {
+                      if (val!.isEmpty) {
+                        return 'Please fill in this field';
+                      } else {
+                        try {
+                          double age = double.parse(val);
+                          if (age < 30 || age > 250) {
+                            return 'Please enter a valid weight';
+                          }
+                        } catch (e) {
+                          return 'Please enter a valid number';
+                        }
+                      }
+                      return null;
+                    }
+									),
+								),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 // Create the user account
                 !signUpRequired
@@ -118,6 +226,10 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 															email: widget.userEmail,
 															firstName: firstNameController.text,
                               lastName: lastNameController.text,
+                              phoneNumber: phoneNumberController.text,
+                              age: ageController.text,
+                              height: heightController.text,
+                              weight: weightController.text,
 														);
                             // Create user by email and password.
 														setState(() {           
