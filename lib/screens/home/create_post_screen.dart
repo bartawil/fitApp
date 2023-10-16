@@ -5,15 +5,15 @@ import 'package:flutter_demo/blocs/create_post_bloc/create_post_bloc.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:user_repository/user_repository.dart';
 
-class PostScreen extends StatefulWidget {
+class CreatePostScreen extends StatefulWidget {
 	final MyUser myUser;
-  const PostScreen(this.myUser, {super.key});
+  const CreatePostScreen(this.myUser, {super.key});
 
   @override
-  State<PostScreen> createState() => _PostScreenState();
+  State<CreatePostScreen> createState() => _CreatePostScreenState();
 }
 
-class _PostScreenState extends State<PostScreen> {
+class _CreatePostScreenState extends State<CreatePostScreen> {
 	late Post post;
 	final TextEditingController _controller = TextEditingController();
 
