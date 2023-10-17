@@ -32,7 +32,7 @@ class PostEntity {
     );
   }
 	
-	@override
+  
 	List<Object?> get props => [postId, post, createAt, myUser];
 
 	@override

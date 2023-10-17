@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:post_repository/post_repository.dart';
@@ -6,6 +8,7 @@ part 'create_post_event.dart';
 part 'create_post_state.dart';
 
 class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
+	// ignore: prefer_final_fields
 	PostRepository _postRepository;
 
   CreatePostBloc({

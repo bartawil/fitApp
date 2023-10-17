@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/components/pick_image.dart';
 import 'package:flutter_demo/components/post_list.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter_demo/blocs/create_post_bloc/create_post_bloc.dart';
 import 'package:flutter_demo/blocs/get_post_bloc/get_post_bloc.dart';
 import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter_demo/screens/home/create_post_screen.dart';
+import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
 import 'package:post_repository/post_repository.dart';
 import '../../blocs/my_user_bloc/my_user_bloc.dart';
 import '../../blocs/update_user_info_bloc/update_user_info_bloc.dart';
-import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -152,6 +150,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 100
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const UpdateWeightScreen()),
+                      );
+                    },
+                    child: Container(
+                      // Add your container properties here
+                      width: 100,
+                      height: 100,
+                      color: Colors.blue,
+                      child: const Center(
+                        child: Text(
+                          "Weight update",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20
+                          ),
+                        ),
                       ),
                     ),
                   ),

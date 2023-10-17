@@ -14,7 +14,7 @@ class PostList extends StatelessWidget {
       itemBuilder: (context, int i) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -51,10 +51,8 @@ class PostList extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Container(
-                    child: Text(
-                      posts[i].post,
-                    ),
+                  Text(
+                    posts[i].post,
                   )
                 ],
               ),

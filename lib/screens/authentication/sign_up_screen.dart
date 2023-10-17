@@ -128,7 +128,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               password: passwordController.text,
                             ),
                           );
-                        }));																		
+                        }
+                      )
+                    );																		
                   }
                 },
                 style: TextButton.styleFrom(

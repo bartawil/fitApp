@@ -1,3 +1,4 @@
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:post_repository/post_repository.dart';
@@ -6,6 +7,7 @@ part 'get_post_event.dart';
 part 'get_post_state.dart';
 
 class GetPostBloc extends Bloc<GetPostEvent, GetPostState> {
+	// ignore: prefer_final_fields
 	PostRepository _postRepository;
 
   GetPostBloc({

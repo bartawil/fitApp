@@ -38,7 +38,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 							backgroundColor: Theme.of(context).colorScheme.background,
 							floatingActionButton: FloatingActionButton(
 								onPressed: () {
-									if(_controller.text.length != 0) {
+									if(_controller.text.isNotEmpty) {
 										setState(() {
 											post.post = _controller.text;
 										});

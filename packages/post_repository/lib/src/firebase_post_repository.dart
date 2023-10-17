@@ -1,9 +1,7 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:post_repository/post_repository.dart';
-import 'package:post_repository/src/models/post.dart';
 import 'package:uuid/uuid.dart';
-import 'post_repo.dart';
 
 class FirebasePostRepository implements PostRepository {
 
@@ -35,7 +33,6 @@ class FirebasePostRepository implements PostRepository {
 					Post.fromEntity(PostEntity.fromDocument(e.data()))
 				).toList());
     } catch (e) {
-      print(e.toString());
 			rethrow;
     }
   }

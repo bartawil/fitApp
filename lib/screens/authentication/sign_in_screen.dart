@@ -109,7 +109,7 @@ class _SignInScreenState extends State<SignInScreen> {
               const SizedBox(height: 8),
               // Forgot password text
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

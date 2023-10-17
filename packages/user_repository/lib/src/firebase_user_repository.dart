@@ -125,8 +125,6 @@ class FirebaseUserRepository implements UserRepository {
 			rethrow;
 		}
 	}
-
-
 }
 
 class CustomFirebaseAuthException implements Exception {
