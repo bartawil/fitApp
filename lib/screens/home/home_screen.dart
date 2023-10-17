@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:flutter_demo/components/pick_image.dart';
 import 'package:flutter_demo/components/post_list.dart';
 import 'package:flutter_demo/blocs/create_post_bloc/create_post_bloc.dart';
@@ -23,14 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UpdateUserInfoBloc, UpdateUserInfoState>(
-			listener: (context, state) {
-				if(state is UploadPictureSuccess) {
-					setState(() {
-					  context.read<MyUserBloc>().state.user!.picture = state.userImage;
-					});
-				}
-			},
-			child: Scaffold(
+      listener: (context, state) {
+        if (state is UploadPictureSuccess) {
+          setState(() {
+            context.read<MyUserBloc>().state.user!.picture = state.userImage;
+          });
+        }
+      },
+      child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         // add post button
         floatingActionButton: BlocBuilder<MyUserBloc, MyUserState>(
@@ -39,30 +40,24 @@ class _HomeScreenState extends State<HomeScreen> {
               return FloatingActionButton(
                 onPressed: () {
                   Navigator.push(
-                    context, 
+                    context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => BlocProvider<CreatePostBloc>(
+                      builder: (BuildContext context) =>
+                          BlocProvider<CreatePostBloc>(
                         create: (context) => CreatePostBloc(
-                          postRepository: FirebasePostRepository()
-                        ),
-                        child: CreatePostScreen(
-                          state.user!
-                        ),
+                            postRepository: FirebasePostRepository()),
+                        child: CreatePostScreen(state.user!),
                       ),
                     ),
                   );
                 },
-                child: const Icon(
-                  CupertinoIcons.add
-                ),
+                child: const Icon(CupertinoIcons.add),
               );
             } else {
               return const FloatingActionButton(
                 onPressed: null,
-                child: Icon(
-                  CupertinoIcons.clear
-                ),
-              ); 
+                child: Icon(CupertinoIcons.clear),
+              );
             }
           },
         ),
@@ -77,46 +72,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Row(
                   children: [
                     state.user!.picture == ""
-                      ? GestureDetector(
-                          onTap: () async {
-                            await pickAndCropImage(context);
-                          },
-                          child: Container(
+                        ? GestureDetector(
+                            onTap: () async {
+                              await pickAndCropImage(context);
+                            },
+                            child: Container(
                               width: 50,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade300,
-                                shape: BoxShape.circle
-                              ),
-                              child: Icon(
-                                CupertinoIcons.person, 
-                                color: Colors.grey.shade400
-                              ),
+                                  color: Colors.grey.shade300,
+                                  shape: BoxShape.circle),
+                              child: Icon(CupertinoIcons.person,
+                                  color: Colors.grey.shade400),
                             ),
-                        )
-                      : GestureDetector(
-                        onTap: () async {
-                          await pickAndCropImage(context);
-                        },
-                        child: Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  state.user!.picture!,
-                                ),
-                                fit: BoxFit.cover
-                              )
+                          )
+                        : GestureDetector(
+                            onTap: () async {
+                              await pickAndCropImage(context);
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                        state.user!.picture!,
+                                      ),
+                                      fit: BoxFit.cover)),
                             ),
                           ),
-                        ),
                     const SizedBox(width: 10),
-                    Text(
-                      "Welcome ${state.user!.firstName}"
-                    )
+                    Text("Welcome ${state.user!.firstName}")
                   ],
                 );
               } else {
@@ -127,14 +115,13 @@ class _HomeScreenState extends State<HomeScreen> {
           // Sign-Out button
           actions: [
             IconButton(
-              onPressed: () {
-                context.read<SignInBloc>().add(const SignOutRequired());
-              }, 
-              icon: Icon(
-                CupertinoIcons.square_arrow_right,
-                color: Theme.of(context).colorScheme.onBackground,
-              )
-            )
+                onPressed: () {
+                  context.read<SignInBloc>().add(const SignOutRequired());
+                },
+                icon: Icon(
+                  CupertinoIcons.square_arrow_right,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ))
           ],
         ),
         body: BlocBuilder<GetPostBloc, GetPostState>(
@@ -147,18 +134,37 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       "Posts",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 100
-                      ),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 100),
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const UpdateWeightScreen()),
-                      );
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return MultiBlocProvider(
+                          providers: [
+                            BlocProvider<MyUserBloc>(
+                              create: (context) => MyUserBloc(
+                                  myUserRepository: context
+                                      .read<AuthenticationBloc>()
+                                      .userRepository)
+                                ..add(GetMyUser(
+                                    myUserId: context
+                                        .read<AuthenticationBloc>()
+                                        .state
+                                        .user!
+                                        .uid)),
+                            ),
+                            BlocProvider(
+                              create: (context) => UpdateUserInfoBloc(
+                                userRepository: context.read<AuthenticationBloc>().userRepository
+                              ),
+                            ),
+                          ],
+                          child: const UpdateWeightScreen(),
+                        );
+                      }));
                     },
                     child: Container(
                       // Add your container properties here
@@ -168,10 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const Center(
                         child: Text(
                           "Weight update",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20
-                          ),
+                          style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       ),
                     ),
@@ -192,6 +195,6 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-		);
+    );
   }
 }

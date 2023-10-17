@@ -23,5 +23,13 @@ class UpdateUserInfoBloc extends Bloc<UpdateUserInfoEvent, UpdateUserInfoState> 
         emit(UploadPictureFailure());
       }
     });
+    on<UpdateUser>((event, emit) async {
+      emit(UpdateUserLoading());
+      try {
+        await _userRepository.setUserData(event.user);
+      } catch (e) {
+        emit(UpdateUserFailure());
+      }
+    });
   }
 }
