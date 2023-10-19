@@ -64,18 +64,23 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
       child: Form(
         key: _formKey,
         child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
           appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.primary,
+            elevation: 0,
+            backgroundColor: Theme.of(context).colorScheme.background,
+            leading: IconButton(
+              icon: const Icon(CupertinoIcons.arrow_left),
+              onPressed: () => Navigator.pop(context),
+            ),
           ),
           body: Center(
             child: Column(
               children: [
-                const SizedBox(height: 20),
                 Transform.rotate(
                   angle: 135 * 3.141592653589793 / 180, // Rotate by 45 degrees (in radians)
                   child: const Icon(
                     Icons.fitness_center_rounded,
-                    size: 125,
+                    size: 150,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -301,15 +306,15 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 														borderRadius: BorderRadius.circular(12)
 													)
 												),
-												child: const Padding(
-													padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+												child: Padding(
+													padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
 													child: Text(
 														'Sign Up',
 														textAlign: TextAlign.center,
 														style: TextStyle(
-															color: Colors.white,
+															color: Theme.of(context).colorScheme.onPrimary,
 															fontSize: 16,
-															fontWeight: FontWeight.w600
+															fontWeight: FontWeight.w900
 														),
 													),
 												)

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/reset_password_bloc/reset_password_bloc.dart';
 import 'package:flutter_demo/components/constants.dart';
 import 'package:flutter_demo/components/textfield.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -54,12 +55,27 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       child: Form(
         key: _formKey,
         child: Scaffold (
+          backgroundColor: Theme.of(context).colorScheme.background,
           appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.primary
+            elevation: 0,
+            backgroundColor: Theme.of(context).colorScheme.background,
+            leading: IconButton(
+              icon: const Icon(CupertinoIcons.arrow_left),
+              onPressed: () => Navigator.pop(context),
+            ),
           ),
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                'Enter your email address here',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.bebasNeue(
+                  color: Theme.of(context).colorScheme.onBackground,
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
               const SizedBox(height: 20),
               // Email text field
               Padding(
@@ -105,16 +121,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12))),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
                             horizontal: 25, vertical: 5),
                         child: Text(
                           'Reset Password',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 16,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.w900),
                         ),
                       )
                     ),

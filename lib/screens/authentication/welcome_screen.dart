@@ -53,6 +53,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
 								Text(
 									'Welcome!',
 									style: GoogleFonts.bebasNeue(
+                    color: Theme.of(context).colorScheme.onBackground,
 										fontSize: 52,
 										fontWeight: FontWeight.bold
 									),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:flutter_demo/components/menu_button.dart';
 import 'package:flutter_demo/components/pick_image.dart';
 import 'package:flutter_demo/components/post_list.dart';
 import 'package:flutter_demo/blocs/create_post_bloc/create_post_bloc.dart';
@@ -104,7 +105,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                     const SizedBox(width: 10),
-                    Text("Welcome ${state.user!.firstName}")
+                    Text("Welcome ${state.user!.firstName}",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onBackground,
+                      )
+                    )
                   ],
                 );
               } else {
@@ -130,14 +135,6 @@ class _HomeScreenState extends State<HomeScreen> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "Posts",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 100),
-                    ),
-                  ),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(context,
@@ -179,6 +176,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MyMenuButton(title: "Metrics", icon: 'assets/images/weight.png'),
+                      const SizedBox(width: 30),
+                      MyMenuButton(title: "Nutrintion", icon: 'assets/images/nutritional.png'),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MyMenuButton(title: "Workouts", icon: 'assets/images/fitness.png'),
+                      const SizedBox(width: 30),
+                      MyMenuButton(title: "settings", icon: 'assets/images/settings.png', iconColor: Theme.of(context).colorScheme.onBackground.withOpacity(0.5), backgroundColor: Theme.of(context).colorScheme.primary, fontColor: Theme.of(context).colorScheme.onBackground.withOpacity(0.5)),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
                   // Show posts list
                   Expanded(child: PostList(posts: state.posts))
                 ],

@@ -141,15 +141,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     borderRadius: BorderRadius.circular(12)
                   )
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
                   child: Text(
                     'Sign Up',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontSize: 16,
-                      fontWeight: FontWeight.w600
+                      fontWeight: FontWeight.w900
                     ),
                   ),
                 )

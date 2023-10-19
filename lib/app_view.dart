@@ -21,12 +21,12 @@ class MyAppView extends StatelessWidget {
       // Define the app's colors
 			theme: ThemeData(
         colorScheme: const ColorScheme.light(
-          background: Colors.white,
+          background: Color.fromARGB(255, 243, 245, 243),
           onBackground: Color.fromARGB(255, 40, 23, 23),
-          primary: Color.fromRGBO(206, 147, 216, 1),
-          onPrimary: Colors.black,
-          secondary: Color.fromRGBO(244, 143, 177, 1),
-          onSecondary: Colors.white,
+          primary: Color.fromRGBO(197, 219, 124, 1),
+          onPrimary: Colors.white,
+          secondary: Color.fromRGBO(65, 108, 172, 1),
+          onSecondary: Colors.black,
 					tertiary: Color.fromRGBO(255, 204, 128, 1),
           error: Colors.red,
 					outline: Color(0xFF424242)

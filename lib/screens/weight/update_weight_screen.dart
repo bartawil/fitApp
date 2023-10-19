@@ -13,29 +13,34 @@ class UpdateWeightScreen extends StatefulWidget {
 
 class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
   final weightController = TextEditingController();
+  String? prvWeight;
+  String? newWeight;
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<UpdateUserInfoBloc, UpdateUserInfoState>(
       listener: (context, state) {
-        // TODO: implement listener
+        if (state is UpdateUserSuccess) {
+          prvWeight = newWeight;
+        }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('New Page'),
+          title: const Text('Update Weight'),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
         body: BlocBuilder<MyUserBloc, MyUserState>(builder: (context, state) {
+          prvWeight = state.user?.weight;
           return Scaffold(
             body: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Weight: ${state.user?.weight ?? ''}"),
+                  Text("Weight: ${prvWeight ?? ''}"),
                   Text("Height: ${state.user?.height ?? ''}"),
                   const SizedBox(
                     height: 20,
