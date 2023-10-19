@@ -52,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 },
+                backgroundColor: Theme.of(context).colorScheme.background,
                 child: const Icon(CupertinoIcons.add),
               );
             } else {
@@ -120,13 +121,14 @@ class _HomeScreenState extends State<HomeScreen> {
           // Sign-Out button
           actions: [
             IconButton(
-                onPressed: () {
-                  context.read<SignInBloc>().add(const SignOutRequired());
-                },
-                icon: Icon(
-                  CupertinoIcons.square_arrow_right,
-                  color: Theme.of(context).colorScheme.onBackground,
-                ))
+              onPressed: () {
+                context.read<SignInBloc>().add(const SignOutRequired());
+              },
+              icon: Icon(
+                CupertinoIcons.square_arrow_right,
+                color: Theme.of(context).colorScheme.onBackground,
+              )
+            )
           ],
         ),
         body: BlocBuilder<GetPostBloc, GetPostState>(
@@ -135,52 +137,48 @@ class _HomeScreenState extends State<HomeScreen> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return MultiBlocProvider(
-                          providers: [
-                            BlocProvider<MyUserBloc>(
-                              create: (context) => MyUserBloc(
-                                  myUserRepository: context
-                                      .read<AuthenticationBloc>()
-                                      .userRepository)
-                                ..add(GetMyUser(
-                                    myUserId: context
-                                        .read<AuthenticationBloc>()
-                                        .state
-                                        .user!
-                                        .uid)),
-                            ),
-                            BlocProvider(
-                              create: (context) => UpdateUserInfoBloc(
-                                userRepository: context.read<AuthenticationBloc>().userRepository
-                              ),
-                            ),
-                          ],
-                          child: const UpdateWeightScreen(),
-                        );
-                      }));
-                    },
-                    child: Container(
-                      // Add your container properties here
-                      width: 100,
-                      height: 100,
-                      color: Colors.blue,
-                      child: const Center(
-                        child: Text(
-                          "Weight update",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      ),
+                  const SizedBox(height: 30),
+                  Center(
+                    child: Image.asset(
+                      'assets/images/chart.png',
+                      width: 250, height: 250
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      MyMenuButton(title: "Metrics", icon: 'assets/images/weight.png'),
+                      MyMenuButton(
+                        title: "Metrics", 
+                        icon: 'assets/images/weight.png',
+                        onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return MultiBlocProvider(
+                                providers: [
+                                  BlocProvider<MyUserBloc>(
+                                    create: (context) => MyUserBloc(
+                                        myUserRepository: context
+                                            .read<AuthenticationBloc>()
+                                            .userRepository)
+                                      ..add(GetMyUser(
+                                          myUserId: context
+                                              .read<AuthenticationBloc>()
+                                              .state
+                                              .user!
+                                              .uid)),
+                                  ),
+                                  BlocProvider(
+                                    create: (context) => UpdateUserInfoBloc(
+                                      userRepository: context.read<AuthenticationBloc>().userRepository
+                                    ),
+                                  ),
+                                ],
+                                child: const UpdateWeightScreen(),
+                              );
+                            }));
+                          },
+                        ),
                       const SizedBox(width: 30),
                       MyMenuButton(title: "Nutrintion", icon: 'assets/images/nutritional.png'),
                     ],

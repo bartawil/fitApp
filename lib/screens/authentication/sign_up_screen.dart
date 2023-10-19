@@ -6,7 +6,7 @@ import 'package:flutter_demo/screens/authentication/create_user_screen.dart';
 
 import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
 import '../../components/constants.dart';
-import '../../components/textfield.dart';
+import '../../components/text_field.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

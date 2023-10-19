@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:flutter_demo/components/constants.dart';
-import 'package:flutter_demo/components/textfield.dart';
+import 'package:flutter_demo/components/text_field.dart';
 import 'package:user_repository/user_repository.dart';
 
 class CreateUserScreen extends StatefulWidget {
