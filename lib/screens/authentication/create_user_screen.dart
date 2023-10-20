@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:flutter_demo/components/constants.dart';
 import 'package:flutter_demo/components/text_field.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:user_repository/user_repository.dart';
 
 class CreateUserScreen extends StatefulWidget {
@@ -71,16 +72,31 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
             leading: IconButton(
               icon: const Icon(CupertinoIcons.arrow_left),
               onPressed: () => Navigator.pop(context),
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           body: Center(
             child: Column(
               children: [
-                Transform.rotate(
-                  angle: 135 * 3.141592653589793 / 180, // Rotate by 45 degrees (in radians)
-                  child: const Icon(
-                    Icons.fitness_center_rounded,
-                    size: 150,
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+                          child: Image.asset('assets/images/dumbel.png', width: 125, height: 125),
+                        ),
+                      ),
+                      Text(
+                        'FITAPP',
+                        style: GoogleFonts.playfairDisplay(
+                          color: Theme.of(context).colorScheme.onBackground,
+                          fontSize: 42,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 20),

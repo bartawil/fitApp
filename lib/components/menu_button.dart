@@ -45,9 +45,9 @@ class MyMenuButton extends StatelessWidget {
           children: [
             Expanded(
               child: ColorFiltered(
-              colorFilter: ColorFilter.mode(iconColor ?? Theme.of(context).colorScheme.primary, BlendMode.srcIn),
-              child: Image.asset(icon, width: 125, height: 125),
-            ),
+                colorFilter: ColorFilter.mode(iconColor ?? Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+                child: Image.asset(icon, width: 125, height: 125),
+              ),
             ),
             const SizedBox(height: 10),
             Text(

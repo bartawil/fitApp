@@ -108,9 +108,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                     const SizedBox(width: 10),
                     Text("Welcome ${state.user!.firstName}",
-                      style: GoogleFonts.caveat (
+                      style: GoogleFonts.playfairDisplay (
                         color: Theme.of(context).colorScheme.onBackground,
-                        fontSize: 32,
+                        // fontSize: 32,
                       ),
                     )
                   ],
@@ -126,10 +126,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Builder(
               builder: (context) => IconButton(
                 icon: Transform.rotate(
-                angle: -1.6, // set the angle of rotation
+                angle: 0.0, // set the angle of rotation
                 child: Icon(
-                  Icons.bar_chart_rounded,
-                  color: Theme.of(context).colorScheme.onBackground,
+                  Icons.menu,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
               onPressed: () {
@@ -147,15 +147,25 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ListView(
               children:  [
                 DrawerHeader(
-                  child: Center(
-                    child: Text("fitApp",
-                      style: GoogleFonts.caveat (
-                        color: Theme.of(context).colorScheme.onBackground,
-                        fontSize: 52,
-                        // fontWeight: FontWeight.bold
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+                          child: Image.asset('assets/images/dumbel.png', width: 80, height: 80),
+                        ),
                       ),
-                    ),
-                  )
+                      Text(
+                        'FITAPP',
+                        style: GoogleFonts.playfairDisplay(
+                          color: Theme.of(context).colorScheme.onBackground,
+                          fontSize: 25,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 ListTile(
                   leading: Icon(
@@ -184,9 +194,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   const SizedBox(height: 30),
                   Center(
-                    child: Image.asset(
-                      'assets/images/chart.png',
-                      width: 250, height: 250
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+                          child: Image.asset('assets/images/dumbel.png', width: 200, height: 150),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'FITAPP',
+                          style: GoogleFonts.playfairDisplay(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 52,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -234,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       MyMenuButton(title: "Workouts", icon: 'assets/images/fitness.png'),
                       const SizedBox(width: 30),
-                      MyMenuButton(title: "settings", icon: 'assets/images/settings.png', iconColor: Theme.of(context).colorScheme.onBackground.withOpacity(0.5), backgroundColor: Theme.of(context).colorScheme.primary, fontColor: Theme.of(context).colorScheme.onBackground.withOpacity(0.5)),
+                      MyMenuButton(title: "settings", icon: 'assets/images/settings.png', iconColor: Theme.of(context).colorScheme.background.withOpacity(0.5), backgroundColor: Theme.of(context).colorScheme.primary, fontColor: Theme.of(context).colorScheme.background.withOpacity(0.5)),
                     ],
                   ),
                   const SizedBox(height: 10),

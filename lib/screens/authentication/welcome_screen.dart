@@ -42,20 +42,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
 						padding: const EdgeInsets.symmetric(horizontal: 20),
 						child: Column(
 							children: [
-                Transform.rotate(
-                  angle: 135 * 3.141592653589793 / 180, // Rotate by 45 degrees (in radians)
-                  child: const Icon(
-                    Icons.fitness_center_rounded,
-                    size: 100,
-                  ),
+                ColorFiltered(
+                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+                  child: Image.asset('assets/images/dumbel.png', width: 100, height: 100),
                 ),
                 const SizedBox(height: 10),
 								Text(
-									'Welcome!',
-									style: GoogleFonts.bebasNeue(
-                    color: Theme.of(context).colorScheme.onBackground,
+									'FITAPP',
+									style: GoogleFonts.playfairDisplay(
+                    color: Theme.of(context).colorScheme.primary,
 										fontSize: 52,
-										fontWeight: FontWeight.bold
 									),
 								),
 								const SizedBox(height: kToolbarHeight),

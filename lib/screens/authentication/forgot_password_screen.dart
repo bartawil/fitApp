@@ -62,6 +62,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             leading: IconButton(
               icon: const Icon(CupertinoIcons.arrow_left),
               onPressed: () => Navigator.pop(context),
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           body: Column(
@@ -70,13 +71,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               Text(
                 'Enter your email address here',
                 textAlign: TextAlign.center,
-                style: GoogleFonts.bebasNeue(
+                style: GoogleFonts.playfairDisplay(
                   color: Theme.of(context).colorScheme.onBackground,
-                  fontSize: 50,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 50),
               // Email text field
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),

@@ -23,9 +23,11 @@ class MyAppView extends StatelessWidget {
         colorScheme: const ColorScheme.light(
           background: Color.fromARGB(255, 243, 245, 243),
           onBackground: Color.fromARGB(255, 40, 23, 23),
-          primary: Color.fromRGBO(197, 219, 124, 1),
+          primary: Color.fromRGBO(56,2,59, 1),
+          // primary: Color.fromRGBO(197, 219, 124, 1),
+          
           onPrimary: Colors.white,
-          secondary: Colors.brown,
+          secondary: Color.fromRGBO(31,47,22, 1),
           // secondary: Color.fromRGBO(65, 108, 172, 1),
           onSecondary: Colors.black,
 					tertiary: Color.fromRGBO(255, 204, 128, 1),
