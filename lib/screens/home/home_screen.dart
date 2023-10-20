@@ -10,6 +10,7 @@ import 'package:flutter_demo/blocs/get_post_bloc/get_post_bloc.dart';
 import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter_demo/screens/home/create_post_screen.dart';
 import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:post_repository/post_repository.dart';
 import '../../blocs/my_user_bloc/my_user_bloc.dart';
 import '../../blocs/update_user_info_bloc/update_user_info_bloc.dart';
@@ -107,9 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                     const SizedBox(width: 10),
                     Text("Welcome ${state.user!.firstName}",
-                      style: TextStyle(
+                      style: GoogleFonts.caveat (
                         color: Theme.of(context).colorScheme.onBackground,
-                      )
+                        fontSize: 32,
+                      ),
                     )
                   ],
                 );
@@ -119,17 +121,60 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           // Sign-Out button
+          // Drawer button
           actions: [
-            IconButton(
+            Builder(
+              builder: (context) => IconButton(
+                icon: Transform.rotate(
+                angle: -1.6, // set the angle of rotation
+                child: Icon(
+                  Icons.bar_chart_rounded,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+              ),
               onPressed: () {
-                context.read<SignInBloc>().add(const SignOutRequired());
+                Scaffold.of(context).openEndDrawer();
               },
-              icon: Icon(
-                CupertinoIcons.square_arrow_right,
-                color: Theme.of(context).colorScheme.onBackground,
-              )
-            )
+              ),
+            ),
           ],
+        ),
+        endDrawer: Drawer(
+          width: 250,
+          shadowColor: Theme.of(context).colorScheme.primary,
+          child: Container(
+            color: Theme.of(context).colorScheme.background,
+            child: ListView(
+              children:  [
+                DrawerHeader(
+                  child: Center(
+                    child: Text("fitApp",
+                      style: GoogleFonts.caveat (
+                        color: Theme.of(context).colorScheme.onBackground,
+                        fontSize: 52,
+                        // fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  )
+                ),
+                ListTile(
+                  leading: Icon(
+                      CupertinoIcons.square_arrow_right,
+                      color: Theme.of(context).colorScheme.onBackground,
+                  ),
+                  title: Text("Sign Out",
+                    style: GoogleFonts.caveat (
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontSize: 24,
+                    ),
+                  ),
+                  onTap: () {
+                    context.read<SignInBloc>().add(const SignOutRequired());
+                  },
+                )
+              ],
+            ),
+          ),
         ),
         body: BlocBuilder<GetPostBloc, GetPostState>(
           builder: (context, state) {
