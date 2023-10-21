@@ -212,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -248,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         ),
                       const SizedBox(width: 30),
-                      MyMenuButton(title: "Nutrintion", icon: 'assets/images/nutritional.png'),
+                      MyMenuButton(title: "settings", icon: 'assets/images/settings.png', iconColor: Theme.of(context).colorScheme.background.withOpacity(0.5), backgroundColor: Theme.of(context).colorScheme.primary, fontColor: Theme.of(context).colorScheme.background.withOpacity(0.5)),
                     ],
                   ),
                   const SizedBox(height: 30),
@@ -257,7 +257,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       MyMenuButton(title: "Workouts", icon: 'assets/images/fitness.png'),
                       const SizedBox(width: 30),
-                      MyMenuButton(title: "settings", icon: 'assets/images/settings.png', iconColor: Theme.of(context).colorScheme.background.withOpacity(0.5), backgroundColor: Theme.of(context).colorScheme.primary, fontColor: Theme.of(context).colorScheme.background.withOpacity(0.5)),
+                      MyMenuButton(title: "Nutrintion", icon: 'assets/images/nutritional.png'),
+
                     ],
                   ),
                   const SizedBox(height: 10),

@@ -225,9 +225,13 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 										obscureText: false,
 										keyboardType: TextInputType.number,
 										prefixIcon: const Icon(CupertinoIcons.chart_bar_alt_fill),
-										validator: (val) {
+                    validator: (val) {
                       if (val!.isEmpty) {
                         return 'Please fill in this field';
+                      } else if (val.length < 2) {
+                        return 'Please enter a valid weight';
+                      } else if (!doubleRexExp.hasMatch(val)) {
+                        return 'Format must be XX.XX';
                       } else {
                         try {
                           double age = double.parse(val);
@@ -238,7 +242,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
                           return 'Please enter a valid number';
                         }
                       }
-                      return null;
+                        return null;
                     }
 									),
 								),
