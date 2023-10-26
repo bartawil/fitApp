@@ -15,7 +15,6 @@ class Post {
 		required this.myUser,
 	});
 
-	/// Empty user which represents an unauthenticated user.
   static final empty = Post(
 		postId: '', 
 		post: '',

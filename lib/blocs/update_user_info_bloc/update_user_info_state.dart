@@ -20,7 +20,7 @@ class UploadPictureSuccess extends UpdateUserInfoState {
   List<Object> get props => [userImage];
 }
 
-class UpdateUserFailure extends UpdateUserInfoState {}
-class UpdateUserLoading extends UpdateUserInfoState {}
-class UpdateUserSuccess extends UpdateUserInfoState {}
+class UpdateUserWeightFailure extends UpdateUserInfoState {}
+class UpdateUserWeightLoading extends UpdateUserInfoState {}
+class UpdateUserWeightSuccess extends UpdateUserInfoState {}
 

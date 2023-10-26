@@ -23,7 +23,7 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
   Widget build(BuildContext context) {
     return BlocListener<UpdateUserInfoBloc, UpdateUserInfoState>(
       listener: (context, state) {
-        if (state is UpdateUserSuccess) {
+        if (state is UpdateUserWeightSuccess) {
           prvWeight = newWeight;
         }
       },
@@ -93,7 +93,7 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                             weight: weightController.text,
                           );
                           setState(() {
-                            context.read<UpdateUserInfoBloc>().add(UpdateUser(
+                            context.read<UpdateUserInfoBloc>().add(UpdateUserWeight(
                               user!,
                             ));
                           });

@@ -125,6 +125,23 @@ class FirebaseUserRepository implements UserRepository {
 			rethrow;
 		}
 	}
+
+  @override
+  Future<String> updateWeightCollection(String weight, String userId) async {
+    try {
+      await usersCollection
+        .doc(userId)
+        .collection('weights')
+        .add({
+          'weight': weight,
+          'date': DateTime.now(),
+        });
+      return weight;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }
 
 class CustomFirebaseAuthException implements Exception {

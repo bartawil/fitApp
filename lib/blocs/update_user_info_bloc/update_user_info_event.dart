@@ -17,10 +17,10 @@ class UploadPicture extends UpdateUserInfoEvent {
   List<Object> get props => [file, userId];
 }
 
-class UpdateUser extends UpdateUserInfoEvent {
+class UpdateUserWeight extends UpdateUserInfoEvent {
   final MyUser user;
 
-  const UpdateUser(this.user);
+  const UpdateUserWeight(this.user);
 
   @override
   List<Object> get props => [user];

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class MyUserEntity extends Equatable {
@@ -10,6 +11,7 @@ class MyUserEntity extends Equatable {
   final String height;
   final String weight;
   final String gender;
+  final DateTime registerDate;
 	final String? picture;
 
 	const MyUserEntity({
@@ -22,6 +24,7 @@ class MyUserEntity extends Equatable {
     required this.height, 
     required this.weight,
     required this.gender,
+    required this.registerDate,
 		this.picture,
 	});
 
@@ -36,6 +39,7 @@ class MyUserEntity extends Equatable {
       'height': height, 
       'weight': weight, 
       'gender': gender,
+      'register_date': registerDate,
       'picture': picture,
     };
   }
@@ -51,6 +55,7 @@ class MyUserEntity extends Equatable {
       height: doc['height'] as String,
       weight: doc['weight'] as String,
       gender: doc['gender'] as String,
+      registerDate: (doc['register_date'] as Timestamp).toDate(),
       picture: doc['picture'] as String?
     );
   }
@@ -58,7 +63,7 @@ class MyUserEntity extends Equatable {
 	@override
 	List<Object?> get props => [
     id, email, firstName, lastName, phoneNumber, 
-    age, height, weight, gender, picture];
+    age, height, weight, gender, registerDate, picture];
 
 	@override
   String toString() {
@@ -72,6 +77,7 @@ class MyUserEntity extends Equatable {
       height: $height
       weight: $weight
       gender: $gender
+      register_date: $registerDate
       picture: $picture
     }''';
   }
