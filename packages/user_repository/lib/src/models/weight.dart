@@ -1,25 +1,31 @@
 import 'package:equatable/equatable.dart';
 import 'package:user_repository/src/entities/weight_entity.dart';
 
+// ignore: must_be_immutable
 class Weight extends Equatable {
+  String id;
   final String weight;
   final DateTime date;
 
-  const Weight({
+  Weight({
+    required this.id,
     required this.weight,
     required this.date,
   });
 
   static final empty = Weight(
+    id: '',
     weight: '',
     date: DateTime.now(),
   );
 
   Weight copyWith({
+    String? id,
     String? weight,
     DateTime? date,
   }) {
     return Weight(
+      id: id ?? this.id,
       weight: weight ?? this.weight,
       date: date ?? this.date,
     );
@@ -31,6 +37,7 @@ class Weight extends Equatable {
 
   WeightEntity toEntity() {
     return WeightEntity(
+      id: id,
       weight: weight,
       date: date,
     );
@@ -38,11 +45,12 @@ class Weight extends Equatable {
 
   static Weight fromEntity(WeightEntity entity) {
     return Weight(
+      id: entity.id,
       weight: entity.weight,
       date: entity.date,
     );
   }
 
   @override
-  List<Object> get props => [weight, date];
+  List<Object> get props => [id, weight, date];
 }

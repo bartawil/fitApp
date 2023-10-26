@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:user_repository/user_repository.dart';
+import 'package:uuid/uuid.dart';
 
 class FirebaseUserRepository implements UserRepository {
 	FirebaseUserRepository({
@@ -125,16 +126,21 @@ class FirebaseUserRepository implements UserRepository {
 	}
 
   @override
-  Future<String> updateWeightCollection(String weight, String userId) async {
+  Future<void> updateWeightCollection(String weightValue, String userId) async {
     try {
+      late Weight newWeight;
+      newWeight = Weight.empty;
+      newWeight.id = const Uuid().v1();
+
       await usersCollection
         .doc(userId)
         .collection('weights')
-        .add({
-          'weight': weight,
+        .doc(newWeight.id)
+        .set({
+          'id': newWeight.id,
+          'weight': weightValue,
           'date': DateTime.now(),
         });
-      return weight;
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -151,6 +157,22 @@ class FirebaseUserRepository implements UserRepository {
         .then((value) => value.docs.map((e) => 
           Weight.fromEntity(WeightEntity.fromDocument(e.data()))
         ).toList());
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Weight>> deleteWeight(String userId, String weightId) async {
+    try {
+      await usersCollection
+        .doc(userId)
+        .collection('weights')
+        .doc(weightId)
+        .delete();
+      
+      return getWeightList(userId);
     } catch (e) {
       log(e.toString());
       rethrow;

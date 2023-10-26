@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   equatable: ^2.0.5
+  uuid: ^4.0.0
 
   # Firebase
   firebase_auth: ^4.8.0

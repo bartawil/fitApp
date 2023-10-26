@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/get_weight_bloc/get_weight_bloc_bloc.dart';
+import 'package:flutter_demo/blocs/get_weight_bloc/get_weight_bloc.dart';
 import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
 import 'package:flutter_demo/components/constants.dart';
@@ -144,9 +144,13 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                   BlocBuilder<GetWeightBloc, GetWeightState>(
                     builder: (context, state) {
                       if (state is GetWeightSuccess) {
-                        return Expanded(child: WeightList(weightList: state.weightList));
+                        return Expanded(child: WeightList(weightList: state.weightList, userId: context.read<MyUserBloc>().state.user!.id));
                       } else if (state is GetWeightLoading) {
                         return const CircularProgressIndicator();
+                      } else if (state is DeleteWeightLoading) {
+                        return const CircularProgressIndicator();
+                      } else if (state is DeleteWeightSuccess) {
+                        return Expanded(child: WeightList(weightList: state.weightList, userId: context.read<MyUserBloc>().state.user!.id));
                       } else {
                         return const Center(
                           child: Text("An error has occured"),

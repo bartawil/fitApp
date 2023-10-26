@@ -1,4 +1,4 @@
-part of 'get_weight_bloc_bloc.dart';
+part of 'get_weight_bloc.dart';
 
 sealed class GetWeightState extends Equatable {
   const GetWeightState();
@@ -15,4 +15,12 @@ final class GetWeightSuccess extends GetWeightState {
 	final List<Weight> weightList;
 
 	const GetWeightSuccess(this.weightList);
+}
+
+final class DeleteWeightFailure extends GetWeightState {}
+final class DeleteWeightLoading extends GetWeightState {}
+final class DeleteWeightSuccess extends GetWeightState {
+  final List<Weight> weightList;
+
+  const DeleteWeightSuccess(this.weightList);
 }
