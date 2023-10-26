@@ -27,7 +27,7 @@ class UpdateUserInfoBloc extends Bloc<UpdateUserInfoEvent, UpdateUserInfoState> 
       emit(UpdateUserWeightLoading());
       try {
         await _userRepository.setUserData(event.user);
-        await _userRepository.updateWeightCollection(event.user.weight, event.user.id);
+        await _userRepository.createWeightCollection(event.user.weight, event.user.id);
         emit(UpdateUserWeightSuccess());
       } catch (e) {
         emit(UpdateUserWeightFailure());

@@ -19,9 +19,11 @@ abstract class UserRepository {
 
 	Future<String> uploadPicture(String file, String userId);
 
-  Future<void> updateWeightCollection(String weight, String userId);
+  Future<void> createWeightCollection(String weight, String userId);
 
   Future<List<Weight>> getWeightList(String userId);
 
   Future<List<Weight>> deleteWeight(String userId, String weightId);
+
+  Future<void> setWeightData(String userId, Weight weight);
 }

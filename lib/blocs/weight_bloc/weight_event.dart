@@ -25,3 +25,13 @@ class DeleteWeight extends WeightEvent{
   @override
   List<Object> get props => [userId, weightId];
 }
+
+class SetWeight extends WeightEvent{
+  final String userId;
+  final Weight weight;
+
+  const SetWeight(this.userId, this.weight);
+
+  @override
+  List<Object> get props => [userId, weight];
+}

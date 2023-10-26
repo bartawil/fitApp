@@ -32,5 +32,15 @@ class WeightBloc extends Bloc<WeightEvent, WeightState> {
         emit(DeleteWeightFailure());
       }
     });
+    on<SetWeight>((event, emit) async {
+      emit(SetWeightLoading());
+      try {
+        await _userRepository.setWeightData(event.userId, event.weight);
+        List<Weight> weightList = await _userRepository.getWeightList(event.userId);
+        emit(SetWeightSuccess(weightList));
+      } catch (e) {
+        emit(SetWeightFailure());
+      }
+    });
   }
 }

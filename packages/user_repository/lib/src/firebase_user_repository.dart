@@ -126,7 +126,7 @@ class FirebaseUserRepository implements UserRepository {
 	}
 
   @override
-  Future<void> updateWeightCollection(String weightValue, String userId) async {
+  Future<void> createWeightCollection(String weightValue, String userId) async {
     try {
       late Weight newWeight;
       newWeight = Weight.empty;
@@ -171,13 +171,26 @@ class FirebaseUserRepository implements UserRepository {
         .collection('weights')
         .doc(weightId)
         .delete();
-      
       return getWeightList(userId);
     } catch (e) {
       log(e.toString());
       rethrow;
     }
   }
+
+  @override
+	Future<void> setWeightData(String userId, Weight weight) async {
+		try {
+			await usersCollection
+        .doc(userId)
+        .collection('weights')
+        .doc(weight.id)
+        .set(weight.toEntity().toDocument());
+		} catch(e) {
+			log(e.toString());
+			rethrow;
+		}
+	}
 }
 
 class CustomFirebaseAuthException implements Exception {

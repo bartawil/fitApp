@@ -19,15 +19,12 @@ class UpdateWeightScreen extends StatefulWidget {
 class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
   final _formKey = GlobalKey<FormState>();
   final weightController = TextEditingController();
-  double? prvWeight;
-  double? newWeight;
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<UpdateUserInfoBloc, UpdateUserInfoState>(
       listener: (context, state) {
         if (state is UpdateUserWeightSuccess) {
-          prvWeight = newWeight;
           context.read<WeightBloc>().add(GetWeightList(context.read<MyUserBloc>().state.user!.id));
         } else if (state is UpdateUserWeightLoading) {
           const Center(
@@ -48,7 +45,6 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
             ),
           ),
           body: BlocBuilder<MyUserBloc, MyUserState>(builder: (context, state) {
-            prvWeight = double.tryParse(state.user?.weight ?? '') ?? 0.0;
             return Scaffold(
               backgroundColor: Theme.of(context).colorScheme.background,
               body: Column(
@@ -79,7 +75,7 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                               return 'Please enter a valid number';
                             }
                           }
-                            return null;
+                          return null;
                         }
                       ),
                     ),
@@ -150,6 +146,10 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                       } else if (state is DeleteWeightLoading) {
                         return const CircularProgressIndicator();
                       } else if (state is DeleteWeightSuccess) {
+                        return Expanded(child: WeightList(weightList: state.weightList, userId: context.read<MyUserBloc>().state.user!.id));
+                      } else if (state is SetWeightLoading) {
+                        return const CircularProgressIndicator();
+                      } else if (state is SetWeightSuccess) {
                         return Expanded(child: WeightList(weightList: state.weightList, userId: context.read<MyUserBloc>().state.user!.id));
                       } else {
                         return const Center(

@@ -5,7 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:user_repository/user_repository.dart';
 
-class WeightList extends StatelessWidget {
+class WeightList extends StatefulWidget {
   final List<Weight> weightList;
   final String userId;
 
@@ -13,55 +13,51 @@ class WeightList extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<WeightList> createState() => _WeightListState();
+}
+
+class _WeightListState extends State<WeightList> {
+  @override
   Widget build(BuildContext context) {
     // Sort the weightList by date
-    weightList.sort((a, b) => b.date.compareTo(a.date));
+    widget.weightList.sort((a, b) => b.date.compareTo(a.date));
     // Get the latest weight
-    Weight? latestWeight = weightList.isNotEmpty ? weightList.first : null;
+    Weight? latestWeight = widget.weightList.isNotEmpty ? widget.weightList.first : null;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: ListView.builder(
-            itemCount: weightList.length,
+            itemCount: widget.weightList.length,
             itemBuilder: (context, int i) {
               return Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 0.0, vertical: 1.0),
                 child: Slidable(
-                  startActionPane: ActionPane(
-                      extentRatio: 0.2,
-                      motion: const StretchMotion(),
-                      children: [
-                        SlidableAction(
-                            onPressed: (context) {
-                              // TODO: Edit weight
-                            },
-                            icon: Icons.edit,
-                            backgroundColor: Colors.grey)
-                      ]),
                   endActionPane: ActionPane(
-                      extentRatio: 0.2,
-                      motion: const StretchMotion(),
-                      children: [
-                        SlidableAction(
-                            onPressed: (context) {
-                              if (latestWeight?.id == weightList[i].id) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return const AlertDialog(
-                                      content: Text('You cannot delete the latest weight!'),
-                                    );
-                                  },
+                    extentRatio: 0.2,
+                    motion: const StretchMotion(),
+                    children: [
+                      SlidableAction(
+                        onPressed: (context) {
+                          if (latestWeight?.id == widget.weightList[i].id) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: Text('You cannot delete the latest weight!'),
                                 );
-                              } else {
-                                context.read<WeightBloc>().add(DeleteWeight(userId, weightList[i].id));
-                              }
-                            },
-                            icon: Icons.delete,
-                            backgroundColor: Colors.red)
-                      ]),
+                              },
+                            );
+                          } else {
+                            context.read<WeightBloc>().add(DeleteWeight(widget.userId, widget.weightList[i].id));
+                          }
+                        },
+                        icon: Icons.delete,
+                        backgroundColor: Colors.red
+                      )
+                    ]
+                  ),
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border(
@@ -84,14 +80,14 @@ class WeightList extends StatelessWidget {
                             bottom:
                                 8.0), // Add padding to the bottom of the title.
                         child: Text(
-                          '${weightList[i].weight} kg',
+                          '${widget.weightList[i].weight} kg',
                           style: const TextStyle(fontSize: 18),
                         ),
                       ),
                       trailing: Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Text(DateFormat('dd.MM.yyyy')
-                            .format(weightList[i].date)),
+                            .format(widget.weightList[i].date)),
                       ),
                     ),
                   ),
