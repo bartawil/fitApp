@@ -3,17 +3,17 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:user_repository/user_repository.dart';
 
-part 'get_weight_event.dart';
-part 'get_weight_state.dart';
+part 'weight_event.dart';
+part 'weight_state.dart';
 
-class GetWeightBloc extends Bloc<GetWeightEvent, GetWeightState> {
+class WeightBloc extends Bloc<WeightEvent, WeightState> {
   // ignore: prefer_final_fields
   UserRepository _userRepository;
 
-  GetWeightBloc({
+  WeightBloc({
 		required UserRepository userRepository
 	}) : _userRepository = userRepository,
-		super(GetWeightInitial()) {
+		super(WeightInitial()) {
     on<GetWeightList>((event, emit) async {
 			emit(GetWeightLoading());
       try {

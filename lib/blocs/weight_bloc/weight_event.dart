@@ -1,13 +1,13 @@
-part of 'get_weight_bloc.dart';
+part of 'weight_bloc.dart';
 
-sealed class GetWeightEvent extends Equatable {
-  const GetWeightEvent();
+sealed class WeightEvent extends Equatable {
+  const WeightEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class GetWeightList extends GetWeightEvent{
+class GetWeightList extends WeightEvent{
   final String userId;
 
   const GetWeightList(this.userId);
@@ -16,7 +16,7 @@ class GetWeightList extends GetWeightEvent{
   List<Object> get props => [userId];
 }
 
-class DeleteWeight extends GetWeightEvent{
+class DeleteWeight extends WeightEvent{
   final String userId;
   final String weightId;
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/get_weight_bloc/get_weight_bloc.dart';
+import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
 import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
 import 'package:flutter_demo/components/constants.dart';
@@ -28,7 +28,7 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
       listener: (context, state) {
         if (state is UpdateUserWeightSuccess) {
           prvWeight = newWeight;
-          context.read<GetWeightBloc>().add(GetWeightList(context.read<MyUserBloc>().state.user!.id));
+          context.read<WeightBloc>().add(GetWeightList(context.read<MyUserBloc>().state.user!.id));
         } else if (state is UpdateUserWeightLoading) {
           const Center(
             child: CircularProgressIndicator(),
@@ -141,7 +141,7 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                     ],
                   ),
                   const SizedBox(height: 5),
-                  BlocBuilder<GetWeightBloc, GetWeightState>(
+                  BlocBuilder<WeightBloc, WeightState>(
                     builder: (context, state) {
                       if (state is GetWeightSuccess) {
                         return Expanded(child: WeightList(weightList: state.weightList, userId: context.read<MyUserBloc>().state.user!.id));

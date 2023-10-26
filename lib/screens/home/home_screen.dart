@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:flutter_demo/blocs/get_weight_bloc/get_weight_bloc.dart';
+import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
 import 'package:flutter_demo/components/menu_button.dart';
 import 'package:flutter_demo/components/pick_image.dart';
 import 'package:flutter_demo/components/post_list.dart';
@@ -255,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 BlocProvider(
-                                  create: (context) => GetWeightBloc(
+                                  create: (context) => WeightBloc(
                                       userRepository: context.read<AuthenticationBloc>().userRepository
                                     )..add(GetWeightList(context.read<AuthenticationBloc>().state.user!.uid)
                                   ),
