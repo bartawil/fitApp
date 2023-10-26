@@ -140,7 +140,7 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 20),
                   BlocBuilder<WeightBloc, WeightState>(
                     builder: (context, state) {
                       if (state is GetWeightSuccess) {

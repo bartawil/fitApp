@@ -16,6 +16,8 @@ class WeightList extends StatelessWidget {
   Widget build(BuildContext context) {
     // Sort the weightList by date
     weightList.sort((a, b) => b.date.compareTo(a.date));
+    // Get the latest weight
+    Weight? latestWeight = weightList.isNotEmpty ? weightList.first : null;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -25,7 +27,7 @@ class WeightList extends StatelessWidget {
             itemBuilder: (context, int i) {
               return Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 0.0, vertical: 16.0),
+                    horizontal: 0.0, vertical: 1.0),
                 child: Slidable(
                   startActionPane: ActionPane(
                       extentRatio: 0.2,
@@ -44,9 +46,18 @@ class WeightList extends StatelessWidget {
                       children: [
                         SlidableAction(
                             onPressed: (context) {
-                              context.read<WeightBloc>().add(
-                                  DeleteWeight(
-                                      userId, weightList[i].id));
+                              if (latestWeight?.id == weightList[i].id) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return const AlertDialog(
+                                      content: Text('You cannot delete the latest weight!'),
+                                    );
+                                  },
+                                );
+                              } else {
+                                context.read<WeightBloc>().add(DeleteWeight(userId, weightList[i].id));
+                              }
                             },
                             icon: Icons.delete,
                             backgroundColor: Colors.red)
@@ -78,9 +89,7 @@ class WeightList extends StatelessWidget {
                         ),
                       ),
                       trailing: Padding(
-                        padding: const EdgeInsets.only(
-                            left:
-                                8.0), // Add padding to the left of the trailing widget.
+                        padding: const EdgeInsets.only(left: 8.0),
                         child: Text(DateFormat('dd.MM.yyyy')
                             .format(weightList[i].date)),
                       ),
