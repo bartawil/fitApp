@@ -52,7 +52,6 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
             return Scaffold(
               backgroundColor: Theme.of(context).colorScheme.background,
               body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -141,13 +140,13 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 5),
                   BlocBuilder<GetWeightBloc, GetWeightState>(
                     builder: (context, state) {
                       if (state is GetWeightSuccess) {
                         return Expanded(child: WeightList(weightList: state.weightList));
                       } else if (state is GetWeightLoading) {
-                        return const Expanded(child: WeightList(weightList: []));
+                        return const CircularProgressIndicator();
                       } else {
                         return const Center(
                           child: Text("An error has occured"),

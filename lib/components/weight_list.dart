@@ -9,11 +9,11 @@ class WeightList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (weightList.isEmpty) {
+      return const Text("an error occurred");
+    }
     // Sort the weightList by date
     weightList.sort((a, b) => b.date.compareTo(a.date));
-    if (weightList.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
-    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -25,7 +25,7 @@ class WeightList extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 16.0),
                 child: Slidable(
                   startActionPane: ActionPane(
-                    extentRatio: 0.15,
+                    extentRatio: 0.2,
                     motion: const StretchMotion(),
                     children: [
                       SlidableAction(
@@ -38,7 +38,7 @@ class WeightList extends StatelessWidget {
                     ]
                   ),
                   endActionPane: ActionPane(
-                    extentRatio: 0.15,
+                    extentRatio: 0.2,
                     motion: const StretchMotion(),
                     children: [
                       SlidableAction(
@@ -50,13 +50,34 @@ class WeightList extends StatelessWidget {
                       )
                     ]
                   ),
-                  child: ListTile(
-                    title: Text(
-                      '${weightList[i].weight} kg',
-                      style: const TextStyle(
-                          fontSize: 18),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.grey[300]!,
+                          width: 0.5,
+                        ),
+                        right: BorderSide(
+                          color: Colors.grey[300]!,
+                          width: 0.5,
+                        ),
+                      ),
                     ),
-                    trailing: Text(DateFormat('dd.MM.yyyy').format(weightList[i].date)),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(horizontal:16.0, vertical: 8.0), // Increase the vertical padding.
+                      title: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0), // Add padding to the bottom of the title.
+                        child: Text(
+                          '${weightList[i].weight} kg',
+                          style: const TextStyle(
+                              fontSize: 18),
+                        ),
+                      ),
+                      trailing: Padding(
+                        padding: const EdgeInsets.only(left: 8.0), // Add padding to the left of the trailing widget.
+                        child: Text(DateFormat('dd.MM.yyyy').format(weightList[i].date)),
+                      ),
+                    ),
                   ),
                 ),
               );
