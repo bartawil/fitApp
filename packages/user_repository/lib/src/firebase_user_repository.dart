@@ -4,9 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:user_repository/src/models/my_user.dart';
-import 'entities/entities.dart';
-import 'user_repo.dart';
+import 'package:user_repository/user_repository.dart';
 
 class FirebaseUserRepository implements UserRepository {
 	FirebaseUserRepository({
@@ -137,6 +135,22 @@ class FirebaseUserRepository implements UserRepository {
           'date': DateTime.now(),
         });
       return weight;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Weight>> getWeightList(String userId) {
+    try {
+      return usersCollection
+        .doc(userId)
+        .collection('weights')
+        .get()
+        .then((value) => value.docs.map((e) => 
+          Weight.fromEntity(WeightEntity.fromDocument(e.data()))
+        ).toList());
     } catch (e) {
       log(e.toString());
       rethrow;

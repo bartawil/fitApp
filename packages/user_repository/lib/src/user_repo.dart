@@ -20,4 +20,6 @@ abstract class UserRepository {
 	Future<String> uploadPicture(String file, String userId);
 
   Future<String> updateWeightCollection(String weight, String userId);
+
+  Future<List<Weight>> getWeightList(String userId);
 }

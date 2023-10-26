@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:flutter_demo/blocs/get_weight_bloc/get_weight_bloc_bloc.dart';
 import 'package:flutter_demo/components/menu_button.dart';
 import 'package:flutter_demo/components/pick_image.dart';
 import 'package:flutter_demo/components/post_list.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_demo/blocs/create_post_bloc/create_post_bloc.dart';
 import 'package:flutter_demo/blocs/get_post_bloc/get_post_bloc.dart';
 import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter_demo/screens/home/create_post_screen.dart';
-import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
+import 'package:flutter_demo/screens/home/update_weight_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:post_repository/post_repository.dart';
 import '../../blocs/my_user_bloc/my_user_bloc.dart';
@@ -213,6 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 50),
+                  // Menu
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -250,6 +252,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 BlocProvider(
                                   create: (context) => UpdateUserInfoBloc(
                                     userRepository: context.read<AuthenticationBloc>().userRepository
+                                  ),
+                                ),
+                                BlocProvider(
+                                  create: (context) => GetWeightBloc(
+                                      userRepository: context.read<AuthenticationBloc>().userRepository
+                                    )..add(GetWeightList(context.read<AuthenticationBloc>().state.user!.uid)
                                   ),
                                 ),
                               ],

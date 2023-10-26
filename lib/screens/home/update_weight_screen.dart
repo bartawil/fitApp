@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_demo/blocs/get_weight_bloc/get_weight_bloc_bloc.dart';
 import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
 import 'package:flutter_demo/components/constants.dart';
 import 'package:flutter_demo/components/text_field.dart';
+import 'package:flutter_demo/components/weight_list.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:user_repository/user_repository.dart';
 
 class UpdateWeightScreen extends StatefulWidget {
@@ -25,6 +28,11 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
       listener: (context, state) {
         if (state is UpdateUserWeightSuccess) {
           prvWeight = newWeight;
+          context.read<GetWeightBloc>().add(GetWeightList(context.read<MyUserBloc>().state.user!.id));
+        } else if (state is UpdateUserWeightLoading) {
+          const Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
       child: Form(
@@ -48,11 +56,6 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Weight: ${prvWeight?.toString() ?? ''}"),
-                    Text("Height: ${state.user?.height ?? ''}"),
-                    const SizedBox(
-                      height: 20,
-                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: SizedBox(
@@ -118,7 +121,42 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                               fontWeight: FontWeight.w900),
                         ),
                       )
-                    )
+                    ),
+                    const SizedBox(height: 50),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: Text(
+                                'Weights history',
+                                style: GoogleFonts.playfairDisplay (
+                                  color: Theme.of(context).colorScheme.onBackground,
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    BlocBuilder<GetWeightBloc, GetWeightState>(
+                      builder: (context, state) {
+                        if (state is GetWeightSuccess) {
+                          return Expanded(child: WeightList(weightList: state.weightList));
+                        } else if (state is GetWeightLoading) {
+                          return const Expanded(child: WeightList(weightList: []));
+                        } else {
+                          return const Center(
+                            child: Text("An error has occured"),
+                          );
+                        }
+                      }
+                    ),
                   ],
                 ),
               ),
