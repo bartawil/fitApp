@@ -51,114 +51,111 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
             prvWeight = double.tryParse(state.user?.weight ?? '') ?? 0.0;
             return Scaffold(
               backgroundColor: Theme.of(context).colorScheme.background,
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: MyTextField(
-                          controller: weightController,
-                          hintText: 'Enter your text here',
-                          obscureText: false,
-                          keyboardType: TextInputType.number,
-                          validator: (val) {
-                            if (val!.isEmpty) {
-                              return 'Please fill in this field';
-                            } else if (val.length < 2) {
-                              return 'Please enter a valid weight';
-                            } else if (!doubleRexExp.hasMatch(val)) {
-                              return 'Format must be XX.XX';
-                            } else {
-                              try {
-                                double age = double.parse(val);
-                                if (age < 30 || age > 250) {
-                                  return 'Please enter a valid weight';
-                                }
-                              } catch (e) {
-                                return 'Please enter a valid number';
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: MyTextField(
+                        controller: weightController,
+                        hintText: 'Enter your text here',
+                        obscureText: false,
+                        keyboardType: TextInputType.number,
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return 'Please fill in this field';
+                          } else if (val.length < 2) {
+                            return 'Please enter a valid weight';
+                          } else if (!doubleRexExp.hasMatch(val)) {
+                            return 'Format must be XX.XX';
+                          } else {
+                            try {
+                              double age = double.parse(val);
+                              if (age < 30 || age > 250) {
+                                return 'Please enter a valid weight';
                               }
+                            } catch (e) {
+                              return 'Please enter a valid number';
                             }
-                              return null;
                           }
-                        ),
+                            return null;
+                        }
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    TextButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          MyUser? user = state.user;
-                          user = user!.copyWith(
-                            weight: weightController.text,
-                          );
-                          setState(() {
-                            context.read<UpdateUserInfoBloc>().add(UpdateUserWeight(
-                              user!,
-                            ));
-                          });
-                        }
-                      },
-                      style: TextButton.styleFrom (
-                            elevation: 3.0,
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primary,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12))),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 25, vertical: 5),
-                        child: Text(
-                          'Update Weight',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w900),
-                        ),
-                      )
-                    ),
-                    const SizedBox(height: 50),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                              child: Text(
-                                'Weights history',
-                                style: GoogleFonts.playfairDisplay (
-                                  color: Theme.of(context).colorScheme.onBackground,
-                                  fontSize: 22,
-                                ),
+                  ),
+                  const SizedBox(height: 20),
+                  TextButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        MyUser? user = state.user;
+                        user = user!.copyWith(
+                          weight: weightController.text,
+                        );
+                        setState(() {
+                          context.read<UpdateUserInfoBloc>().add(UpdateUserWeight(
+                            user!,
+                          ));
+                        });
+                      }
+                    },
+                    style: TextButton.styleFrom (
+                          elevation: 3.0,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12))),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 5),
+                      child: Text(
+                        'Update Weight',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    )
+                  ),
+                  const SizedBox(height: 50),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Text(
+                              'Weights history',
+                              style: GoogleFonts.playfairDisplay (
+                                color: Theme.of(context).colorScheme.onBackground,
+                                fontSize: 22,
                               ),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    BlocBuilder<GetWeightBloc, GetWeightState>(
-                      builder: (context, state) {
-                        if (state is GetWeightSuccess) {
-                          return Expanded(child: WeightList(weightList: state.weightList));
-                        } else if (state is GetWeightLoading) {
-                          return const Expanded(child: WeightList(weightList: []));
-                        } else {
-                          return const Center(
-                            child: Text("An error has occured"),
-                          );
-                        }
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  BlocBuilder<GetWeightBloc, GetWeightState>(
+                    builder: (context, state) {
+                      if (state is GetWeightSuccess) {
+                        return Expanded(child: WeightList(weightList: state.weightList));
+                      } else if (state is GetWeightLoading) {
+                        return const Expanded(child: WeightList(weightList: []));
+                      } else {
+                        return const Center(
+                          child: Text("An error has occured"),
+                        );
                       }
-                    ),
-                  ],
-                ),
+                    }
+                  ),
+                ],
               ),
             );
           }),
