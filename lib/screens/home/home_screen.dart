@@ -10,7 +10,7 @@ import 'package:flutter_demo/blocs/create_post_bloc/create_post_bloc.dart';
 import 'package:flutter_demo/blocs/get_post_bloc/get_post_bloc.dart';
 import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter_demo/screens/home/create_post_screen.dart';
-import 'package:flutter_demo/screens/home/update_weight_screen.dart';
+import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:post_repository/post_repository.dart';
 import '../../blocs/my_user_bloc/my_user_bloc.dart';

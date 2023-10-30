@@ -21,8 +21,6 @@ class _WeightListState extends State<WeightList> {
   Widget build(BuildContext context) {
     // Sort the weightList by date
     widget.weightList.sort((a, b) => b.date.compareTo(a.date));
-    // Get the latest weight
-    Weight? latestWeight = widget.weightList.isNotEmpty ? widget.weightList.first : null;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -47,18 +45,6 @@ class _WeightListState extends State<WeightList> {
                       children: [
                         SlidableAction(
                           onPressed: (context) {
-                            // if (latestWeight?.id == widget.weightList[i].id) {
-                            //   showDialog(
-                            //     context: context,
-                            //     builder: (context) {
-                            //       return const AlertDialog(
-                            //         content: Text('You cannot delete the latest weight!'),
-                            //       );
-                            //     },
-                            //   );
-                            // } else {
-                            //   context.read<WeightBloc>().add(DeleteWeight(widget.userId, widget.weightList[i].id));
-                            // }
                             context.read<WeightBloc>().add(DeleteWeight(widget.userId, widget.weightList[i].id));
                           },
                           icon: Icons.delete,
