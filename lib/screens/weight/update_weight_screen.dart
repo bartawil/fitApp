@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
 import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
+import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
 import 'package:flutter_demo/components/constants.dart';
 import 'package:flutter_demo/components/text_field.dart';
 import 'package:flutter_demo/components/weight_list.dart';
@@ -156,8 +156,7 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                           );
                         },
                         child: Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 12.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
                           child: Icon(CupertinoIcons.chart_bar_alt_fill,
                               size: 30,
                               color: Theme.of(context).colorScheme.secondary),

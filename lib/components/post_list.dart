@@ -45,7 +45,8 @@ class PostList extends StatelessWidget {
                                 fontWeight: FontWeight.bold, fontSize: 18),
                           ),
                           const SizedBox(height: 5),
-                          Text(DateFormat('yyyy-MM-dd').format(posts[i].createAt))
+                          Text(DateFormat('yyyy-MM-dd')
+                              .format(posts[i].createAt))
                         ],
                       )
                     ],

@@ -35,9 +35,12 @@ class FirebaseUserRepository implements UserRepository {
 				password: password
 			);
 
+
 			myUser = myUser.copyWith(
 				id: user.user!.uid
 			);
+
+      createWeightCollection(myUser.weight, myUser.id);
 
 			return myUser;
     } on FirebaseAuthException catch (e) {

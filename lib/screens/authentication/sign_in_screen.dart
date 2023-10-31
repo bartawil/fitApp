@@ -33,19 +33,19 @@ class _SignInScreenState extends State<SignInScreen> {
     return BlocListener<SignInBloc, SignInState>(
       listener: (context, state) {
         if (state is SignInSuccess) {
-					setState(() {
-					  signInRequired = false;
-					});
-				} else if (state is SignInProcess) {
-					setState(() {
-					  signInRequired = true;
-					});
-				} else if (state is SignInFailure) {
-					setState(() {
-					  signInRequired = false;
-						_errorMsg = 'Invalid email or password';
-					});
-				}
+          setState(() {
+            signInRequired = false;
+          });
+        } else if (state is SignInProcess) {
+          setState(() {
+            signInRequired = true;
+          });
+        } else if (state is SignInFailure) {
+          setState(() {
+            signInRequired = false;
+            _errorMsg = 'Invalid email or password';
+          });
+        }
       },
       child: Form(
           key: _formKey,
@@ -116,21 +116,26 @@ class _SignInScreenState extends State<SignInScreen> {
                     GestureDetector(
                       // Navigate to forgot password screen
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
                           return BlocProvider<ResetPasswordBloc>(
-                              create: (context) => ResetPasswordBloc(
-                                userRepository: context.read<AuthenticationBloc>().userRepository
-                              ),
-                              child: const ForgotPasswordScreen(),
-                            );
+                            create: (context) => ResetPasswordBloc(
+                                userRepository: context
+                                    .read<AuthenticationBloc>()
+                                    .userRepository),
+                            child: const ForgotPasswordScreen(),
+                          );
                         }));
                       },
                       child: Text(
                         'Forgot password?',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground.withOpacity(0.5),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onBackground
+                              .withOpacity(0.5),
                           fontWeight: FontWeight.bold,
-                        ),  
+                        ),
                       ),
                     ),
                   ],
@@ -140,43 +145,40 @@ class _SignInScreenState extends State<SignInScreen> {
               // If sign-in is in progress, show circular progress indicator.
               // else Authenticate user and go to Home screen.
               !signInRequired
-                ? SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 50,
-                    child: TextButton(
-                      // Authenticate user
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          context.read<SignInBloc>().add(SignInRequired(
-                              emailController.text,
-                              passwordController.text
-                            )
-                          );
-                        }
-                      },
-                      style: TextButton.styleFrom (
-                          elevation: 3.0,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primary,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12))),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 25, vertical: 5),
-                        child: Text(
-                          'Sign In',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w900
-                              ),
-                        ),
-                      )
-                    ),
-                  )
-                : const CircularProgressIndicator()
+                  ? SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 50,
+                      child: TextButton(
+                          // Authenticate user
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              context.read<SignInBloc>().add(SignInRequired(
+                                  emailController.text,
+                                  passwordController.text));
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                              elevation: 3.0,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12))),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 5),
+                            child: Text(
+                              'Sign In',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w900),
+                            ),
+                          )),
+                    )
+                  : const CircularProgressIndicator()
             ],
           )),
     );

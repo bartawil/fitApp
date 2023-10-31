@@ -35,23 +35,24 @@ class _WeightListState extends State<WeightList> {
                   child: Slidable(
                     key: ValueKey(widget.weightList[i]),
                     endActionPane: ActionPane(
-                      dismissible: DismissiblePane(
-                        onDismissed: () {
-                          context.read<WeightBloc>().add(DeleteWeight(widget.userId, widget.weightList[i].id));
-                        },
-                      ),
-                      extentRatio: 0.2,
-                      motion: const StretchMotion(),
-                      children: [
-                        SlidableAction(
-                          onPressed: (context) {
-                            context.read<WeightBloc>().add(DeleteWeight(widget.userId, widget.weightList[i].id));
+                        dismissible: DismissiblePane(
+                          onDismissed: () {
+                            context.read<WeightBloc>().add(DeleteWeight(
+                                widget.userId, widget.weightList[i].id));
                           },
-                          icon: Icons.delete,
-                          backgroundColor: Colors.red,
-                        )
-                      ]
-                    ),
+                        ),
+                        extentRatio: 0.2,
+                        motion: const StretchMotion(),
+                        children: [
+                          SlidableAction(
+                            onPressed: (context) {
+                              context.read<WeightBloc>().add(DeleteWeight(
+                                  widget.userId, widget.weightList[i].id));
+                            },
+                            icon: Icons.delete,
+                            backgroundColor: Colors.red,
+                          )
+                        ]),
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border(

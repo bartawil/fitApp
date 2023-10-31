@@ -8,10 +8,9 @@ class MyMenuButton extends StatelessWidget {
   Color? backgroundColor;
   Color? fontColor;
   Color? iconColor;
-  
 
   MyMenuButton({
-    Key? key, 
+    Key? key,
     required this.title,
     required this.icon,
     this.onTap,
@@ -46,7 +45,9 @@ class MyMenuButton extends StatelessWidget {
           children: [
             Expanded(
               child: ColorFiltered(
-                colorFilter: ColorFilter.mode(iconColor ?? Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(
+                    iconColor ?? Theme.of(context).colorScheme.primary,
+                    BlendMode.srcIn),
                 child: Image.asset(icon, width: 125, height: 125),
               ),
             ),
@@ -54,8 +55,9 @@ class MyMenuButton extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                fontWeight: FontWeight.bold, 
-                color: fontColor ?? Theme.of(context).colorScheme.onBackground.withOpacity(0.5),
+                fontWeight: FontWeight.bold,
+                color: fontColor ??
+                    Theme.of(context).colorScheme.onBackground.withOpacity(0.5),
               ),
             )
           ],

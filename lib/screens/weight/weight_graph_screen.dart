@@ -27,81 +27,95 @@ class _WeightGraphScreenState extends State<WeightGraphScreen> {
             chartList.addAll(state.weightList);
             // Sort the weightList by date
             chartList.sort((a, b) => a.date.compareTo(b.date));
-            smallestWeight = chartList.reduce((a, b) => double.parse(a.weight) < double.parse(b.weight) ? a : b).weight;
-            largestWeight = chartList.reduce((a, b) => double.parse(a.weight) > double.parse(b.weight) ? a : b).weight;
+            smallestWeight = chartList
+                .reduce((a, b) =>
+                    double.parse(a.weight) < double.parse(b.weight) ? a : b)
+                .weight;
+            largestWeight = chartList
+                .reduce((a, b) =>
+                    double.parse(a.weight) > double.parse(b.weight) ? a : b)
+                .weight;
           });
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Theme.of(context).colorScheme.background,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-            color: Theme.of(context).colorScheme.secondary,
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Theme.of(context).colorScheme.background,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.of(context).pop(),
+              color: Theme.of(context).colorScheme.secondary,
+            ),
           ),
-        ),
-        body: Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Text(
-                  'Weight progress chart',
-                  style: GoogleFonts.playfairDisplay (
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 22,
+          body: Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.background,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Text(
+                    'Weight progress chart',
+                    style: GoogleFonts.playfairDisplay(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontSize: 22,
+                    ),
                   ),
                 ),
-              ),
-              Center(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.width / 1.5,
-                  width: MediaQuery.of(context).size.width / 1.2,
-                  child: chartList.isEmpty 
-                      ? const Center(child: CircularProgressIndicator())
-                      : SfCartesianChart(
-                    primaryXAxis: CategoryAxis(
-                      majorGridLines: const MajorGridLines(
-                          color: Colors.transparent),
-                      isVisible: false
-                    ),
-                    primaryYAxis: NumericAxis(
-                      minimum: (double.parse(smallestWeight)/10).ceil() * 10 - 10,
-                      maximum: (double.parse(largestWeight)/10).ceil() * 10 + 10,
-                      isVisible: false,
-                    ),
-                    series: <ChartSeries>[
-                      // Renders line chart
-                      LineSeries<Weight, String>(
-                        color: Theme.of(context).colorScheme.secondary,
-                        dataSource: chartList,
-                        xValueMapper: (Weight data, _) => DateFormat('d/M/y').format(data.date),
-                        yValueMapper: (Weight data, _) => double.parse(data.weight),
-                        markerSettings: const MarkerSettings(
-                          isVisible: true,
-                          height: 6,
-                          width: 6,
-                        ),
-                        dataLabelSettings: DataLabelSettings(
-                          isVisible: true,
-                          // Positioning the data label
-                          useSeriesColor: true,
-                          color: Colors.transparent,
-                          textStyle: TextStyle(color: Theme.of(context).colorScheme.onBackground),
-                        )
-                      )
-                    ]
-                  )
+                Center(
+                  child: SizedBox(
+                      height: MediaQuery.of(context).size.width / 1.5,
+                      width: MediaQuery.of(context).size.width / 1.2,
+                      child: chartList.isEmpty
+                          ? const Center(child: CircularProgressIndicator())
+                          : SfCartesianChart(
+                              primaryXAxis: CategoryAxis(
+                                  majorGridLines: const MajorGridLines(
+                                      color: Colors.transparent),
+                                  isVisible: false),
+                              primaryYAxis: NumericAxis(
+                                minimum:
+                                    (double.parse(smallestWeight) / 10).ceil() *
+                                            10 -
+                                        10,
+                                maximum:
+                                    (double.parse(largestWeight) / 10).ceil() *
+                                            10 +
+                                        10,
+                                isVisible: false,
+                              ),
+                              series: <ChartSeries>[
+                                  // Renders line chart
+                                  LineSeries<Weight, String>(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      dataSource: chartList,
+                                      xValueMapper: (Weight data, _) =>
+                                          DateFormat('d/M/y').format(data.date),
+                                      yValueMapper: (Weight data, _) =>
+                                          double.parse(data.weight),
+                                      markerSettings: const MarkerSettings(
+                                        isVisible: true,
+                                        height: 6,
+                                        width: 6,
+                                      ),
+                                      dataLabelSettings: DataLabelSettings(
+                                        isVisible: true,
+                                        // Positioning the data label
+                                        useSeriesColor: true,
+                                        color: Colors.transparent,
+                                        textStyle: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onBackground),
+                                      ))
+                                ])),
                 ),
-              ),
-            ],
-          ),
-        )
-      ),
+              ],
+            ),
+          )),
     );
   }
 }

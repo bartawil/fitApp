@@ -2,17 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:flutter_demo/blocs/create_post_bloc/create_post_bloc.dart';
+import 'package:flutter_demo/blocs/get_post_bloc/get_post_bloc.dart';
+import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
 import 'package:flutter_demo/components/menu_button.dart';
 import 'package:flutter_demo/components/pick_image.dart';
 import 'package:flutter_demo/components/post_list.dart';
-import 'package:flutter_demo/blocs/create_post_bloc/create_post_bloc.dart';
-import 'package:flutter_demo/blocs/get_post_bloc/get_post_bloc.dart';
-import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter_demo/screens/home/create_post_screen.dart';
 import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:post_repository/post_repository.dart';
+
 import '../../blocs/my_user_bloc/my_user_bloc.dart';
 import '../../blocs/update_user_info_bloc/update_user_info_bloc.dart';
 
@@ -108,8 +109,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                     const SizedBox(width: 10),
-                    Text("Welcome ${state.user!.firstName}",
-                      style: GoogleFonts.playfairDisplay (
+                    Text(
+                      "Welcome ${state.user!.firstName}",
+                      style: GoogleFonts.playfairDisplay(
                         color: Theme.of(context).colorScheme.onBackground,
                         // fontSize: 32,
                       ),
@@ -127,15 +129,15 @@ class _HomeScreenState extends State<HomeScreen> {
             Builder(
               builder: (context) => IconButton(
                 icon: Transform.rotate(
-                angle: 0.0, // set the angle of rotation
-                child: Icon(
-                  Icons.menu,
-                  color: Theme.of(context).colorScheme.secondary,
+                  angle: 0.0, // set the angle of rotation
+                  child: Icon(
+                    Icons.menu,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
                 ),
-              ),
-              onPressed: () {
-                Scaffold.of(context).openEndDrawer();
-              },
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
               ),
             ),
           ],
@@ -146,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Container(
             color: Theme.of(context).colorScheme.background,
             child: ListView(
-              children:  [
+              children: [
                 DrawerHeader(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -154,8 +156,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.only(right: 16.0),
                         child: ColorFiltered(
-                          colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
-                          child: Image.asset('assets/images/dumbel.png', width: 80, height: 80),
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).colorScheme.primary,
+                              BlendMode.srcIn),
+                          child: Image.asset('assets/images/dumbel.png',
+                              width: 80, height: 80),
                         ),
                       ),
                       Text(
@@ -170,11 +175,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ListTile(
                   leading: Icon(
-                      CupertinoIcons.square_arrow_right,
-                      color: Theme.of(context).colorScheme.onBackground.withOpacity(0.5),
+                    CupertinoIcons.square_arrow_right,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(0.5),
                   ),
-                  title: Text("Sign Out",
-                    style: GoogleFonts.caveat (
+                  title: Text(
+                    "Sign Out",
+                    style: GoogleFonts.caveat(
                       color: Theme.of(context).colorScheme.secondary,
                       fontSize: 24,
                     ),
@@ -199,8 +208,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ColorFiltered(
-                          colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
-                          child: Image.asset('assets/images/dumbel.png', width: 200, height: 150),
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).colorScheme.primary,
+                              BlendMode.srcIn),
+                          child: Image.asset('assets/images/dumbel.png',
+                              width: 200, height: 150),
                         ),
                         const SizedBox(height: 10),
                         Text(
@@ -218,10 +230,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      MyMenuButton(title: "Workouts", icon: 'assets/images/fitness.png', iconColor: Theme.of(context).colorScheme.tertiary,),
-                      
+                      MyMenuButton(
+                        title: "Workouts",
+                        icon: 'assets/images/fitness.png',
+                        iconColor: Theme.of(context).colorScheme.tertiary,
+                      ),
                       const SizedBox(width: 30),
-                      MyMenuButton(title: "settings", icon: 'assets/images/settings.png', iconColor: Theme.of(context).colorScheme.background.withOpacity(0.5), backgroundColor: Theme.of(context).colorScheme.primary, fontColor: Theme.of(context).colorScheme.background.withOpacity(0.5)),
+                      MyMenuButton(
+                          title: "settings",
+                          icon: 'assets/images/settings.png',
+                          iconColor: Theme.of(context)
+                              .colorScheme
+                              .background
+                              .withOpacity(0.5),
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          fontColor: Theme.of(context)
+                              .colorScheme
+                              .background
+                              .withOpacity(0.5)),
                     ],
                   ),
                   const SizedBox(height: 30),
@@ -229,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       MyMenuButton(
-                        title: "Metrics", 
+                        title: "Metrics",
                         icon: 'assets/images/weight.png',
                         iconColor: Theme.of(context).colorScheme.secondary,
                         onTap: () {
@@ -251,14 +278,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 BlocProvider(
                                   create: (context) => UpdateUserInfoBloc(
-                                    userRepository: context.read<AuthenticationBloc>().userRepository
-                                  ),
+                                      userRepository: context
+                                          .read<AuthenticationBloc>()
+                                          .userRepository),
                                 ),
                                 BlocProvider(
                                   create: (context) => WeightBloc(
-                                      userRepository: context.read<AuthenticationBloc>().userRepository
-                                    )..add(GetWeightList(context.read<AuthenticationBloc>().state.user!.uid)
-                                  ),
+                                      userRepository: context
+                                          .read<AuthenticationBloc>()
+                                          .userRepository)
+                                    ..add(GetWeightList(context
+                                        .read<AuthenticationBloc>()
+                                        .state
+                                        .user!
+                                        .uid)),
                                 ),
                               ],
                               child: const UpdateWeightScreen(),
@@ -267,8 +300,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       const SizedBox(width: 30),
-                      MyMenuButton(title: "Nutrintion", icon: 'assets/images/nutritional.png', iconColor: Theme.of(context).colorScheme.tertiary,),
-
+                      MyMenuButton(
+                        title: "Nutrintion",
+                        icon: 'assets/images/nutritional.png',
+                        iconColor: Theme.of(context).colorScheme.tertiary,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 10),
