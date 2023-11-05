@@ -16,6 +16,7 @@ dependencies:
   intl: ^0.18.1
   flutter_slidable: ^3.0.0
   syncfusion_flutter_charts: ^23.1.42
+  syncfusion_flutter_gauges: ^23.1.43
 
   # Firebase
   firebase_core: ^2.9.0

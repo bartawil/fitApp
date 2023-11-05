@@ -28,7 +28,11 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
   Widget build(BuildContext context) {
     return BlocListener<UpdateUserInfoBloc, UpdateUserInfoState>(
       listener: (context, state) {
-        if (state is UpdateUserWeightLoading) {
+        if (state is UpdateUserWeightSuccess) {
+          // make the list render after adding a new weight
+          context.read<WeightBloc>().add(GetWeightList(
+              context.read<AuthenticationBloc>().state.user!.uid));
+        } else if (state is UpdateUserWeightLoading) {
           const Center(
             child: CircularProgressIndicator(),
           );

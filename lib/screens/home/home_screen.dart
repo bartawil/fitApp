@@ -11,6 +11,7 @@ import 'package:flutter_demo/components/pick_image.dart';
 import 'package:flutter_demo/components/post_list.dart';
 import 'package:flutter_demo/screens/home/create_post_screen.dart';
 import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
+import 'package:flutter_demo/screens/weight/weight_graph_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:post_repository/post_repository.dart';
 
@@ -190,6 +191,54 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   onTap: () {
                     context.read<SignInBloc>().add(const SignOutRequired());
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    CupertinoIcons.chart_bar_alt_fill,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(0.5),
+                  ),
+                  title: Text(
+                    "Progress Charts",
+                    style: GoogleFonts.caveat(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 24,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return MultiBlocProvider(providers: [
+                          BlocProvider(
+                              create: (context) => WeightBloc(
+                                  userRepository: context
+                                      .read<AuthenticationBloc>()
+                                      .userRepository)
+                                ..add(GetWeightList(context
+                                    .read<AuthenticationBloc>()
+                                    .state
+                                    .user!
+                                    .uid))),
+                          BlocProvider<MyUserBloc>(
+                            create: (context) => MyUserBloc(
+                                myUserRepository: context
+                                    .read<AuthenticationBloc>()
+                                    .userRepository)
+                              ..add(GetMyUser(
+                                  myUserId: context
+                                      .read<AuthenticationBloc>()
+                                      .state
+                                      .user!
+                                      .uid)),
+                          ),
+                        ], child: const WeightGraphScreen());
+                      }),
+                    );
                   },
                 )
               ],
