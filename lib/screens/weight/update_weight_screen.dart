@@ -28,11 +28,7 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
   Widget build(BuildContext context) {
     return BlocListener<UpdateUserInfoBloc, UpdateUserInfoState>(
       listener: (context, state) {
-        if (state is UpdateUserWeightSuccess) {
-          context
-              .read<WeightBloc>()
-              .add(GetWeightList(context.read<MyUserBloc>().state.user!.id));
-        } else if (state is UpdateUserWeightLoading) {
+        if (state is UpdateUserWeightLoading) {
           const Center(
             child: CircularProgressIndicator(),
           );
@@ -91,8 +87,12 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           MyUser? user = state.user;
-                          user = user!.copyWith(
+                          double bmi = double.parse(weightController.text) /
+                              ((double.parse(user!.height) / 100) *
+                                  (double.parse(user.height) / 100));
+                          user = user.copyWith(
                             weight: weightController.text,
+                            bmi: bmi,
                           );
                           setState(() {
                             context
@@ -141,16 +141,31 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) {
-                              return BlocProvider(
-                                  create: (context) => WeightBloc(
-                                      userRepository: context
-                                          .read<AuthenticationBloc>()
-                                          .userRepository)
-                                    ..add(GetWeightList(context
-                                        .read<AuthenticationBloc>()
-                                        .state
-                                        .user!
-                                        .uid)),
+                              return MultiBlocProvider(
+                                  providers: [
+                                    BlocProvider(
+                                        create: (context) => WeightBloc(
+                                            userRepository: context
+                                                .read<AuthenticationBloc>()
+                                                .userRepository)
+                                          ..add(GetWeightList(context
+                                              .read<AuthenticationBloc>()
+                                              .state
+                                              .user!
+                                              .uid))),
+                                    BlocProvider<MyUserBloc>(
+                                      create: (context) => MyUserBloc(
+                                          myUserRepository: context
+                                              .read<AuthenticationBloc>()
+                                              .userRepository)
+                                        ..add(GetMyUser(
+                                            myUserId: context
+                                                .read<AuthenticationBloc>()
+                                                .state
+                                                .user!
+                                                .uid)),
+                                    ),
+                                  ],
                                   child: const WeightGraphScreen());
                             }),
                           );

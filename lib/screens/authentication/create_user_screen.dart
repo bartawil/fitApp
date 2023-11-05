@@ -297,6 +297,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 													if (_formKey.currentState!.validate()) {
                             // Create a new MyUser object with the email and user details.
                             MyUser myUser = MyUser.empty;
+                            double bmi = double.parse(weightController.text) / ((double.parse(heightController.text) / 100) * (double.parse(heightController.text) / 100));
 														myUser = myUser.copyWith(
 															email: widget.userEmail,
 															firstName: firstNameController.text,
@@ -305,6 +306,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
                               age: ageController.text,
                               height: heightController.text,
                               weight: weightController.text,
+                              bmi: bmi,
                               gender: genderValue,
 														);
                             // Create user by email and password.

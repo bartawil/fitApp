@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -88,6 +89,7 @@ class _WeightGraphScreenState extends State<WeightGraphScreen> {
                               series: <ChartSeries>[
                                   // Renders line chart
                                   LineSeries<Weight, String>(
+                                      animationDuration: 0,
                                       color: Theme.of(context)
                                           .colorScheme
                                           .secondary,
@@ -112,6 +114,20 @@ class _WeightGraphScreenState extends State<WeightGraphScreen> {
                                                 .onBackground),
                                       ))
                                 ])),
+                ),
+                BlocBuilder<MyUserBloc, MyUserState>(
+                  builder: (context, state) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text(
+                        'BMI range ${state.user?.bmi.toStringAsFixed(2)}',
+                        style: GoogleFonts.playfairDisplay(
+                          color: Theme.of(context).colorScheme.onBackground,
+                          fontSize: 22,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

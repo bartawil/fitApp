@@ -10,6 +10,7 @@ class MyUserEntity extends Equatable {
   final String age;
   final String height;
   final String weight;
+  final double bmi;
   final String gender;
   final DateTime registerDate;
 	final String? picture;
@@ -23,6 +24,7 @@ class MyUserEntity extends Equatable {
     required this.age,
     required this.height, 
     required this.weight,
+    required this.bmi,
     required this.gender,
     required this.registerDate,
 		this.picture,
@@ -38,6 +40,7 @@ class MyUserEntity extends Equatable {
       'age': age, 
       'height': height, 
       'weight': weight, 
+      'bmi': bmi,
       'gender': gender,
       'register_date': registerDate,
       'picture': picture,
@@ -54,6 +57,7 @@ class MyUserEntity extends Equatable {
       age: doc['age'] as String,
       height: doc['height'] as String,
       weight: doc['weight'] as String,
+      bmi: doc['bmi'] as double,
       gender: doc['gender'] as String,
       registerDate: (doc['register_date'] as Timestamp).toDate(),
       picture: doc['picture'] as String?
@@ -63,7 +67,7 @@ class MyUserEntity extends Equatable {
 	@override
 	List<Object?> get props => [
     id, email, firstName, lastName, phoneNumber, 
-    age, height, weight, gender, registerDate, picture];
+    age, height, weight, bmi, gender, registerDate, picture];
 
 	@override
   String toString() {
@@ -76,6 +80,7 @@ class MyUserEntity extends Equatable {
       age: $age
       height: $height
       weight: $weight
+      bmi: $bmi
       gender: $gender
       register_date: $registerDate
       picture: $picture
