@@ -59,10 +59,11 @@ class _WeightGraphScreenState extends State<WeightGraphScreen> {
                 BlocBuilder<MyUserBloc, MyUserState>(
                   builder: (context, state) {
                     double userBMI = 0;
+                    // ignore: non_constant_identifier_names
                     String BMIStatus = '';
                     if (state.user != null) {
                       userBMI = state.user?.bmi ?? 0;
-                      if (userBMI! < 18.5) {
+                      if (userBMI < 18.5) {
                         BMIStatus = 'Underweight';
                       } else if (userBMI >= 18.5 && userBMI < 25) {
                         BMIStatus = 'Normal';
@@ -188,6 +189,7 @@ class _WeightGraphScreenState extends State<WeightGraphScreen> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 Center(
                   child: SizedBox(
                       height: MediaQuery.of(context).size.width / 1.5,
