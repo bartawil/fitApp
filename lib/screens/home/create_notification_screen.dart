@@ -3,6 +3,20 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
+class Notification {
+  final String title;
+  final String description;
+  final DateTime dateTime;
+  final bool? repeatWeekly;
+
+  Notification({
+    required this.title,
+    required this.description,
+    required this.dateTime,
+    this.repeatWeekly = false,
+  });
+}
+
 class CreateNotificationScreen extends StatefulWidget {
   const CreateNotificationScreen({super.key});
 
@@ -21,6 +35,9 @@ class _CreateNotificationScreenState
 
   DateTime dateTime = DateTime.now();
   bool repeatWeekly = false;
+
+  int counter = 0;
+  final Map<int, Notification> notificationsList = {};
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -84,9 +101,17 @@ class _CreateNotificationScreenState
     tz.initializeTimeZones();
     final tz.TZDateTime scheduledAt = tz.TZDateTime.from(dateTime, tz.local);
 
-     if (repeatWeekly) {
+
+
+    if (repeatWeekly) {
+      Notification notification = Notification(
+        title: titleController.text,
+        description: descriptionController.text,
+        dateTime: dateTime,
+        repeatWeekly: true,
+      );
       flutterLocalNotificationsPlugin.zonedSchedule(
-          01,
+          counter,
           titleController.text,
           descriptionController.text,
           scheduledAt,
@@ -95,9 +120,15 @@ class _CreateNotificationScreenState
               UILocalNotificationDateInterpretation.wallClockTime,
           payload: 'Ths s the data',
           matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
+      notificationsList[counter] = notification;
     } else {
+      Notification notification = Notification(
+        title: titleController.text,
+        description: descriptionController.text,
+        dateTime: dateTime,
+      );
       flutterLocalNotificationsPlugin.zonedSchedule(
-          01,
+          counter,
           titleController.text,
           descriptionController.text,
           scheduledAt,
@@ -105,7 +136,24 @@ class _CreateNotificationScreenState
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.wallClockTime,
           payload: 'Ths s the data');
+      notificationsList[counter] = notification;
     }
+
+    // increment the counter for the next notification to be created
+    counter++;
+
+    // clear all the text fields after the notification is created
+    titleController.clear();
+    descriptionController.clear();
+    dateController.clear();
+    timeController.clear();
+    setState(() {
+      dateTime = DateTime.now();
+      repeatWeekly = false;
+    });
+
+    // Notification not = notificationsList[counter]!;
+    print(notificationsList.length);
   }
 
   Future<void> cancelNotification(int id) async {
@@ -206,7 +254,7 @@ class _CreateNotificationScreenState
                             }
     
                             timeController.text =
-                                "${slectedTime.hour}:${slectedTime.minute}:${slectedTime.period.toString()}";
+                                "${slectedTime.hour}:${slectedTime.minute}";
     
                             DateTime newDT = DateTime(
                               dateTime.year,
@@ -222,7 +270,6 @@ class _CreateNotificationScreenState
                         ),
                         label: const Text("Time")),
                   ),
-                  const SizedBox(height: 10.0),
                   CheckboxListTile(
                     title: const Text('Repeat every week'),
                     value: repeatWeekly,
@@ -231,6 +278,7 @@ class _CreateNotificationScreenState
                         repeatWeekly = value ?? false;
                       });
                     },
+                    contentPadding: const EdgeInsets.only(left: 0.0, right: 100.0),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -240,50 +288,6 @@ class _CreateNotificationScreenState
                     onPressed: showNotification,
                     child: const Text("Create Notification")
                   ),
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: 2,
-                      itemBuilder: (context, int i) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Colors.grey[300]!,
-                                width: 0.5,
-                              ),
-                              right: BorderSide(
-                                color: Colors.grey[300]!,
-                                width: 0.5,
-                              ),
-                            ),
-                          ),
-                          child: const ListTile(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16.0,
-                                vertical: 8.0), // Increase the vertical padding.
-                            trailing: Text(
-                                '00',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            title: Padding(
-                              padding: EdgeInsets.only(
-                                  bottom:
-                                      8.0), // Add padding to the bottom of the title.
-                              child: Text(
-                                'Title',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            subtitle: Text(
-                              'Description',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        );
-                      }
-                    )
-                  )
                 ],
               ),
             ),

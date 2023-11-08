@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/screens/home/create_notification_screen.dart';
+import 'package:flutter_demo/screens/home/notification_settings_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -52,15 +52,34 @@ class SettingsScreen extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(16.0),
             ),
-            margin: const EdgeInsets.only(left: 16.0, right: 16.0), 
+            margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0), 
             child: ListTile(
               leading: const Icon(Icons.notifications),
-              title: const Text("Notifications"),
+              title: const Text("Create Notifications"),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
                     return const CreateNotificationScreen();
+                  }),
+                );
+              },
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0), 
+            child: ListTile(
+              leading: const Icon(Icons.notifications_off),
+              title: const Text("Notifications Settings"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return const NotificationSettingsScreen();
                   }),
                 );
               },
