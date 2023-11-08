@@ -9,7 +9,9 @@ import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
 import 'package:flutter_demo/components/menu_button.dart';
 import 'package:flutter_demo/components/pick_image.dart';
 import 'package:flutter_demo/components/post_list.dart';
+import 'package:flutter_demo/screens/home/create_notification_screen.dart';
 import 'package:flutter_demo/screens/home/create_post_screen.dart';
+import 'package:flutter_demo/screens/home/settings_screen.dart';
 import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
 import 'package:flutter_demo/screens/weight/weight_graph_screen.dart';
 import 'package:flutter_demo/services/notification_service.dart';
@@ -177,25 +179,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ListTile(
                   leading: Icon(
-                    CupertinoIcons.square_arrow_right,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withOpacity(0.5),
-                  ),
-                  title: Text(
-                    "Sign Out",
-                    style: GoogleFonts.caveat(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 24,
-                    ),
-                  ),
-                  onTap: () {
-                    context.read<SignInBloc>().add(const SignOutRequired());
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
                     CupertinoIcons.chart_bar_alt_fill,
                     color: Theme.of(context)
                         .colorScheme
@@ -241,7 +224,70 @@ class _HomeScreenState extends State<HomeScreen> {
                       }),
                     );
                   },
-                )
+                ),
+                ListTile(
+                  leading: const Icon(Icons.notifications),
+                  title: Text(
+                    "Notifications",
+                    style: GoogleFonts.caveat(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 24,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return const CreateNotificationScreen();
+                      }),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    CupertinoIcons.settings_solid,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(0.5),
+                  ),
+                  title: Text(
+                    "Settings",
+                    style: GoogleFonts.caveat(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 24,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return const SettingsScreen();
+                      }),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    CupertinoIcons.square_arrow_right,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(0.5),
+                  ),
+                  title: Text(
+                    "Sign Out",
+                    style: GoogleFonts.caveat(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 24,
+                    ),
+                  ),
+                  onTap: () {
+                    context.read<SignInBloc>().add(const SignOutRequired());
+                  },
+                ),
               ],
             ),
           ),

@@ -30,74 +30,77 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                ColorFiltered(
-                  colorFilter: ColorFilter.mode(
-                      Theme.of(context).colorScheme.primary, BlendMode.srcIn),
-                  child: Image.asset('assets/images/dumbel.png',
-                      width: 100, height: 100),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  'FITAPP',
-                  style: GoogleFonts.playfairDisplay(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontSize: 52,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+        ),
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+                    child: Image.asset('assets/images/dumbel.png',
+                        width: 100, height: 100),
                   ),
-                ),
-                const SizedBox(height: kToolbarHeight),
-                TabBar(
-                    controller: tabController,
-                    unselectedLabelColor: Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withOpacity(0.5),
-                    labelColor: Theme.of(context).colorScheme.onBackground,
-                    tabs: const [
-                      Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Text(
-                          'Sign Up',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ]),
-                Expanded(
-                  child: TabBarView(controller: tabController, children: [
-                    BlocProvider<SignInBloc>(
-                      create: (context) => SignInBloc(
-                          userRepository: context
-                              .read<AuthenticationBloc>()
-                              .userRepository),
-                      child: const SignInScreen(),
+                  const SizedBox(height: 10),
+                  Text(
+                    'FITAPP',
+                    style: GoogleFonts.playfairDisplay(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 52,
                     ),
-                    const SignUpScreen()
-                  ]),
-                )
-              ],
+                  ),
+                  const SizedBox(height: kToolbarHeight),
+                  TabBar(
+                      controller: tabController,
+                      unselectedLabelColor: Theme.of(context)
+                          .colorScheme
+                          .onBackground
+                          .withOpacity(0.5),
+                      labelColor: Theme.of(context).colorScheme.onBackground,
+                      tabs: const [
+                        Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Text(
+                            'Sign Up',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ]),
+                  Expanded(
+                    child: TabBarView(controller: tabController, children: [
+                      BlocProvider<SignInBloc>(
+                        create: (context) => SignInBloc(
+                            userRepository: context
+                                .read<AuthenticationBloc>()
+                                .userRepository),
+                        child: const SignInScreen(),
+                      ),
+                      const SignUpScreen()
+                    ]),
+                  )
+                ],
+              ),
             ),
           ),
         ),

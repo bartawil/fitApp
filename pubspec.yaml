@@ -32,6 +32,7 @@ dependencies:
     path: packages/user_repository
   post_repository:
     path: packages/post_repository
+  timezone: ^0.9.2
 
 dev_dependencies:
   flutter_test:
