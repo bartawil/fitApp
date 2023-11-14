@@ -9,7 +9,6 @@ import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
 import 'package:flutter_demo/components/menu_button.dart';
 import 'package:flutter_demo/components/pick_image.dart';
 import 'package:flutter_demo/components/post_list.dart';
-import 'package:flutter_demo/screens/home/create_notification_screen.dart';
 import 'package:flutter_demo/screens/home/create_post_screen.dart';
 import 'package:flutter_demo/screens/home/settings_screen.dart';
 import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
@@ -80,46 +79,15 @@ class _HomeScreenState extends State<HomeScreen> {
               if (state.status == MyUserStatus.success) {
                 return Row(
                   children: [
-                    state.user!.picture == ""
-                        ? GestureDetector(
-                            onTap: () async {
-                              await pickAndCropImage(context);
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey.shade300,
-                                  shape: BoxShape.circle),
-                              child: Icon(CupertinoIcons.person,
-                                  color: Colors.grey.shade400),
-                            ),
-                          )
-                        : GestureDetector(
-                            onTap: () async {
-                              await pickAndCropImage(context);
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                        state.user!.picture!,
-                                      ),
-                                      fit: BoxFit.cover)),
-                            ),
-                          ),
-                    const SizedBox(width: 10),
+                    
+                    const SizedBox(width: 12),
                     Text(
-                      "Welcome ${state.user!.firstName}",
+                      "Welcome ${state.user!.firstName} !",
                       style: GoogleFonts.playfairDisplay(
                         color: Theme.of(context).colorScheme.onBackground,
                         // fontSize: 32,
                       ),
-                    )
+                    )!
                   ],
                 );
               } else {
@@ -226,25 +194,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.notifications),
-                  title: Text(
-                    "Notifications",
-                    style: GoogleFonts.caveat(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 24,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return const CreateNotificationScreen();
-                      }),
-                    );
-                  },
-                ),
-                ListTile(
                   leading: Icon(
                     CupertinoIcons.settings_solid,
                     color: Theme.of(context)
@@ -253,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         .withOpacity(0.5),
                   ),
                   title: Text(
-                    "Settings",
+                    "App Settings",
                     style: GoogleFonts.caveat(
                       color: Theme.of(context).colorScheme.secondary,
                       fontSize: 24,
@@ -264,7 +213,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                        return const SettingsScreen();
+                        return MultiBlocProvider(
+                          providers: [
+                            BlocProvider<MyUserBloc>(
+                              create: (context) => MyUserBloc(
+                                  myUserRepository: context
+                                      .read<AuthenticationBloc>()
+                                      .userRepository)
+                                ..add(GetMyUser(
+                                    myUserId: context
+                                        .read<AuthenticationBloc>()
+                                        .state
+                                        .user!
+                                        .uid)),
+                            ),
+                            BlocProvider(
+                              create: (context) => UpdateUserInfoBloc(
+                                  userRepository: context
+                                      .read<AuthenticationBloc>()
+                                      .userRepository),
+                            ),
+                          ],
+                          child: const SettingsScreen(),
+                        );
                       }),
                     );
                   },
@@ -402,8 +373,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         iconColor: Theme.of(context).colorScheme.tertiary,
                         onTap: () {
                           NotificationService().showNotification(
-                              title: "FitApp",
-                              body: "It's time for you'r weekly weight update!",);
+                            title: "FitApp",
+                            body: "It's time for you'r weekly weight update!",
+                          );
                         },
                       ),
                     ],
