@@ -7,7 +7,6 @@ import 'package:flutter_demo/blocs/get_post_bloc/get_post_bloc.dart';
 import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
 import 'package:flutter_demo/components/menu_button.dart';
-import 'package:flutter_demo/components/pick_image.dart';
 import 'package:flutter_demo/components/post_list.dart';
 import 'package:flutter_demo/screens/home/create_post_screen.dart';
 import 'package:flutter_demo/screens/home/settings_screen.dart';
@@ -87,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Theme.of(context).colorScheme.onBackground,
                         // fontSize: 32,
                       ),
-                    )!
+                    )
                   ],
                 );
               } else {

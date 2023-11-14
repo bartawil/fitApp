@@ -147,7 +147,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     margin: const EdgeInsets.only(
                         left: 16.0, right: 16.0, bottom: 8.0),
                     child: ListTile(
-                      leading: const Icon(Icons.notifications),
+                      leading: const Icon(Icons.notification_add_rounded),
                       title: const Text("Create Notifications"),
                       onTap: () {
                         Navigator.push(
