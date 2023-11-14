@@ -1,27 +1,30 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class NotificationEntity {
   String notificationId;
+  double serialNumber;
   String title;
   String description;
-  final DateTime dateTime;
+  tz.TZDateTime scheduledAt;
   final bool? repeatWeekly;
 	String userId;
 
 	NotificationEntity({
     required this.notificationId,
+    required this.serialNumber,
     required this.title,
     required this.description,
-    required this.dateTime,
+    required this.scheduledAt,
     this.repeatWeekly,
     required this.userId,
   });
 
   static final empty = NotificationEntity(
     notificationId: '',
+    serialNumber: 0,
     title: '',
     description: '',
-    dateTime: DateTime.now(),
+    scheduledAt: tz.TZDateTime.from(DateTime.now(), tz.local),
     repeatWeekly: false,
     userId: '',
   );
@@ -30,9 +33,10 @@ class NotificationEntity {
 	Map<String, Object?> toDocument() {
     return {
       'notificationId': notificationId,
+      'serialNumber': serialNumber,
       'title': title,
       'description': description,
-      'dateTime': dateTime,
+      'scheduledAt': scheduledAt,
       'repeatWeekly': repeatWeekly,
       'userId': userId,
     };
@@ -41,9 +45,10 @@ class NotificationEntity {
 	static NotificationEntity fromDocument(Map<String, dynamic> doc) {
     return NotificationEntity(
       notificationId: doc['notificationId'] as String,
+      serialNumber: doc['serialNumber'] as double,
       title: doc['title'] as String,
       description: doc['description'] as String,
-      dateTime: (doc['dateTime'] as Timestamp).toDate(),
+      scheduledAt: doc['scheduledAt'] as tz.TZDateTime,
       repeatWeekly: doc['repeatWeekly'] as bool?,
       userId: doc['userId'] as String,
     );
@@ -52,9 +57,10 @@ class NotificationEntity {
   
 	List<Object?> get props => [
     notificationId,
+    serialNumber,
     title,
     description,
-    dateTime,
+    scheduledAt,
     repeatWeekly,
     userId,];
 
@@ -62,9 +68,10 @@ class NotificationEntity {
   String toString() {
     return '''NotificationEntity: {
       notificationId: $notificationId,
+      serialNumber: $serialNumber,
       title: $title,
       description: $description,
-      dateTime: $dateTime,
+      scheduledAt: $scheduledAt,
       repeatWeekly: $repeatWeekly,
       userId: $userId,
     }''';

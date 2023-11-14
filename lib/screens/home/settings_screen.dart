@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
+import 'package:flutter_demo/blocs/notification_bloc/notification_bloc.dart';
 import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
 import 'package:flutter_demo/components/pick_image.dart';
 import 'package:flutter_demo/screens/home/create_notification_screen.dart';
 import 'package:flutter_demo/screens/home/notification_settings_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notification_repository/notification_repository.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -150,11 +152,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       leading: const Icon(Icons.notification_add_rounded),
                       title: const Text("Create Notifications"),
                       onTap: () {
-                        Navigator.push(
+                        Navigator.push( 
                           context,
-                          MaterialPageRoute(builder: (context) {
-                            return const CreateNotificationScreen();
-                          }),
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                BlocProvider<NotificationBloc>(
+                              create: (context) => NotificationBloc(
+                                  notificationRepository: FirebaseNotificationRepository()),
+                              child: CreateNotificationScreen(state.user!.id),
+                            ),
+                          ),
                         );
                       },
                     ),

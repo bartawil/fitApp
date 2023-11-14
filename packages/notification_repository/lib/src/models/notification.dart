@@ -1,73 +1,82 @@
+import 'package:timezone/timezone.dart' as tz;
+
 import '../entities/entities.dart';
 
-class Notification {
+class MyNotification {
   String notificationId;
+  double serialNumber;
   String title;
   String description;
-  DateTime dateTime;
+  tz.TZDateTime scheduledAt;
   bool? repeatWeekly;
 	String userId;
 
-	Notification({
+	MyNotification({
     required this.notificationId,
+    required this.serialNumber,
     required this.title,
     required this.description,
-    required this.dateTime,
+    required this.scheduledAt,
     this.repeatWeekly,
     required this.userId,
 	});
 
-  static final empty = Notification(
+  static final empty = MyNotification(
     notificationId: '',
+    serialNumber: 0,
     title: '',
     description: '',
-    dateTime: DateTime.now(),
+    scheduledAt: tz.TZDateTime.from(DateTime.now(), tz.local),
     repeatWeekly: false,
     userId: '',
   );
 
 	/// Modify Notifications parameters
-	Notification copyWith({
+	MyNotification copyWith({
     String? notificationId,
+    double? serialNumber,
     String? title,
     String? description,
-    DateTime? dateTime,
+    tz.TZDateTime? scheduledAt,
     bool? repeatWeekly,
     String? userId,
   }) {
-    return Notification(
+    return MyNotification(
       notificationId: notificationId ?? this.notificationId,
+      serialNumber: serialNumber ?? this.serialNumber,
       title: title ?? this.title,
       description: description ?? this.description,
-      dateTime: dateTime ?? this.dateTime,
+      scheduledAt: scheduledAt ?? this.scheduledAt,
       repeatWeekly: repeatWeekly ?? this.repeatWeekly,
       userId: userId ?? this.userId,
     );
   }
 
 	/// Convenience getter to determine whether the notification is empty.
-  bool get isEmpty => this == Notification.empty;
+  bool get isEmpty => this == MyNotification.empty;
 
   /// Convenience getter to determine whether the current notification is not empty.
-  bool get isNotEmpty => this != Notification.empty;
+  bool get isNotEmpty => this != MyNotification.empty;
 
 	NotificationEntity toEntity() {
     return NotificationEntity(
       notificationId: notificationId,
+      serialNumber: serialNumber,
       title: title,
       description: description,
-      dateTime: dateTime,
+      scheduledAt: scheduledAt,
       repeatWeekly: repeatWeekly,
       userId: userId,
     );
   }
 
-	static Notification fromEntity(NotificationEntity entity) {
-    return Notification(
+	static MyNotification fromEntity(NotificationEntity entity) {
+    return MyNotification(
       notificationId: entity.notificationId,
+      serialNumber: entity.serialNumber,
       title: entity.title,
       description: entity.description,
-      dateTime: entity.dateTime,
+      scheduledAt: entity.scheduledAt,
       repeatWeekly: entity.repeatWeekly,
       userId: entity.userId,
     );
@@ -77,9 +86,10 @@ class Notification {
   String toString() {
     return '''Notification: {
       notificationId: $notificationId,
+      serialNumber: $serialNumber,
       title: $title,
       description: $description,
-      dateTime: $dateTime,
+      scheduledAt: $scheduledAt,
       repeatWeekly: $repeatWeekly,
       userId: $userId,
     }''';

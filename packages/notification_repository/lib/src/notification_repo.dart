@@ -2,8 +2,8 @@ import 'models/models.dart';
 
 abstract class NotificationRepository {
 
-	Future<Notification> createNotification(Notification post);
+	Future<MyNotification> createNotification(MyNotification notification);
 
-	Future<List<Notification>> getNotification();
+	Future<List<MyNotification>> getNotifications();
 
 }

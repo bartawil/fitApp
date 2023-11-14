@@ -28,7 +28,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   Widget build(BuildContext context) {
     return BlocListener<CreatePostBloc, CreatePostState>(
 			listener: (context, state) {
-				if(state is CreatePostSuccess) {
+				if (state is CreatePostSuccess) {
 					Navigator.pop(context);
 				}
 			},
@@ -52,7 +52,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 								foregroundColor: Colors.white,
 								title: const Text(
 									'Create a Post !'
-								),
+								), 
 							),
 							body: SingleChildScrollView(
 								child: Padding(

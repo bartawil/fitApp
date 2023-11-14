@@ -8,10 +8,9 @@ class FirebaseNotificationRepository implements NotificationRepository {
 	final notificationsCollection = FirebaseFirestore.instance.collection('notifications');
 
   @override
-  Future<Notification> createNotification(Notification notification) async {
+  Future<MyNotification> createNotification(MyNotification notification) async {
     try {
       notification.notificationId = const Uuid().v1();
-      notification.dateTime = DateTime.now();
 
       await notificationsCollection
 				.doc(notification.notificationId)
@@ -25,12 +24,12 @@ class FirebaseNotificationRepository implements NotificationRepository {
   }
 
   @override
-  Future<List<Notification>> getNotification() {
+  Future<List<MyNotification>> getNotifications() {
     try {
       return notificationsCollection
 				.get()
 				.then((value) => value.docs.map((e) => 
-					Notification.fromEntity(NotificationEntity.fromDocument(e.data()))
+					MyNotification.fromEntity(NotificationEntity.fromDocument(e.data()))
 				).toList());
     } catch (e) {
 			rethrow;
