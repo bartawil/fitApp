@@ -6,4 +6,5 @@ abstract class NotificationRepository {
 
 	Future<List<MyNotification>> getNotifications();
 
+  Future<double> getNotificationCollectionSize();
 }

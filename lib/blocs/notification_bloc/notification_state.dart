@@ -16,3 +16,11 @@ final class NotificationSuccess extends NotificationState {
 
 	const NotificationSuccess(this.notification);
 }
+
+final class GetNotificationsSizeFailure extends NotificationState {}
+final class GetNotificationsSizeLoading extends NotificationState {}
+final class GetNotificationsSizeSuccess extends NotificationState {
+  final double size;
+
+  const GetNotificationsSizeSuccess(this.size);
+}

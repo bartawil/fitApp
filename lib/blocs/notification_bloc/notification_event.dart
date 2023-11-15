@@ -12,3 +12,7 @@ class CreateNotification extends NotificationEvent {
 
 	const CreateNotification(this.notification);
 }
+
+class GetNotificationsSize extends NotificationEvent {
+  const GetNotificationsSize();
+}

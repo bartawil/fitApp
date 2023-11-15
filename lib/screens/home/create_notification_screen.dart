@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/notification_bloc/notification_bloc.dart';
@@ -59,12 +61,15 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
       onDidReceiveNotificationResponse:
           (NotificationResponse notificationResponse) async {},
     );
+
+    context.read<NotificationBloc>().add(const GetNotificationsSize());
   }
 
   showNotification() {
-    if (titleController.text.isEmpty || descriptionController.text.isEmpty) {
+    if (titleController.text.isEmpty || descriptionController.text.isEmpty || dateController.text.isEmpty || timeController.text.isEmpty) {
       return;
     }
+    FocusManager.instance.primaryFocus?.unfocus();
 
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
@@ -90,11 +95,13 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
     tz.initializeTimeZones();
     final tz.TZDateTime scheduledAt = tz.TZDateTime.from(dateTime, tz.local);
 
+
     setState(() {
       notification.title = titleController.text;
       notification.description = descriptionController.text;
       notification.scheduledAt = scheduledAt;
       notification.repeatWeekly = repeatWeekly;
+      notification.serialNumber = counter.toDouble();
     });
 
     if (repeatWeekly) {
@@ -119,6 +126,7 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
               UILocalNotificationDateInterpretation.wallClockTime,
           payload: 'Ths s the data');
     }
+    log(notification.toString(), name: "CreateNotificationScreen");
     context.read<NotificationBloc>().add(CreateNotification(notification));
 
     // clear all the text fields after the notification is created
@@ -130,6 +138,8 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
       dateTime = DateTime.now();
       repeatWeekly = false;
     });
+
+    context.read<NotificationBloc>().add(const GetNotificationsSize());
   }
 
   Future<void> cancelNotification(int id) async {
@@ -140,7 +150,10 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
   Widget build(BuildContext context) {
     return BlocListener<NotificationBloc, NotificationState>(
       listener: (context, state) {
-        // TODO: implement listener
+        if (state is GetNotificationsSizeSuccess) {
+          counter = state.size.toInt();
+          log("Counter: $counter", name: "CreateNotificationScreen");
+        }
       },
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
