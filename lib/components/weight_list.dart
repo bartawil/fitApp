@@ -8,7 +8,7 @@ import 'package:user_repository/user_repository.dart';
 class WeightList extends StatefulWidget {
   final List<Weight> weightList;
   final String userId;
-
+ 
   const WeightList({Key? key, required this.weightList, required this.userId})
       : super(key: key);
 
