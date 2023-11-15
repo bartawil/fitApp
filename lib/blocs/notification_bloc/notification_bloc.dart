@@ -1,7 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:notification_repository/notification_repository.dart';
@@ -30,7 +28,6 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       emit(GetNotificationsSizeLoading());
       try {
         double size = await _notificationRepository.getNotificationCollectionSize();
-        log("this is from bloc $size");
         emit(GetNotificationsSizeSuccess(size));
       } catch (e) {
         emit(GetNotificationsSizeFailure());

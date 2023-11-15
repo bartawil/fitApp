@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
@@ -128,58 +129,66 @@ class _NotificationSettingsScreenState
         ),
         body: Scaffold(
           backgroundColor: Theme.of(context).colorScheme.background,
-          body: Center(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: 2,
-                      itemBuilder: (context, int i) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Colors.grey[300]!,
-                                width: 0.5,
-                              ),
-                              right: BorderSide(
-                                color: Colors.grey[300]!,
-                                width: 0.5,
-                              ),
-                            ),
-                          ),
-                          child: const ListTile(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16.0,
-                                vertical: 8.0), // Increase the vertical padding.
-                            trailing: Text(
-                                '00',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            title: Padding(
-                              padding: EdgeInsets.only(
-                                  bottom:
-                                      8.0), // Add padding to the bottom of the title.
-                              child: Text(
-                                'Title',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            subtitle: Text(
-                              'Description',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        );
-                      }
-                    )
-                  )
-                ],
+          body: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  'Notifications List',
+                  textAlign: TextAlign.left,
+                  style: GoogleFonts.playfairDisplay(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 22,
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 2,
+                  itemBuilder: (context, int i) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey[300]!,
+                            width: 0.5,
+                          ),
+                          right: BorderSide(
+                            color: Colors.grey[300]!,
+                            width: 0.5,
+                          ),
+                        ),
+                      ),
+                      child: const ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0), // Increase the vertical padding.
+                        trailing: Text(
+                            '00',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        title: Padding(
+                          padding: EdgeInsets.only(
+                              bottom:
+                                  8.0), // Add padding to the bottom of the title.
+                          child: Text(
+                            'Title',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        subtitle: Text(
+                          'Description',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ),
+                    );
+                  }
+                )
+              )
+            ],
           ),
         ),
       ),

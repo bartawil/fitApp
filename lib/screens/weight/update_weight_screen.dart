@@ -46,7 +46,12 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
             backgroundColor: Theme.of(context).colorScheme.background,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () async {
+                FocusManager.instance.primaryFocus?.unfocus();
+                await Future.delayed(const Duration(milliseconds: 150));
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).pop();
+              },
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
@@ -148,37 +153,36 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return MultiBlocProvider(
-                                    providers: [
-                                      BlocProvider(
-                                          create: (context) => WeightBloc(
-                                              userRepository: context
-                                                  .read<AuthenticationBloc>()
-                                                  .userRepository)
-                                            ..add(GetWeightList(context
-                                                .read<AuthenticationBloc>()
-                                                .state
-                                                .user!
-                                                .uid))),
-                                      BlocProvider<MyUserBloc>(
-                                        create: (context) => MyUserBloc(
-                                            myUserRepository: context
-                                                .read<AuthenticationBloc>()
-                                                .userRepository)
-                                          ..add(GetMyUser(
-                                              myUserId: context
-                                                  .read<AuthenticationBloc>()
-                                                  .state
-                                                  .user!
-                                                  .uid)),
-                                      ),
-                                    ],
-                                    child: const WeightGraphScreen());
+                                return MultiBlocProvider(providers: [
+                                  BlocProvider(
+                                      create: (context) => WeightBloc(
+                                          userRepository: context
+                                              .read<AuthenticationBloc>()
+                                              .userRepository)
+                                        ..add(GetWeightList(context
+                                            .read<AuthenticationBloc>()
+                                            .state
+                                            .user!
+                                            .uid))),
+                                  BlocProvider<MyUserBloc>(
+                                    create: (context) => MyUserBloc(
+                                        myUserRepository: context
+                                            .read<AuthenticationBloc>()
+                                            .userRepository)
+                                      ..add(GetMyUser(
+                                          myUserId: context
+                                              .read<AuthenticationBloc>()
+                                              .state
+                                              .user!
+                                              .uid)),
+                                  ),
+                                ], child: const WeightGraphScreen());
                               }),
                             );
                           },
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 12.0),
                             child: Icon(CupertinoIcons.chart_bar_alt_fill,
                                 size: 30,
                                 color: Theme.of(context).colorScheme.secondary),

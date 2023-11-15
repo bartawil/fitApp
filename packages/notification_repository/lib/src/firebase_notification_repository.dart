@@ -40,7 +40,6 @@ class FirebaseNotificationRepository implements NotificationRepository {
   Future<double> getNotificationCollectionSize() async {
     final querySnapshot = await notificationsCollection.get();
     final double size = querySnapshot.size.toDouble();
-    log("this is from repository $size");
     return size;
   }
 

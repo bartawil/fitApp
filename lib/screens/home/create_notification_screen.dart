@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/notification_bloc/notification_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
 import 'package:notification_repository/notification_repository.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class CreateNotificationScreen extends StatefulWidget {
   final String userId;
@@ -126,7 +124,6 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
               UILocalNotificationDateInterpretation.wallClockTime,
           payload: 'Ths s the data');
     }
-    log(notification.toString(), name: "CreateNotificationScreen");
     context.read<NotificationBloc>().add(CreateNotification(notification));
 
     // clear all the text fields after the notification is created
@@ -152,7 +149,6 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
       listener: (context, state) {
         if (state is GetNotificationsSizeSuccess) {
           counter = state.size.toInt();
-          log("Counter: $counter", name: "CreateNotificationScreen");
         }
       },
       child: GestureDetector(
@@ -274,16 +270,23 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
                         });
                       },
                       contentPadding:
-                          const EdgeInsets.only(left: 0.0, right: 100.0),
+                          const EdgeInsets.only(left: 5.0, right: 100.0),
                     ),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
                           minimumSize: const Size(double.infinity, 55),
                           backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
+                              Theme.of(context).colorScheme.primary,
                         ),
                         onPressed: showNotification,
-                        child: const Text("Create Notification")),
+                        child: Text("Create Notification",
+                        style: TextStyle(
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w900),)),
                   ],
                 ),
               ),

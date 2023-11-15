@@ -12,7 +12,6 @@ import 'package:flutter_demo/screens/home/create_post_screen.dart';
 import 'package:flutter_demo/screens/home/settings_screen.dart';
 import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
 import 'package:flutter_demo/screens/weight/weight_graph_screen.dart';
-import 'package:flutter_demo/services/notification_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:post_repository/post_repository.dart';
 
@@ -370,12 +369,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: "Nutrintion",
                         icon: 'assets/images/nutritional.png',
                         iconColor: Theme.of(context).colorScheme.tertiary,
-                        onTap: () {
-                          NotificationService().showNotification(
-                            title: "FitApp",
-                            body: "It's time for you'r weekly weight update!",
-                          );
-                        },
+                        onTap: () {},
                       ),
                     ],
                   ),
