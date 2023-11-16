@@ -113,6 +113,8 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                                     user!,
                                   ));
                             });
+                            weightController.clear();
+                            FocusManager.instance.primaryFocus?.unfocus();
                           }
                         },
                         style: TextButton.styleFrom(

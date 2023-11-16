@@ -432,6 +432,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  gif_view:
+    dependency: "direct main"
+    description:
+      name: gif_view
+      sha256: "73a089a046fd1a5e63e3856cf30ef7bac1e64b78d79becde1449e955dddfb645"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0"
   glob:
     dependency: transitive
     description:
@@ -767,13 +775,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
-  post_repository:
-    dependency: "direct main"
-    description:
-      path: "packages/post_repository"
-      relative: true
-    source: path
-    version: "0.1.0"
   provider:
     dependency: transitive
     description:

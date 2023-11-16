@@ -5,8 +5,8 @@ import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:flutter_demo/blocs/notification_bloc/notification_bloc.dart';
 import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
 import 'package:flutter_demo/components/pick_image.dart';
-import 'package:flutter_demo/screens/home/create_notification_screen.dart';
-import 'package:flutter_demo/screens/home/notification_settings_screen.dart';
+import 'package:flutter_demo/screens/notifications/create_notification_screen.dart';
+import 'package:flutter_demo/screens/notifications/notification_settings_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notification_repository/notification_repository.dart';
 
