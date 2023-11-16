@@ -92,12 +92,20 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
 
     tz.initializeTimeZones();
     final tz.TZDateTime scheduledAt = tz.TZDateTime.from(dateTime, tz.local);
-
+    final DateTime scheduledDateTime = DateTime(
+      scheduledAt.year,
+      scheduledAt.month,
+      scheduledAt.day,
+      scheduledAt.hour,
+      scheduledAt.minute,
+      scheduledAt.second,
+      scheduledAt.millisecond,
+    );
 
     setState(() {
       notification.title = titleController.text;
       notification.description = descriptionController.text;
-      notification.scheduledAt = scheduledAt;
+      notification.scheduledAt = scheduledDateTime;
       notification.repeatWeekly = repeatWeekly;
       notification.serialNumber = counter.toDouble();
     });
@@ -137,6 +145,7 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
     });
 
     context.read<NotificationBloc>().add(const GetNotificationsSize());
+    Navigator.of(context).pop();
   }
 
   Future<void> cancelNotification(int id) async {

@@ -1,11 +1,12 @@
-import 'package:timezone/timezone.dart' as tz;
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NotificationEntity {
   String notificationId;
   double serialNumber;
   String title;
   String description;
-  tz.TZDateTime scheduledAt;
+  DateTime scheduledAt;
   final bool? repeatWeekly;
 	String userId;
 
@@ -24,7 +25,7 @@ class NotificationEntity {
     serialNumber: 0,
     title: '',
     description: '',
-    scheduledAt: tz.TZDateTime.from(DateTime.now(), tz.local),
+    scheduledAt: DateTime.now(),
     repeatWeekly: false,
     userId: '',
   );
@@ -48,7 +49,7 @@ class NotificationEntity {
       serialNumber: doc['serialNumber'] as double,
       title: doc['title'] as String,
       description: doc['description'] as String,
-      scheduledAt: doc['scheduledAt'] as tz.TZDateTime,
+      scheduledAt: (doc['scheduledAt'] as Timestamp).toDate(),
       repeatWeekly: doc['repeatWeekly'] as bool?,
       userId: doc['userId'] as String,
     );

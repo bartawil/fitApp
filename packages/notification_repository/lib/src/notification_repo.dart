@@ -4,7 +4,9 @@ abstract class NotificationRepository {
 
 	Future<MyNotification> createNotification(MyNotification notification);
 
-	Future<List<MyNotification>> getNotifications();
-
   Future<double> getNotificationCollectionSize();
+
+  Future<List<MyNotification>> getNotificationsList();
+
+  Future<List<MyNotification>> deleteNotification(String notificationId);
 }

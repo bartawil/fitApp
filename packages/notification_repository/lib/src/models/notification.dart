@@ -1,5 +1,3 @@
-import 'package:timezone/timezone.dart' as tz;
-
 import '../entities/entities.dart';
 
 class MyNotification {
@@ -7,7 +5,7 @@ class MyNotification {
   double serialNumber;
   String title;
   String description;
-  tz.TZDateTime scheduledAt;
+  DateTime scheduledAt;
   bool? repeatWeekly;
 	String userId;
 
@@ -26,7 +24,7 @@ class MyNotification {
     serialNumber: 0,
     title: '',
     description: '',
-    scheduledAt: tz.TZDateTime.from(DateTime.now(), tz.local),
+    scheduledAt: DateTime.now(),
     repeatWeekly: false,
     userId: '',
   );
@@ -37,7 +35,7 @@ class MyNotification {
     double? serialNumber,
     String? title,
     String? description,
-    tz.TZDateTime? scheduledAt,
+    DateTime? scheduledAt,
     bool? repeatWeekly,
     String? userId,
   }) {

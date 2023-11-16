@@ -24,3 +24,19 @@ final class GetNotificationsSizeSuccess extends NotificationState {
 
   const GetNotificationsSizeSuccess(this.size);
 }
+
+final class GetNotificationsListFailure extends NotificationState {}
+final class GetNotificationsListLoading extends NotificationState {}
+final class GetNotificationsListSuccess extends NotificationState {
+  final List<MyNotification> notificationList;
+
+  const GetNotificationsListSuccess(this.notificationList);
+}
+
+final class DeleteNotificationFailure extends NotificationState {}
+final class DeleteNotificationLoading extends NotificationState {}
+final class DeleteNotificationSuccess extends NotificationState {
+  final List<MyNotification> notificationList;
+
+  const DeleteNotificationSuccess(this.notificationList);
+}

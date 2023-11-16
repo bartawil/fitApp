@@ -16,3 +16,13 @@ class CreateNotification extends NotificationEvent {
 class GetNotificationsSize extends NotificationEvent {
   const GetNotificationsSize();
 }
+
+class GetNotificationsList extends NotificationEvent {
+  const GetNotificationsList();
+}
+
+class DeleteNotification extends NotificationEvent {
+  final String id;
+
+  const DeleteNotification(this.id);
+}

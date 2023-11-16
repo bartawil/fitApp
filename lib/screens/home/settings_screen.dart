@@ -177,11 +177,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       leading: const Icon(Icons.notifications_off),
                       title: const Text("Notifications Settings"),
                       onTap: () {
-                        Navigator.push(
+                        Navigator.push( 
                           context,
-                          MaterialPageRoute(builder: (context) {
-                            return const NotificationSettingsScreen();
-                          }),
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                BlocProvider<NotificationBloc>(
+                              create: (context) => NotificationBloc(
+                                  notificationRepository: FirebaseNotificationRepository()),
+                              child: const NotificationSettingsScreen(),
+                            ),
+                          ),
                         );
                       },
                     ),
