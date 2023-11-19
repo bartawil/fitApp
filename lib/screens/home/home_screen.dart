@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         'FITAPP',
                         style: GoogleFonts.playfairDisplay(
-                          color: Theme.of(context).colorScheme.onBackground,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 25,
                         ),
                       ),
