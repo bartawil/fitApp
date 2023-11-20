@@ -259,12 +259,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 MyMenuButton(
                   title: "Workouts",
-                  icon: 'assets/images/fitness.png',
-                  iconColor: Theme.of(context).colorScheme.tertiary,
+                  icon: 'assets/images/muscle.png',
+                  iconColor: Theme.of(context).colorScheme.onBackground,
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => WorkoutScreen()),
+                      MaterialPageRoute(builder: (context) => const WorkoutScreen()),
                     );
                   },
                 ),

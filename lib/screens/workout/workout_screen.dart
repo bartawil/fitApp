@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gif_view/gif_view.dart';
+import 'package:flutter_demo/components/exercise_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WorkoutScreen extends StatelessWidget {
-  final controller = GifController(autoPlay: false);
-  WorkoutScreen({super.key});
+  
+  const WorkoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class WorkoutScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Choose your workout',
+                    'Choose your workout plan',
                     style: GoogleFonts.caveat(
                       color: Theme.of(context).colorScheme.primary,
                       fontSize: 25,
@@ -47,7 +47,7 @@ class WorkoutScreen extends StatelessWidget {
                       colorFilter: ColorFilter.mode(
                           Theme.of(context).colorScheme.primary,
                           BlendMode.srcIn),
-                      child: Image.asset('assets/images/dumbel.png',
+                      child: Image.asset('assets/images/biceps.png',
                           width: 50, height: 50),
                     ),
                   ),
@@ -60,7 +60,6 @@ class WorkoutScreen extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onBackground,
                     fontSize: 22,
                   ),
-                  
                   tabs: const [
                     Tab(
                       text: 'I',
@@ -72,78 +71,12 @@ class WorkoutScreen extends StatelessWidget {
                       text: 'III',
                     ),
                   ]),
-              const SizedBox(height: 20),
               Expanded(
-                child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (context, int i) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.grey[300]!,
-                              width: 0.5,
-                            ),
-                          ),
-                        ),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 0.0,
-                              vertical: 0.0), // Increase the vertical padding.
-                          title: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 10.0, left: 10),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    if (controller.status ==
-                                        GifStatus.playing) {
-                                      controller.pause();
-                                    } else {
-                                      controller.play();
-                                    }
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.2),
-                                          blurRadius: 5,
-                                          spreadRadius: 2,
-                                          offset: Offset(0, 2),
-                                        ),
-                                      ],
-                                    ),
-                                    child: GifView.asset(
-                                      'assets/images/Barbell-squat.gif',
-                                      height: 100,
-                                      width: 100,
-                                      controller: controller,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(
-                                    left: 20.0,
-                                    bottom:
-                                        8.0), // Add padding to the bottom of the title.
-                                child: Text(
-                                  'Name of exercise\n\nReps: 10\nSets: 3',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                child: TabBarView(children: [
+                  ExerciseList(numOfExercises: 1,),
+                  ExerciseList(numOfExercises: 2,),
+                  ExerciseList(numOfExercises: 4,),
+                ]),
               ),
             ],
           ),
