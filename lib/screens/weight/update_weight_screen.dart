@@ -7,7 +7,7 @@ import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.d
 import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
 import 'package:flutter_demo/components/constants.dart';
 import 'package:flutter_demo/components/text_field.dart';
-import 'package:flutter_demo/components/weight_list.dart';
+import 'package:flutter_demo/screens/weight/weight_list.dart';
 import 'package:flutter_demo/screens/weight/weight_graph_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_repository/user_repository.dart';

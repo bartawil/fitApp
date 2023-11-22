@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
+import 'package:flutter_demo/blocs/workout_bloc/workout_bloc.dart';
 import 'package:flutter_demo/components/menu_button.dart';
 import 'package:flutter_demo/screens/home/settings_screen.dart';
 import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
@@ -262,10 +263,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: 'assets/images/muscle.png',
                   iconColor: Theme.of(context).colorScheme.onBackground,
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const WorkoutScreen()),
-                    );
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return MultiBlocProvider(
+                        providers: [
+                          BlocProvider(
+                            create: (context) => WorkoutBloc(
+                                userRepository: context
+                                    .read<AuthenticationBloc>()
+                                    .userRepository)
+                              ..add(const GetWorkoutGif()),
+                          ),
+                        ],
+                        child: const WorkoutScreen(),
+                      );
+                    }));
                   },
                 ),
                 const SizedBox(width: 30),

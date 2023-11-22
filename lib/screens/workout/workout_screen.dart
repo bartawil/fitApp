@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/components/exercise_list.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_demo/blocs/workout_bloc/workout_bloc.dart';
+import 'package:flutter_demo/screens/workout/exercise_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WorkoutScreen extends StatelessWidget {
-  
   const WorkoutScreen({super.key});
 
   @override
@@ -55,15 +56,13 @@ class WorkoutScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               TabBar(
-                  labelColor: Theme.of(context).colorScheme.onBackground,
+                  labelColor: Theme.of(context).colorScheme.error,
                   labelStyle: GoogleFonts.playfairDisplay(
                     color: Theme.of(context).colorScheme.onBackground,
                     fontSize: 22,
                   ),
                   tabs: const [
-                    Tab(
-                      text: 'I',
-                    ),
+                    Tab(text: 'I'),
                     Tab(
                       text: 'II',
                     ),
@@ -71,12 +70,32 @@ class WorkoutScreen extends StatelessWidget {
                       text: 'III',
                     ),
                   ]),
-              Expanded(
-                child: TabBarView(children: [
-                  ExerciseList(numOfExercises: 1,),
-                  ExerciseList(numOfExercises: 2,),
-                  ExerciseList(numOfExercises: 4,),
-                ]),
+              const SizedBox(height: 20),
+              BlocBuilder<WorkoutBloc, WorkoutState>(
+                builder: (context, state) {
+                  if (state is GetWorkoutGifSuccess) {
+                    return Expanded(
+                      child: TabBarView(children: [
+                        ExerciseList(
+                          gifUrl: state.gifUrl,
+                          numOfExercises: 4,
+                        ),
+                        ExerciseList(
+                          gifUrl: state.gifUrl,
+                          numOfExercises: 2,
+                        ),
+                        ExerciseList(
+                          gifUrl: state.gifUrl,
+                          numOfExercises: 1,
+                        ),
+                      ]),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
               ),
             ],
           ),
