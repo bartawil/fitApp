@@ -26,6 +26,4 @@ abstract class UserRepository {
   Future<List<Weight>> deleteWeight(String userId, String weightId);
 
   Future<void> setWeightData(String userId, Weight weight);
-
-  Future<String> getGif();
 }

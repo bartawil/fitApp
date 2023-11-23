@@ -180,19 +180,6 @@ class FirebaseUserRepository implements UserRepository {
       rethrow;
     }
   }
-
-  @override
-  Future<String> getGif() async {
-    try {
-      Reference firebaseStoreRef =
-          FirebaseStorage.instance.ref().child('workout/dumbbell-shoulder-press.gif');
-      String url = await firebaseStoreRef.getDownloadURL();
-      return url;
-    } catch (e) {
-      log(e.toString());
-      rethrow;
-    }
-  }
 }
 
 class CustomFirebaseAuthException implements Exception {

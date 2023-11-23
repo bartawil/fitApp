@@ -11,6 +11,7 @@ import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
 import 'package:flutter_demo/screens/weight/weight_graph_screen.dart';
 import 'package:flutter_demo/screens/workout/workout_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:workout_repository/workout_repository.dart';
 
 import '../../blocs/my_user_bloc/my_user_bloc.dart';
 import '../../blocs/update_user_info_bloc/update_user_info_bloc.dart';
@@ -207,6 +208,38 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ListTile(
                   leading: Icon(
+                    Icons.fitness_center_sharp,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(0.5),
+                  ),
+                  title: Text(
+                    "Workouts",
+                    style: GoogleFonts.caveat(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 24,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return MultiBlocProvider(
+                        providers: [
+                          BlocProvider(
+                            create: (context) => WorkoutBloc(
+                                workoutRepository:  FirebaseWorkoutRepository())
+                              ..add(const GetWorkoutGif()),
+                          ),
+                        ],
+                        child: const WorkoutScreen(),
+                      );
+                    }));
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
                     CupertinoIcons.square_arrow_right,
                     color: Theme.of(context)
                         .colorScheme
@@ -269,9 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         providers: [
                           BlocProvider(
                             create: (context) => WorkoutBloc(
-                                userRepository: context
-                                    .read<AuthenticationBloc>()
-                                    .userRepository)
+                                workoutRepository: FirebaseWorkoutRepository())
                               ..add(const GetWorkoutGif()),
                           ),
                         ],
@@ -288,6 +319,36 @@ class _HomeScreenState extends State<HomeScreen> {
                         .colorScheme
                         .background
                         .withOpacity(0.5),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return MultiBlocProvider(
+                            providers: [
+                              BlocProvider<MyUserBloc>(
+                                create: (context) => MyUserBloc(
+                                    myUserRepository: context
+                                        .read<AuthenticationBloc>()
+                                        .userRepository)
+                                  ..add(GetMyUser(
+                                      myUserId: context
+                                          .read<AuthenticationBloc>()
+                                          .state
+                                          .user!
+                                          .uid)),
+                              ),
+                              BlocProvider(
+                                create: (context) => UpdateUserInfoBloc(
+                                    userRepository: context
+                                        .read<AuthenticationBloc>()
+                                        .userRepository),
+                              ),
+                            ],
+                            child: const SettingsScreen(),
+                          );
+                        }),
+                      );
+                    },
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     fontColor: Theme.of(context)
                         .colorScheme
