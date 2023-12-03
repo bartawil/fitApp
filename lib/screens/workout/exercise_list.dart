@@ -7,7 +7,8 @@ class ExerciseList extends StatefulWidget {
   final String gifUrl;
   final int numOfExercises;
 
-  ExerciseList({Key? key, required this.gifUrl, required this.numOfExercises}) : super(key: key);
+  ExerciseList({Key? key, required this.gifUrl, required this.numOfExercises})
+      : super(key: key);
 
   @override
   _ExerciseListState createState() => _ExerciseListState();
@@ -22,6 +23,14 @@ class _ExerciseListState extends State<ExerciseList> {
     for (int i = 0; i < widget.numOfExercises; i++) {
       controllers.add(GifController(autoPlay: false));
     }
+  }
+
+  @override
+  void dispose() {
+    for (var controller in controllers) {
+      controller.dispose();
+    }
+    super.dispose();
   }
 
   @override

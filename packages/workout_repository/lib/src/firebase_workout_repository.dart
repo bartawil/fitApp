@@ -8,13 +8,37 @@ class FirebaseWorkoutRepository implements WorkoutRepository {
   final workoutsCollection = FirebaseFirestore.instance.collection('workouts');
 
   @override
+  Future<List<Workout>> getWorkoutsList(String type) async {
+    try {
+      QuerySnapshot snapshot = await workoutsCollection.doc(type).collection(type).get();
+      List<Workout> list = snapshot.docs
+        .map((doc) {
+          try {
+            return Workout.fromEntity(WorkoutEntity.fromDocument(
+                doc.data() as Map<String, dynamic>));
+          } catch (e) {
+            return null;
+          }
+        })
+        .where((item) => item != null)
+        .cast<Workout>()
+        .toList();
+
+      return list;
+    } catch (e) {
+      log("Error in getWorkoutsList: ${e.toString()}",
+          name: 'FirebaseWorkoutRepository');
+      rethrow;
+    }
+  }
+
+  @override
   Future<String> getGif() async {
     try {
       Reference firebaseStoreRef = FirebaseStorage.instance
           .ref()
           .child('workout/Legs/barbell-rack-pull.gif');
       String url = await firebaseStoreRef.getDownloadURL();
-
       return url;
     } catch (e) {
       log(e.toString());
@@ -36,18 +60,14 @@ class FirebaseWorkoutRepository implements WorkoutRepository {
         subfolderNames.add(subfolderName);
       }
 
-      print(subfolderNames);
-
       for (String folder in subfolderNames) {
         Reference firebaseStoreRef =
             FirebaseStorage.instance.ref().child('workout/$folder');
         ListResult result = await firebaseStoreRef.listAll();
 
-        List<String> gifUrls = [];
-
         for (Reference ref in result.items) {
           String url = await ref.getDownloadURL();
-          String workoutName = ref.name
+          String name = ref.name
               .toLowerCase()
               .replaceAll('-', ' ')
               .replaceAll('_', ' ')
@@ -55,17 +75,26 @@ class FirebaseWorkoutRepository implements WorkoutRepository {
           String category = folder;
 
           Workout newWorkout = Workout(
-            workoutName: workoutName,
+            name: name,
             category: category,
             gifUrl: url,
           );
 
-          await workoutsCollection.doc(newWorkout.workoutName).set({
-            'name': newWorkout.workoutName,
-            'category': newWorkout.category,
-            'gifUrl': newWorkout.gifUrl,
-          });
-          gifUrls.add(url);
+          await workoutsCollection
+            .doc(folder)
+            .collection(folder)
+            .doc(newWorkout.name)
+            .set({
+              'name': newWorkout.name,
+              'category': newWorkout.category,
+              'gifUrl': newWorkout.gifUrl,
+            });
+
+          // await workoutsCollection.doc(newWorkout.name).set({
+          //   'name': newWorkout.name,
+          //   'category': newWorkout.category,
+          //   'gifUrl': newWorkout.gifUrl,
+          // });
         }
       }
     } catch (e) {

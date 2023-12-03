@@ -1,34 +1,34 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_const_constructors_in_immutables
 import 'package:equatable/equatable.dart';
 
 import '../entities/entities.dart';
 
 class Workout extends Equatable {
-	final String workoutName;
+	final String name;
   final String category;
-  String? gifUrl;
+  final String gifUrl;
 
 	Workout({
-		required this.workoutName,
+		required this.name,
     required this.category,
-    this.gifUrl,
+    required this.gifUrl,
 	});
 
 	/// Empty user which represents an unauthenticated user.
   static final empty = Workout(
-    workoutName: '',
+    name: '',
     category: '',
     gifUrl: '',
 	);
 
 	/// Modify Workout parameters
 	Workout copyWith({
-    String? workoutName,
+    String? name,
     String? category,
     String? gifUrl,
   }) {
     return Workout(
-      workoutName: workoutName ?? this.workoutName,
+      name: name ?? this.name,
       category: category ?? this.category,
       gifUrl: gifUrl ?? this.gifUrl,
     );
@@ -42,7 +42,7 @@ class Workout extends Equatable {
 
 	WorkoutEntity toEntity() {
     return WorkoutEntity(
-      workoutName: workoutName,
+      name: name,
       category: category,
       gifUrl: gifUrl,
     );
@@ -50,7 +50,7 @@ class Workout extends Equatable {
 
 	static Workout fromEntity(WorkoutEntity entity) {
     return Workout(
-      workoutName: entity.workoutName,
+      name: entity.name,
       category: entity.category,
       gifUrl: entity.gifUrl,
     );
@@ -59,7 +59,7 @@ class Workout extends Equatable {
 
 	@override
 	List<Object?> get props => [
-    workoutName,
+    name,
     category,
     gifUrl,
   ];

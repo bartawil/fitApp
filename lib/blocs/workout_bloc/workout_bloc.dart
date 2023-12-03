@@ -2,6 +2,7 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_demo/components/constants.dart';
 import 'package:workout_repository/workout_repository.dart';
 part 'workout_event.dart';
 part 'workout_state.dart';
@@ -20,6 +21,15 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
           emit(GetWorkoutGifSuccess(gifUrl));
         } catch (e) {
           emit(GetWorkoutGifFailure());
+        }
+      });
+      on<GetWorkoutsList>((event, emit) async {
+        emit(GetWorkoutsListLoading());
+        try {
+          List<Workout> workoutsList = await _workoutRepository.getWorkoutsList(event.workoutType);
+          emit(GetWorkoutsListSuccess(workoutsList));
+        } catch (e) {
+          emit(GetWorkoutsListFailure());
         }
       });
     }

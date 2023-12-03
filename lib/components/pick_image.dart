@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 Future<void> pickAndCropImage(BuildContext context) async {
   final ImagePicker picker = ImagePicker();
-  final XFile? image = await picker.pickImage(
+  XFile? image = await picker.pickImage(
     source: ImageSource.gallery,
     maxHeight: 500,
     maxWidth: 500,
@@ -47,4 +47,5 @@ Future<void> pickAndCropImage(BuildContext context) async {
           );
     }
   }
+  image = null;
 }

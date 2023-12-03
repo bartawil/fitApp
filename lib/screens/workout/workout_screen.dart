@@ -4,8 +4,30 @@ import 'package:flutter_demo/blocs/workout_bloc/workout_bloc.dart';
 import 'package:flutter_demo/screens/workout/exercise_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class WorkoutScreen extends StatelessWidget {
+class WorkoutScreen extends StatefulWidget {
   const WorkoutScreen({super.key});
+
+  @override
+  State<WorkoutScreen> createState() => _WorkoutScreenState();
+}
+
+class _WorkoutScreenState extends State<WorkoutScreen>
+    with SingleTickerProviderStateMixin {
+  TabController? _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    // Create a TabController with the desired length (number of tabs)
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the TabController to release resources
+    _tabController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +97,7 @@ class WorkoutScreen extends StatelessWidget {
                 builder: (context, state) {
                   if (state is GetWorkoutGifSuccess) {
                     return Expanded(
-                      child: TabBarView(children: [
+                      child: TabBarView(controller: _tabController, children: [
                         ExerciseList(
                           gifUrl: state.gifUrl,
                           numOfExercises: 4,

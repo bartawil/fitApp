@@ -8,8 +8,14 @@ import 'package:flutter_demo/screens/authentication/welcome_screen.dart';
 import 'blocs/authentication_bloc/authentication_bloc.dart';
 import 'screens/home/home_screen.dart';
 
-class MyAppView extends StatelessWidget {
+class MyAppView extends StatefulWidget {
   const MyAppView({super.key});
+
+  @override
+  State<MyAppView> createState() => _MyAppViewState();
+}
+
+class _MyAppViewState extends State<MyAppView> {
 
   @override
   Widget build(BuildContext context) {

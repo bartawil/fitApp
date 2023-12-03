@@ -16,3 +16,11 @@ final class GetWorkoutGifSuccess extends WorkoutState {
 
   const GetWorkoutGifSuccess(this.gifUrl);
 }
+
+final class GetWorkoutsListFailure extends WorkoutState {}
+final class GetWorkoutsListLoading extends WorkoutState {}
+final class GetWorkoutsListSuccess extends WorkoutState {
+  final List<Workout> workoutsList;
+
+  const GetWorkoutsListSuccess(this.workoutsList);
+}

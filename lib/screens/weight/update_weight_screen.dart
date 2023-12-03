@@ -24,6 +24,12 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
   final weightController = TextEditingController();
 
   @override
+  void dispose() {
+    weightController.dispose();
+    _formKey.currentState?.dispose(); // Dispose of FormState if needed
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<UpdateUserInfoBloc, UpdateUserInfoState>(

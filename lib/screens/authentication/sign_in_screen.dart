@@ -29,6 +29,13 @@ class _SignInScreenState extends State<SignInScreen> {
   bool signInRequired = false; // Boolean to track if sign-in is in progress.
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<SignInBloc, SignInState>(
       listener: (context, state) {

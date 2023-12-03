@@ -13,3 +13,12 @@ class GetWorkoutGif extends WorkoutEvent{
   @override
   List<Object> get props => [];
 }
+
+class GetWorkoutsList extends WorkoutEvent{
+  final String workoutType;
+
+  const GetWorkoutsList(this.workoutType);
+
+  @override
+  List<Object> get props => [workoutTypes];
+}

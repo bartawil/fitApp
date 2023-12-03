@@ -22,6 +22,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   bool resetPasswordRequired = false;
 
   @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<ResetPasswordBloc, ResetPasswordState>(
         listener: (context, state) {
@@ -135,8 +141,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   'Reset Password',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      color:
-                                          Theme.of(context).colorScheme.onPrimary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w900),
                                 ),

@@ -5,22 +5,38 @@ import 'package:user_repository/user_repository.dart';
 
 import 'app_view.dart';
 
-class MyApp extends StatelessWidget {
-	final UserRepository userRepository;
-  
+class MyApp extends StatefulWidget {
+  final UserRepository userRepository;
+
   const MyApp(this.userRepository, {super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late AuthenticationBloc _authenticationBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _authenticationBloc = AuthenticationBloc(myUserRepository: widget.userRepository);
+  }
+
+  @override
+  void dispose() {
+    _authenticationBloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
-			providers: [
-				RepositoryProvider<AuthenticationBloc>(
-					create: (_) => AuthenticationBloc(
-						myUserRepository: userRepository
-					)
-				)
-			], 
-			child: const MyAppView()
-		);
+      providers: [
+        RepositoryProvider<AuthenticationBloc>.value(value: _authenticationBloc),
+      ],
+      child: const MyAppView(),
+    );
   }
 }

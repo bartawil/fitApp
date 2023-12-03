@@ -64,7 +64,10 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
   }
 
   showNotification() {
-    if (titleController.text.isEmpty || descriptionController.text.isEmpty || dateController.text.isEmpty || timeController.text.isEmpty) {
+    if (titleController.text.isEmpty ||
+        descriptionController.text.isEmpty ||
+        dateController.text.isEmpty ||
+        timeController.text.isEmpty) {
       return;
     }
     FocusManager.instance.primaryFocus?.unfocus();
@@ -150,6 +153,15 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
 
   Future<void> cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    dateController.dispose();
+    timeController.dispose();
+    super.dispose();
   }
 
   @override
@@ -291,11 +303,13 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
                               Theme.of(context).colorScheme.primary,
                         ),
                         onPressed: showNotification,
-                        child: Text("Create Notification",
-                        style: TextStyle(
-                                  color: Theme.of(context).colorScheme.onPrimary,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w900),)),
+                        child: Text(
+                          "Create Notification",
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900),
+                        )),
                   ],
                 ),
               ),

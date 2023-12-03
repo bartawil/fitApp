@@ -30,6 +30,15 @@ class _NotificationSettingsScreenState
   }
 
   @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    dateController.dispose();
+    timeController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<NotificationBloc, NotificationState>(
       listener: (context, state) {
@@ -99,7 +108,7 @@ class _NotificationSettingsScreenState
                                   horizontal: 16.0,
                                   vertical:
                                       8.0), // Increase the vertical padding.
-                              
+
                               title: Padding(
                                 padding: const EdgeInsets.only(
                                     bottom:
@@ -122,7 +131,8 @@ class _NotificationSettingsScreenState
                                             create: (context) => NotificationBloc(
                                                 notificationRepository:
                                                     FirebaseNotificationRepository()),
-                                            child: NotificationDetailsScreen(notificationList[i]),
+                                            child: NotificationDetailsScreen(
+                                                notificationList[i]),
                                           )),
                                 );
                               },

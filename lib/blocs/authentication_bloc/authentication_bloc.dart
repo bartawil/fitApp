@@ -30,7 +30,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       }
     });
   }
-
+ 
 	@override
 	Future<void> close() {
 		_userSubscription.cancel();
