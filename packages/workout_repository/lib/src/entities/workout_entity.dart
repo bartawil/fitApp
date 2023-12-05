@@ -3,12 +3,14 @@
 import 'package:equatable/equatable.dart';
 
 class WorkoutEntity extends Equatable {
+  String id;
 	String name;
   String category;
   String gifUrl;
 
 
 	WorkoutEntity({
+    required this.id,
 		required this.name,
     required this.category,
     required this.gifUrl,
@@ -16,6 +18,7 @@ class WorkoutEntity extends Equatable {
 
 	Map<String, Object?> toDocument() {
     return {
+      'id': id,
       'name': name,
       'category': category,
       'gifUrl': gifUrl,
@@ -24,6 +27,7 @@ class WorkoutEntity extends Equatable {
 
 	static WorkoutEntity fromDocument(Map<String, dynamic> doc) {
     return WorkoutEntity(
+      id: doc['id'] as String,
       name: doc['name'] as String,
       category: doc['category'] as String,
       gifUrl: doc['gifUrl'] as String,
@@ -32,6 +36,7 @@ class WorkoutEntity extends Equatable {
 	
 	@override
 	List<Object?> get props => [
+    id,
     name,
     category,
     gifUrl,
@@ -40,6 +45,7 @@ class WorkoutEntity extends Equatable {
 	@override
   String toString() {
     return '''UserEntity: {
+      id: $id,
       name: $name,
       category: $category,
       gifUrl: $gifUrl,

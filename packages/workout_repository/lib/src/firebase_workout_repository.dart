@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
 import 'package:workout_repository/workout_repository.dart';
 
 class FirebaseWorkoutRepository implements WorkoutRepository {
@@ -35,6 +36,7 @@ class FirebaseWorkoutRepository implements WorkoutRepository {
   @override
   Future<String> getGif() async {
     try {
+      // uploadAllGifs();
       Reference firebaseStoreRef = FirebaseStorage.instance
           .ref()
           .child('workout/Legs/barbell-rack-pull.gif');
@@ -75,6 +77,7 @@ class FirebaseWorkoutRepository implements WorkoutRepository {
           String category = folder;
 
           Workout newWorkout = Workout(
+            id: const Uuid().v4(),
             name: name,
             category: category,
             gifUrl: url,
@@ -83,8 +86,9 @@ class FirebaseWorkoutRepository implements WorkoutRepository {
           await workoutsCollection
             .doc(folder)
             .collection(folder)
-            .doc(newWorkout.name)
+            .doc(newWorkout.id)
             .set({
+              'id': newWorkout.id,
               'name': newWorkout.name,
               'category': newWorkout.category,
               'gifUrl': newWorkout.gifUrl,

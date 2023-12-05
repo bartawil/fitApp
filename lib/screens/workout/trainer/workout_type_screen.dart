@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/workout_bloc/workout_bloc.dart';
@@ -18,6 +20,8 @@ class WorkoutTypeScreen extends StatefulWidget {
 class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
   Map<String, List<TextEditingController>> workoutSetsControllers = {};
   Map<String, List<TextEditingController>> workoutRepsControllers = {};
+  Map<String, List<bool>> selectedWorkouts = {};
+  Map<String, List<String>> selectedId = {};
 
   @override
   void initState() {
@@ -25,15 +29,31 @@ class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
     for (var type in workoutTypes) {
       workoutSetsControllers[type] = [];
       workoutRepsControllers[type] = [];
+      selectedWorkouts[type] = [];
+      selectedId[type] = [];
       for (int i = 0; i < 100; i++) {
         workoutSetsControllers[type]?.add(TextEditingController(text: '3'));
         workoutRepsControllers[type]?.add(TextEditingController(text: '12'));
+        selectedWorkouts[type]?.add(false);
+        selectedId[type]?.add('');
+      }
+    }
+  }
+
+  void onReturnFromScreen() {
+    for (var type in workoutTypes) {
+      for (int i = 0; i < 100; i++) {
+        if (selectedWorkouts[type]![i]) {
+          log('type: $type index: ${selectedId[type]![i]}', name: "WorkoutTypeScreen");
+          log('type: $type index: $i', name: "WorkoutTypeScreen");
+        }
       }
     }
   }
 
   @override
   void dispose() {
+    onReturnFromScreen();
     // Dispose the controllers to avoid memory leaks
     for (var type in workoutTypes) {
       for (var controller in workoutSetsControllers[type]!) {
@@ -54,7 +74,9 @@ class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
         backgroundColor: Theme.of(context).colorScheme.background,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           color: Theme.of(context).colorScheme.secondary,
         ),
       ),
@@ -165,205 +187,245 @@ class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
                                         title: Padding(
                                           padding: const EdgeInsets.only(
                                               bottom: 16.0),
-                                          child: Text(
-                                            state.workoutsList[j].name
-                                                .toUpperCase(),
-                                            style: GoogleFonts.playfairDisplay(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.normal,
-                                            ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                state.workoutsList[j].name
+                                                    .toUpperCase(),
+                                                style:
+                                                    GoogleFonts.playfairDisplay(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                              Checkbox(
+                                                activeColor: Theme.of(context)
+                                                    .colorScheme
+                                                    .error,
+                                                value: selectedWorkouts[
+                                                    workoutTypes[index]]![j],
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    selectedWorkouts[
+                                                            workoutTypes[
+                                                                index]]![j] =
+                                                        value!;
+                                                    selectedId[workoutTypes[
+                                                            index]]![j] = state.workoutsList[j].id;
+                                                  });
+                                                },
+                                              )
+                                            ],
                                           ),
                                         ),
-                                        subtitle: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            // Number of sets
-                                            Row(
-                                              children: [
-                                                const Text("Sets:"),
-                                                const SizedBox(width: 20),
-                                                Column(
-                                                  children: [
-                                                    Column(
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              workoutSetsControllers[
-                                                                      workoutTypes[
-                                                                          index]]![j]
-                                                                  .text,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
+                                        subtitle: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 40.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              // Number of sets
+                                              Row(
+                                                children: [
+                                                  Column(
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                workoutSetsControllers[
+                                                                        workoutTypes[
+                                                                            index]]![j]
+                                                                    .text,
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 10),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            CircleAvatar(
-                                                              backgroundColor:
-                                                                  Theme.of(
-                                                                          context)
-                                                                      .colorScheme
-                                                                      .secondary,
-                                                              child: IconButton(
-                                                                icon: const Icon(
-                                                                    Icons
-                                                                        .remove),
-                                                                color: Colors
-                                                                    .white,
-                                                                onPressed: () {
-                                                                  setState(() {
-                                                                    workoutSetsControllers[workoutTypes[index]]![
-                                                                            j]
-                                                                        .text = (int.parse(workoutSetsControllers[workoutTypes[index]]![j].text) -
-                                                                            1)
-                                                                        .toString();
-                                                                  });
-                                                                },
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 10),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              CircleAvatar(
+                                                                backgroundColor: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .secondary,
+                                                                child:
+                                                                    IconButton(
+                                                                  icon: const Icon(
+                                                                      Icons
+                                                                          .remove),
+                                                                  color: Colors
+                                                                      .white,
+                                                                  onPressed:
+                                                                      () {
+                                                                    setState(
+                                                                        () {
+                                                                      workoutSetsControllers[workoutTypes[index]]![
+                                                                              j]
+                                                                          .text = (int.parse(workoutSetsControllers[workoutTypes[index]]![j].text) -
+                                                                              1)
+                                                                          .toString();
+                                                                    });
+                                                                  },
+                                                                ),
                                                               ),
-                                                            ),
-                                                            const SizedBox(
-                                                                width: 10),
-                                                            CircleAvatar(
-                                                              backgroundColor:
-                                                                  Theme.of(
-                                                                          context)
-                                                                      .colorScheme
-                                                                      .secondary,
-                                                              child: IconButton(
-                                                                icon: const Icon(
-                                                                    Icons.add),
-                                                                color: Colors
-                                                                    .white,
-                                                                onPressed: () {
-                                                                  setState(() {
-                                                                    workoutSetsControllers[workoutTypes[index]]![
-                                                                            j]
-                                                                        .text = (int.parse(workoutSetsControllers[workoutTypes[index]]![j].text) +
-                                                                            1)
-                                                                        .toString();
-                                                                  });
-                                                                },
+                                                              const SizedBox(
+                                                                  width: 10),
+                                                              CircleAvatar(
+                                                                backgroundColor: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .secondary,
+                                                                child:
+                                                                    IconButton(
+                                                                  icon: const Icon(
+                                                                      Icons
+                                                                          .add),
+                                                                  color: Colors
+                                                                      .white,
+                                                                  onPressed:
+                                                                      () {
+                                                                    setState(
+                                                                        () {
+                                                                      workoutSetsControllers[workoutTypes[index]]![
+                                                                              j]
+                                                                          .text = (int.parse(workoutSetsControllers[workoutTypes[index]]![j].text) +
+                                                                              1)
+                                                                          .toString();
+                                                                    });
+                                                                  },
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            // Number of reps
-                                            Row(
-                                              children: [
-                                                const Text("Reps:"),
-                                                const SizedBox(width: 20),
-                                                Column(
-                                                  children: [
-                                                    Column(
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              workoutRepsControllers[
-                                                                      workoutTypes[
-                                                                          index]]![j]
-                                                                  .text,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      const Text("Sets"),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              // Number of reps
+                                              Row(
+                                                children: [
+                                                  Column(
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                workoutRepsControllers[
+                                                                        workoutTypes[
+                                                                            index]]![j]
+                                                                    .text,
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 10),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            CircleAvatar(
-                                                              backgroundColor:
-                                                                  Theme.of(
-                                                                          context)
-                                                                      .colorScheme
-                                                                      .secondary,
-                                                              child: IconButton(
-                                                                icon: const Icon(
-                                                                    Icons
-                                                                        .remove),
-                                                                color: Colors
-                                                                    .white,
-                                                                onPressed: () {
-                                                                  setState(() {
-                                                                    workoutRepsControllers[workoutTypes[index]]![
-                                                                            j]
-                                                                        .text = (int.parse(workoutRepsControllers[workoutTypes[index]]![j].text) -
-                                                                            1)
-                                                                        .toString();
-                                                                  });
-                                                                },
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 10),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              CircleAvatar(
+                                                                backgroundColor: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .secondary,
+                                                                child:
+                                                                    IconButton(
+                                                                  icon: const Icon(
+                                                                      Icons
+                                                                          .remove),
+                                                                  color: Colors
+                                                                      .white,
+                                                                  onPressed:
+                                                                      () {
+                                                                    setState(
+                                                                        () {
+                                                                      workoutRepsControllers[workoutTypes[index]]![
+                                                                              j]
+                                                                          .text = (int.parse(workoutRepsControllers[workoutTypes[index]]![j].text) -
+                                                                              1)
+                                                                          .toString();
+                                                                    });
+                                                                  },
+                                                                ),
                                                               ),
-                                                            ),
-                                                            const SizedBox(
-                                                                width: 10),
-                                                            CircleAvatar(
-                                                              backgroundColor:
-                                                                  Theme.of(
-                                                                          context)
-                                                                      .colorScheme
-                                                                      .secondary,
-                                                              child: IconButton(
-                                                                icon: const Icon(
-                                                                    Icons.add),
-                                                                color: Colors
-                                                                    .white,
-                                                                onPressed: () {
-                                                                  setState(() {
-                                                                    workoutRepsControllers[workoutTypes[index]]![
-                                                                            j]
-                                                                        .text = (int.parse(workoutRepsControllers[workoutTypes[index]]![j].text) +
-                                                                            1)
-                                                                        .toString();
-                                                                  });
-                                                                },
+                                                              const SizedBox(
+                                                                  width: 10),
+                                                              CircleAvatar(
+                                                                backgroundColor: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .secondary,
+                                                                child:
+                                                                    IconButton(
+                                                                  icon: const Icon(
+                                                                      Icons
+                                                                          .add),
+                                                                  color: Colors
+                                                                      .white,
+                                                                  onPressed:
+                                                                      () {
+                                                                    setState(
+                                                                        () {
+                                                                      workoutRepsControllers[workoutTypes[index]]![
+                                                                              j]
+                                                                          .text = (int.parse(workoutRepsControllers[workoutTypes[index]]![j].text) +
+                                                                              1)
+                                                                          .toString();
+                                                                    });
+                                                                  },
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      const Text("Reps"),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     );
