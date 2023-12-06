@@ -22,3 +22,24 @@ class GetWorkoutsList extends WorkoutEvent{
   @override
   List<Object> get props => [workoutTypes];
 }
+
+class UpdateUserWorkout extends WorkoutEvent{
+  final String userId;
+  final String workoutId;
+  final String category;
+  final double workoutNumber;
+  final double sets;
+  final double reps;
+
+  const UpdateUserWorkout(
+    this.userId, 
+    this.workoutId,
+    this.category,
+    this.workoutNumber,
+    this.sets,
+    this.reps
+  );
+
+  @override
+  List<Object> get props => [];
+}

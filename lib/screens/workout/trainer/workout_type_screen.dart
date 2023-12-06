@@ -5,12 +5,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/workout_bloc/workout_bloc.dart';
 import 'package:flutter_demo/components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_repository/user_repository.dart';
 
 class WorkoutTypeScreen extends StatefulWidget {
+  final String userId;
+  final double workoutNumber;
   final String title;
   final Color color;
 
-  const WorkoutTypeScreen({Key? key, required this.title, required this.color})
+  const WorkoutTypeScreen(
+      {Key? key,
+      required this.userId,
+      required this.workoutNumber,
+      required this.title,
+      required this.color})
       : super(key: key);
 
   @override
@@ -22,6 +30,8 @@ class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
   Map<String, List<TextEditingController>> workoutRepsControllers = {};
   Map<String, List<bool>> selectedWorkouts = {};
   Map<String, List<String>> selectedId = {};
+  List<UserWorkout> userWorkoutsList = [];
+
 
   @override
   void initState() {
@@ -44,8 +54,26 @@ class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
     for (var type in workoutTypes) {
       for (int i = 0; i < 100; i++) {
         if (selectedWorkouts[type]![i]) {
-          log('type: $type index: ${selectedId[type]![i]}', name: "WorkoutTypeScreen");
+          log('type: $type index: ${selectedId[type]![i]}',
+              name: "WorkoutTypeScreen");
           log('type: $type index: $i', name: "WorkoutTypeScreen");
+          UserWorkout userWorkout = UserWorkout.empty;
+          userWorkout.workoutId = selectedId[type]![i];
+          userWorkout.category = type;
+          userWorkout.workoutNumber = widget.workoutNumber;
+          userWorkout.sets =
+              double.parse(workoutSetsControllers[type]![i].text);
+          userWorkout.reps =
+              double.parse(workoutRepsControllers[type]![i].text);
+        context.read<WorkoutBloc>().add(UpdateUserWorkout(
+            widget.userId, 
+            selectedId[type]![i],
+            type,
+            widget.workoutNumber,
+            double.parse(workoutSetsControllers[type]![i].text),
+            double.parse(workoutRepsControllers[type]![i].text),
+        ));
+          
         }
       }
     }
@@ -53,7 +81,6 @@ class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
 
   @override
   void dispose() {
-    onReturnFromScreen();
     // Dispose the controllers to avoid memory leaks
     for (var type in workoutTypes) {
       for (var controller in workoutSetsControllers[type]!) {
@@ -75,6 +102,8 @@ class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
+            log("chevk", name: "WorkoutTypeScreen");
+
             Navigator.of(context).pop();
           },
           color: Theme.of(context).colorScheme.secondary,
@@ -216,7 +245,9 @@ class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
                                                                 index]]![j] =
                                                         value!;
                                                     selectedId[workoutTypes[
-                                                            index]]![j] = state.workoutsList[j].id;
+                                                            index]]![j] =
+                                                        state
+                                                            .workoutsList[j].id;
                                                   });
                                                 },
                                               )
@@ -445,6 +476,19 @@ class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
                 },
               ),
             ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                onReturnFromScreen();
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.error,
+                minimumSize: const Size(150, 50), // Set the desired width and height
+              ),
+              child: const Text('Save workout'),
+            ),
+            const SizedBox(height: 30),
           ],
         ),
       ),

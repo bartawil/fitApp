@@ -180,6 +180,33 @@ class FirebaseUserRepository implements UserRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<void> updateUserWorkoutCollection(String userId, String workoutId,
+      String category, double workoutNumber, double sets, double reps) async {
+    try {
+      // late UserWorkout newWorkout;
+      // newWorkout = userWorkout.copyWith(
+      //   id: const Uuid().v1(),
+      // );
+      String id = const Uuid().v1();
+      await usersCollection
+          .doc(userId)
+          .collection('workouts ${workoutNumber.toInt()}')
+          .doc(id)
+          .set({
+        'id': id,
+        'workoutId': workoutId,
+        'category': category,
+        'workoutNumber': workoutNumber,
+        'sets': sets,
+        'reps': reps,
+      });
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }
 
 class CustomFirebaseAuthException implements Exception {
@@ -187,5 +214,3 @@ class CustomFirebaseAuthException implements Exception {
 
   CustomFirebaseAuthException(this.message);
 }
-
-  

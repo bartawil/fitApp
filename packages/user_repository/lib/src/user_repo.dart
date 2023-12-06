@@ -26,4 +26,13 @@ abstract class UserRepository {
   Future<List<Weight>> deleteWeight(String userId, String weightId);
 
   Future<void> setWeightData(String userId, Weight weight);
+
+  Future<void> updateUserWorkoutCollection(
+    String userId, 
+    String workoutId,
+    String category,
+    double workoutNumber,
+    double sets,
+    double reps
+  );
 }

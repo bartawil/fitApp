@@ -24,3 +24,13 @@ final class GetWorkoutsListSuccess extends WorkoutState {
 
   const GetWorkoutsListSuccess(this.workoutsList);
 }
+
+final class GetUpdateWorkoutGifFailure extends WorkoutState {}
+final class GetUpdateWorkoutGifLoading extends WorkoutState {}
+final class GetUpdateWorkoutGifSuccess extends WorkoutState {
+
+  const GetUpdateWorkoutGifSuccess();
+
+  @override
+  List<Object> get props => [];
+}

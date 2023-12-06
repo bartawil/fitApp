@@ -12,6 +12,7 @@ import 'package:flutter_demo/screens/weight/weight_graph_screen.dart';
 import 'package:flutter_demo/screens/workout/trainer/plan_workout_screen.dart';
 import 'package:flutter_demo/screens/workout/workout_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_repository/user_repository.dart';
 import 'package:workout_repository/workout_repository.dart';
 
 import '../../blocs/my_user_bloc/my_user_bloc.dart';
@@ -214,13 +215,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return MultiBlocProvider(
                       providers: [
                         BlocProvider(
                           create: (context) => WorkoutBloc(
-                              workoutRepository:  FirebaseWorkoutRepository())
+                              userRepository: FirebaseUserRepository(),
+                              workoutRepository: FirebaseWorkoutRepository())
                             ..add(const GetWorkoutGif()),
                         ),
                       ],
@@ -247,14 +248,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return MultiBlocProvider(
                       providers: [
-                        BlocProvider(
-                          create: (context) => WorkoutBloc(
-                              workoutRepository:  FirebaseWorkoutRepository())
+                        BlocProvider<MyUserBloc>(
+                          create: (context) => MyUserBloc(
+                              myUserRepository: context
+                                  .read<AuthenticationBloc>()
+                                  .userRepository)
+                            ..add(GetMyUser(
+                                myUserId: context
+                                    .read<AuthenticationBloc>()
+                                    .state
+                                    .user!
+                                    .uid)),
                         ),
+                        BlocProvider(
+                            create: (context) => WorkoutBloc(
+                                userRepository: FirebaseUserRepository(),
+                                workoutRepository:
+                                    FirebaseWorkoutRepository())),
                       ],
                       child: const PlanWorkoutScreen(),
                     );
@@ -319,12 +332,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: 'assets/images/muscle.png',
                 iconColor: Theme.of(context).colorScheme.onBackground,
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return MultiBlocProvider(
                       providers: [
                         BlocProvider(
                           create: (context) => WorkoutBloc(
+                              userRepository: FirebaseUserRepository(),
                               workoutRepository: FirebaseWorkoutRepository())
                             ..add(const GetWorkoutGif()),
                         ),
@@ -338,10 +351,8 @@ class _HomeScreenState extends State<HomeScreen> {
               MyMenuButton(
                   title: "settings",
                   icon: 'assets/images/settings.png',
-                  iconColor: Theme.of(context)
-                      .colorScheme
-                      .background
-                      .withOpacity(0.5),
+                  iconColor:
+                      Theme.of(context).colorScheme.background.withOpacity(0.5),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -388,8 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: 'assets/images/weight.png',
                 iconColor: Theme.of(context).colorScheme.secondary,
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return MultiBlocProvider(
                       providers: [
                         BlocProvider<MyUserBloc>(
