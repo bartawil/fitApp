@@ -7,13 +7,13 @@ import 'package:flutter_demo/components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_repository/user_repository.dart';
 
-class WorkoutTypeScreen extends StatefulWidget {
+class SelectExerciseScreen extends StatefulWidget {
   final String userId;
   final double workoutNumber;
   final String title;
   final Color color;
 
-  const WorkoutTypeScreen(
+  const SelectExerciseScreen(
       {Key? key,
       required this.userId,
       required this.workoutNumber,
@@ -22,10 +22,10 @@ class WorkoutTypeScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<WorkoutTypeScreen> createState() => _WorkoutTypeScreenState();
+  State<SelectExerciseScreen> createState() => _SelectExerciseScreenState();
 }
 
-class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
+class _SelectExerciseScreenState extends State<SelectExerciseScreen> {
   Map<String, List<TextEditingController>> workoutSetsControllers = {};
   Map<String, List<TextEditingController>> workoutRepsControllers = {};
   Map<String, List<bool>> selectedWorkouts = {};
@@ -55,8 +55,8 @@ class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
       for (int i = 0; i < 100; i++) {
         if (selectedWorkouts[type]![i]) {
           log('type: $type index: ${selectedId[type]![i]}',
-              name: "WorkoutTypeScreen");
-          log('type: $type index: $i', name: "WorkoutTypeScreen");
+              name: "SelectExerciseScreen");
+          log('type: $type index: $i', name: "SelectExerciseScreen");
           UserWorkout userWorkout = UserWorkout.empty;
           userWorkout.workoutId = selectedId[type]![i];
           userWorkout.category = type;
@@ -102,7 +102,7 @@ class _WorkoutTypeScreenState extends State<WorkoutTypeScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            log("chevk", name: "WorkoutTypeScreen");
+            log("chevk", name: "SelectExerciseScreen");
 
             Navigator.of(context).pop();
           },

@@ -9,7 +9,7 @@ import 'package:flutter_demo/components/menu_button.dart';
 import 'package:flutter_demo/screens/home/settings_screen.dart';
 import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
 import 'package:flutter_demo/screens/weight/weight_graph_screen.dart';
-import 'package:flutter_demo/screens/workout/trainer/plan_workout_screen.dart';
+import 'package:flutter_demo/screens/workout/trainer/build_workout_screen.dart';
 import 'package:flutter_demo/screens/workout/workout_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_repository/user_repository.dart';
@@ -269,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 workoutRepository:
                                     FirebaseWorkoutRepository())),
                       ],
-                      child: const PlanWorkoutScreen(),
+                      child: const BuildWorkoutScreen(),
                     );
                   }));
                 },
