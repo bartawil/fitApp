@@ -51,5 +51,23 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
           emit(GetUpdateWorkoutGifFailure());
         }
       });
+      on<GetUserWorkoutList>((event, emit) async {
+        emit(GetUserWorkoutListLoading());
+        try {
+          List<UserWorkout> weightList = await _userRepository.getWorkoutList(event.userId, event.workoutNumber);
+          emit(GetUserWorkoutListSuccess(weightList));
+        } catch (e) {
+          emit(GetUserWorkoutListFailure());
+        }
+      });
+      on<GetWorkoutById>((event, emit) async {
+        emit(GetWorkoutByIdLoading());
+        try {
+          Workout workout = await _workoutRepository.getWorkoutById(event.category, event.workoutId);
+          emit(GetWorkoutByIdSuccess(workout));
+        } catch (e) {
+          emit(GetWorkoutByIdFailure());
+        }
+      });
     }
 }

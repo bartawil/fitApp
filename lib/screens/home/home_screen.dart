@@ -218,11 +218,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return MultiBlocProvider(
                       providers: [
-                        BlocProvider(
-                          create: (context) => WorkoutBloc(
-                              userRepository: FirebaseUserRepository(),
-                              workoutRepository: FirebaseWorkoutRepository())
-                            ..add(const GetWorkoutGif()),
+                        BlocProvider<MyUserBloc>(
+                          create: (context) => MyUserBloc(
+                              myUserRepository: context
+                                  .read<AuthenticationBloc>()
+                                  .userRepository)
+                            ..add(GetMyUser(
+                                myUserId: context
+                                    .read<AuthenticationBloc>()
+                                    .state
+                                    .user!
+                                    .uid)),
                         ),
                       ],
                       child: const WorkoutScreen(),
@@ -335,11 +341,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return MultiBlocProvider(
                       providers: [
-                        BlocProvider(
-                          create: (context) => WorkoutBloc(
-                              userRepository: FirebaseUserRepository(),
-                              workoutRepository: FirebaseWorkoutRepository())
-                            ..add(const GetWorkoutGif()),
+                        BlocProvider<MyUserBloc>(
+                          create: (context) => MyUserBloc(
+                              myUserRepository: context
+                                  .read<AuthenticationBloc>()
+                                  .userRepository)
+                            ..add(GetMyUser(
+                                myUserId: context
+                                    .read<AuthenticationBloc>()
+                                    .state
+                                    .user!
+                                    .uid)),
                         ),
                       ],
                       child: const WorkoutScreen(),

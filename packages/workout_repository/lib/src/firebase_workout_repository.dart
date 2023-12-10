@@ -9,6 +9,26 @@ class FirebaseWorkoutRepository implements WorkoutRepository {
   final workoutsCollection = FirebaseFirestore.instance.collection('workouts');
 
   @override
+  Future<Workout> getWorkoutById(String category, String workoutId) async {
+    try {
+      DocumentSnapshot snapshot = await workoutsCollection
+          .doc(category)
+          .collection(category)
+          .doc(workoutId)
+          .get();
+
+      Workout workout = Workout.fromEntity(
+          WorkoutEntity.fromDocument(snapshot.data() as Map<String, dynamic>));
+
+      log(workout.toString(), name: 'FirebaseWorkoutRepository');
+      return workout;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<Workout>> getWorkoutsList(String type) async {
     try {
       QuerySnapshot snapshot = await workoutsCollection.doc(type).collection(type).get();

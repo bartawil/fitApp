@@ -149,12 +149,12 @@ class _BuildWorkoutScreenState extends State<BuildWorkoutScreen> {
                               userId: state.user!.id,
                               workoutNumber: 3,
                               title: 'CHOOSE WORKOUT   III',
-                              color: Theme.of(context).colorScheme.scrim,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ));
                       }));
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.scrim,
+                      backgroundColor: Theme.of(context).colorScheme.tertiary,
                       minimumSize: const Size(
                           280, 80), // Set the desired width and height
                     ),

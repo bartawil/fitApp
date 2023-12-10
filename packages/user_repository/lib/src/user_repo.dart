@@ -35,4 +35,6 @@ abstract class UserRepository {
     double sets,
     double reps
   );
+
+  Future<List<UserWorkout>> getWorkoutList(String userId, double workoutNumber);
 }

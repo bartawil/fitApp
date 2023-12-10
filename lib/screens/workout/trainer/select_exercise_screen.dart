@@ -102,8 +102,6 @@ class _SelectExerciseScreenState extends State<SelectExerciseScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            log("chevk", name: "SelectExerciseScreen");
-
             Navigator.of(context).pop();
           },
           color: Theme.of(context).colorScheme.secondary,

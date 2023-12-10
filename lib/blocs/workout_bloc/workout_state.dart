@@ -34,3 +34,19 @@ final class GetUpdateWorkoutGifSuccess extends WorkoutState {
   @override
   List<Object> get props => [];
 }
+
+final class GetUserWorkoutListFailure extends WorkoutState {}
+final class GetUserWorkoutListLoading extends WorkoutState {}
+final class GetUserWorkoutListSuccess extends WorkoutState {
+  final List<UserWorkout> userWorkoutList;
+
+  const GetUserWorkoutListSuccess(this.userWorkoutList);
+}
+
+final class GetWorkoutByIdFailure extends WorkoutState {}
+final class GetWorkoutByIdLoading extends WorkoutState {}
+final class GetWorkoutByIdSuccess extends WorkoutState {
+  final Workout workout;
+
+  const GetWorkoutByIdSuccess(this.workout);
+}

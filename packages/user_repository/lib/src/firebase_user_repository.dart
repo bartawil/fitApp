@@ -182,13 +182,34 @@ class FirebaseUserRepository implements UserRepository {
   }
 
   @override
+  Future<List<UserWorkout>> getWorkoutList(String userId, double workoutNumber) {
+    try {
+      return usersCollection.doc(userId).collection('workouts ${workoutNumber.toInt()}').get().then(
+          (value) => value.docs
+              .map(
+                  (e) => UserWorkout.fromEntity(UserWorkoutEntity.fromDocument(e.data())))
+              .toList());
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
   Future<void> updateUserWorkoutCollection(String userId, String workoutId,
       String category, double workoutNumber, double sets, double reps) async {
     try {
-      // late UserWorkout newWorkout;
-      // newWorkout = userWorkout.copyWith(
-      //   id: const Uuid().v1(),
-      // );
+          // Delete the existing collection
+    await usersCollection
+        .doc(userId)
+        .collection('workouts ${workoutNumber.toInt()}')
+        .get()
+        .then((snapshot) {
+      for (DocumentSnapshot doc in snapshot.docs) {
+        doc.reference.delete();
+      }
+    });
+
       String id = const Uuid().v1();
       await usersCollection
           .doc(userId)

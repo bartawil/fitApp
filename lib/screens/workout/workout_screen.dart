@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:flutter_demo/blocs/workout_bloc/workout_bloc.dart';
 import 'package:flutter_demo/screens/workout/exercise_list.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_repository/user_repository.dart';
+import 'package:workout_repository/workout_repository.dart';
 
 class WorkoutScreen extends StatefulWidget {
   const WorkoutScreen({super.key});
@@ -78,45 +81,75 @@ class _WorkoutScreenState extends State<WorkoutScreen>
               ),
               const SizedBox(height: 20),
               TabBar(
-                  labelColor: Theme.of(context).colorScheme.error,
-                  labelStyle: GoogleFonts.playfairDisplay(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 22,
+                controller: _tabController,
+                labelColor: Theme.of(context).colorScheme.error,
+                labelStyle: GoogleFonts.playfairDisplay(
+                  color: Theme.of(context).colorScheme.onBackground,
+                  fontSize: 22,
+                ),
+                tabs: const [
+                  Tab(
+                    text: 'I',
                   ),
-                  tabs: const [
-                    Tab(text: 'I'),
-                    Tab(
-                      text: 'II',
-                    ),
-                    Tab(
-                      text: 'III',
-                    ),
-                  ]),
+                  Tab(
+                    text: 'II',
+                  ),
+                  Tab(
+                    text: 'III',
+                  ),
+                ],
+              ),
               const SizedBox(height: 20),
-              BlocBuilder<WorkoutBloc, WorkoutState>(
+              BlocBuilder<MyUserBloc, MyUserState>(
                 builder: (context, state) {
-                  if (state is GetWorkoutGifSuccess) {
+                  if (state.status == MyUserStatus.success) {
                     return Expanded(
                       child: TabBarView(controller: _tabController, children: [
-                        ExerciseList(
-                          gifUrl: state.gifUrl,
-                          numOfExercises: 4,
+                        // Workout 1
+                        MultiBlocProvider(
+                          providers: [
+                            BlocProvider(
+                              create: (context) => WorkoutBloc(
+                                  userRepository: FirebaseUserRepository(),
+                                  workoutRepository:
+                                      FirebaseWorkoutRepository())
+                                ..add(GetUserWorkoutList(state.user!.id, 1)),
+                            ),
+                          ],
+                          child: ExerciseList(),
                         ),
-                        ExerciseList(
-                          gifUrl: state.gifUrl,
-                          numOfExercises: 2,
+                        // Workout 2
+                        MultiBlocProvider(
+                          providers: [
+                            BlocProvider(
+                              create: (context) => WorkoutBloc(
+                                  userRepository: FirebaseUserRepository(),
+                                  workoutRepository:
+                                      FirebaseWorkoutRepository())
+                                ..add(GetUserWorkoutList(state.user!.id, 2)),
+                            ),
+                          ],
+                          child: ExerciseList(),
                         ),
-                        ExerciseList(
-                          gifUrl: state.gifUrl,
-                          numOfExercises: 1,
+                        // Workout 3
+                        MultiBlocProvider(
+                          providers: [
+                            BlocProvider(
+                              create: (context) => WorkoutBloc(
+                                  userRepository: FirebaseUserRepository(),
+                                  workoutRepository:
+                                      FirebaseWorkoutRepository())
+                                ..add(GetUserWorkoutList(state.user!.id, 3)),
+                            ),
+                          ],
+                          child: ExerciseList(),
                         ),
                       ]),
                     );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
                   }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 },
               ),
             ],
