@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api
 
+import 'dart:html';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/workout_bloc/workout_bloc.dart';
@@ -15,7 +18,7 @@ class ExerciseList extends StatefulWidget {
   _ExerciseListState createState() => _ExerciseListState();
 }
 
-class _ExerciseListState extends State<ExerciseList> {
+class _ExerciseListState extends State<ExerciseList> with SingleTickerProviderStateMixin {
   List<UserWorkout> userWorkoutList = [];
   final List<GifController> controllers = [];
 
@@ -98,27 +101,33 @@ class _ExerciseListState extends State<ExerciseList> {
                                       }
                                     },
                                     child: Container(
+                                      height: 100,
+                                      width: 100,
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(16),
+                                        borderRadius: BorderRadius.circular(8),
+                                        image: DecorationImage(
+                                            image: CachedNetworkImageProvider(
+                                              state.workout.gifUrl,
+                                            ),
+                                            fit: BoxFit.cover),
                                         boxShadow: [
                                           BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.2),
+                                            color: Colors.black.withOpacity(0.2),
                                             blurRadius: 5,
                                             spreadRadius: 2,
                                             offset: const Offset(0, 2),
                                           ),
                                         ],
                                       ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: GifView.network(
-                                          state.workout.gifUrl,
-                                          height: 100,
-                                          width: 100,
-                                          controller: controllers[i],
-                                        ),
-                                      ),
+                                      // child: ClipRRect(
+                                      //   borderRadius: BorderRadius.circular(8),
+                                      //   child: GifView.network(
+                                      //     state.workout.gifUrl,
+                                      //     height: 100,
+                                      //     width: 100,
+                                      //     controller: controllers[i],
+                                      //   ),
+                                      // ),
                                     ),
                                   ),
                                 ),
@@ -130,7 +139,8 @@ class _ExerciseListState extends State<ExerciseList> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                        width: 220, // Set the desired width for the text
+                                        width:
+                                            220, // Set the desired width for the text
                                         child: Text(
                                           state.workout.name.toUpperCase(),
                                           style: GoogleFonts.playfairDisplay(

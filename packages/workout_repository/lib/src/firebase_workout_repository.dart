@@ -20,7 +20,6 @@ class FirebaseWorkoutRepository implements WorkoutRepository {
       Workout workout = Workout.fromEntity(
           WorkoutEntity.fromDocument(snapshot.data() as Map<String, dynamic>));
 
-      log(workout.toString(), name: 'FirebaseWorkoutRepository');
       return workout;
     } catch (e) {
       log(e.toString());
@@ -47,8 +46,6 @@ class FirebaseWorkoutRepository implements WorkoutRepository {
 
       return list;
     } catch (e) {
-      log("Error in getWorkoutsList: ${e.toString()}",
-          name: 'FirebaseWorkoutRepository');
       rethrow;
     }
   }

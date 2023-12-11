@@ -198,44 +198,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
-              ListTile(
-                leading: Icon(
-                  Icons.fitness_center_sharp,
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onBackground
-                      .withOpacity(0.5),
-                ),
-                title: Text(
-                  "Workouts",
-                  style: GoogleFonts.caveat(
-                    color: Theme.of(context).colorScheme.secondary,
-                    fontSize: 24,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return MultiBlocProvider(
-                      providers: [
-                        BlocProvider<MyUserBloc>(
-                          create: (context) => MyUserBloc(
-                              myUserRepository: context
-                                  .read<AuthenticationBloc>()
-                                  .userRepository)
-                            ..add(GetMyUser(
-                                myUserId: context
-                                    .read<AuthenticationBloc>()
-                                    .state
-                                    .user!
-                                    .uid)),
-                        ),
-                      ],
-                      child: const WorkoutScreen(),
-                    );
-                  }));
-                },
-              ),
               // Select workout to client manager screen
               ListTile(
                 leading: Icon(
