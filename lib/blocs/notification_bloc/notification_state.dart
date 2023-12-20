@@ -17,6 +17,7 @@ final class NotificationSuccess extends NotificationState {
 	const NotificationSuccess(this.notification);
 }
 
+// Define a state class for getting the size of notifications
 final class GetNotificationsSizeFailure extends NotificationState {}
 final class GetNotificationsSizeLoading extends NotificationState {}
 final class GetNotificationsSizeSuccess extends NotificationState {
@@ -25,6 +26,8 @@ final class GetNotificationsSizeSuccess extends NotificationState {
   const GetNotificationsSizeSuccess(this.size);
 }
 
+
+// Define a state class for getting the list of notifications
 final class GetNotificationsListFailure extends NotificationState {}
 final class GetNotificationsListLoading extends NotificationState {}
 final class GetNotificationsListSuccess extends NotificationState {
@@ -33,6 +36,8 @@ final class GetNotificationsListSuccess extends NotificationState {
   const GetNotificationsListSuccess(this.notificationList);
 }
 
+
+// Define a state class for deleting a notification
 final class DeleteNotificationFailure extends NotificationState {}
 final class DeleteNotificationLoading extends NotificationState {}
 final class DeleteNotificationSuccess extends NotificationState {

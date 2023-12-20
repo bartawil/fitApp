@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api
 
-import 'dart:html';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:user_repository/user_repository.dart';
 import 'package:workout_repository/workout_repository.dart';
 
+// Define the ExerciseList widget as a StatefulWidget
 class ExerciseList extends StatefulWidget {
   ExerciseList({Key? key}) : super(key: key);
 
@@ -18,13 +17,16 @@ class ExerciseList extends StatefulWidget {
   _ExerciseListState createState() => _ExerciseListState();
 }
 
+// Create the state for the ExerciseList widget
 class _ExerciseListState extends State<ExerciseList> with SingleTickerProviderStateMixin {
-  List<UserWorkout> userWorkoutList = [];
+  List<UserWorkout> userWorkoutList = []; 
+  // List of GifControllers for GIF animations
   final List<GifController> controllers = [];
 
   @override
   void initState() {
     super.initState();
+    // Initialize GifControllers for animations
     for (int i = 0; i < 10; i++) {
       controllers.add(GifController(autoPlay: false));
     }
@@ -32,6 +34,7 @@ class _ExerciseListState extends State<ExerciseList> with SingleTickerProviderSt
 
   @override
   void dispose() {
+    // Dispose of GifControllers to release resources
     for (var controller in controllers) {
       controller.dispose();
     }

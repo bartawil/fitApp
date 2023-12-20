@@ -7,10 +7,12 @@ import 'package:flutter_demo/components/text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_repository/user_repository.dart';
 
+// This is a Flutter widget for creating a user account.
 class CreateUserScreen extends StatefulWidget {
   final String userEmail;
   final String userPassword;
 
+  // Constructor to initialize user email and password.
   const CreateUserScreen(
       {super.key, required String email, required String password})
       : userEmail = email,
@@ -37,6 +39,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 
   @override
   void dispose() {
+    // Dispose of text controllers when the widget is disposed.
     firstNameController.dispose();
     lastNameController.dispose();
     phoneNumberController.dispose();
@@ -51,16 +54,19 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
         if (state is SignUpSuccess) {
+          // Handle successful user registration.
           setState(() {
             signUpRequired = false;
             // Go Back to Welcome Screen (SignUp toggle).
             Navigator.pop(context);
           });
         } else if (state is SignUpProcess) {
+          // Handle user registration in progress.
           setState(() {
             signUpRequired = true;
           });
         } else if (state is SignUpFailure) {
+          // Handle user registration failure.
           setState(() {
             signUpRequired = false;
             // Create an alert dialog to display the error message.

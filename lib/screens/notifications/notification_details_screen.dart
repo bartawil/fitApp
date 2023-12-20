@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/notification_bloc/notification_bloc.dart';
@@ -7,10 +6,12 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:notification_repository/notification_repository.dart';
 
+// Define a StatefulWidget for displaying notification details
 // ignore: must_be_immutable
 class NotificationDetailsScreen extends StatefulWidget {
   MyNotification notification;
 
+  // Constructor for the NotificationDetailsScreen
   NotificationDetailsScreen(this.notification, {super.key});
 
   @override
@@ -18,14 +19,16 @@ class NotificationDetailsScreen extends StatefulWidget {
       _NotificationDetailsScreenState();
 }
 
+// Define the state class for the NotificationDetailsScreen
 class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
-
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
     super.initState();
+
+    // Initialize FlutterLocalNotificationsPlugin
     const AndroidInitializationSettings androidInitializationSettings =
         AndroidInitializationSettings('playstore');
 
@@ -50,15 +53,21 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
     );
   }
 
+  // Function to cancel a scheduled notification by ID
   Future<void> cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);
-    context.read<NotificationBloc>().add(DeleteNotification(widget.notification.notificationId));
+    // Dispatch a DeleteNotification event to NotificationBloc
+    context
+        .read<NotificationBloc>()
+        .add(DeleteNotification(widget.notification.notificationId));
+    // Close the NotificationDetailsScreen
     Navigator.of(context).pop();
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Convert scheduled time to local time and format it
     DateTime scheduledTime = widget.notification.scheduledAt.toUtc();
     DateTime localTime = scheduledTime.add(const Duration(hours: 4));
     String formattedTime = DateFormat('dd/M/yy HH:mm').format(localTime);
@@ -76,7 +85,8 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
       ),
       body: Center(
         child: Container(
-          margin: const EdgeInsets.only(top: 100, left: 16, right: 16, bottom: 180),
+          margin: const EdgeInsets.only(
+              top: 100, left: 16, right: 16, bottom: 180),
           padding: const EdgeInsets.all(25),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -112,7 +122,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
               ),
               const SizedBox(height: 20),
               Text(
-                "Scedualed Time: $formattedTime",
+                "Scheduled Time: $formattedTime",
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 20),
@@ -130,6 +140,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
           ),
         ),
       ),
+      // Floating action button for deleting the notification
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () async {

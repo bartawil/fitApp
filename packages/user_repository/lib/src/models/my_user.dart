@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 import '../entities/entities.dart';
 
+/// A class representing user information
 class MyUser extends Equatable {
 	final String id;
 	final String email;
@@ -17,6 +18,7 @@ class MyUser extends Equatable {
   final DateTime registerDate;
 	String? picture;
 
+  /// Creates a new instance of [MyUser] with the provided values.
 	MyUser({
 		required this.id,
 		required this.email,
@@ -32,7 +34,7 @@ class MyUser extends Equatable {
 		this.picture,
 	});
 
-	/// Empty user which represents an unauthenticated user.
+	/// An empty user which represents an unauthenticated user.
   static final empty = MyUser(
 		id: '', 
 		email: '',
@@ -48,7 +50,7 @@ class MyUser extends Equatable {
 		picture: ''
 	);
 
-	/// Modify MyUser parameters
+	/// Modifies the parameters of the current [MyUser] instance and returns a new instance.
 	MyUser copyWith({
     String? id,
     String? email,
@@ -85,6 +87,7 @@ class MyUser extends Equatable {
   /// Convenience getter to determine whether the current user is not empty.
   bool get isNotEmpty => this != MyUser.empty;
 
+  /// Converts the [MyUser] instance to a [MyUserEntity].
 	MyUserEntity toEntity() {
     return MyUserEntity(
       id: id,
@@ -102,6 +105,7 @@ class MyUser extends Equatable {
     );
   }
 
+  /// Creates a [MyUser] instance from a [MyUserEntity] instance.
 	static MyUser fromEntity(MyUserEntity entity) {
     return MyUser(
       id: entity.id,

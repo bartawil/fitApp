@@ -8,9 +8,10 @@ sealed class WorkoutState extends Equatable {
 }
 
 final class WorkoutInitial extends WorkoutState {}
-
+ 
 final class GetWorkoutGifFailure extends WorkoutState {}
 final class GetWorkoutGifLoading extends WorkoutState {}
+/// State indicating a successful retrieval of the workout GIF.
 final class GetWorkoutGifSuccess extends WorkoutState {
   final String gifUrl;
 
@@ -19,6 +20,7 @@ final class GetWorkoutGifSuccess extends WorkoutState {
 
 final class GetWorkoutsListFailure extends WorkoutState {}
 final class GetWorkoutsListLoading extends WorkoutState {}
+/// State indicating a successful retrieval of the list of workouts.
 final class GetWorkoutsListSuccess extends WorkoutState {
   final List<Workout> workoutsList;
 
@@ -27,6 +29,7 @@ final class GetWorkoutsListSuccess extends WorkoutState {
 
 final class GetUpdateWorkoutGifFailure extends WorkoutState {}
 final class GetUpdateWorkoutGifLoading extends WorkoutState {}
+/// State indicating a successful update of the user's workout information.
 final class GetUpdateWorkoutGifSuccess extends WorkoutState {
 
   const GetUpdateWorkoutGifSuccess();
@@ -37,6 +40,7 @@ final class GetUpdateWorkoutGifSuccess extends WorkoutState {
 
 final class GetUserWorkoutListFailure extends WorkoutState {}
 final class GetUserWorkoutListLoading extends WorkoutState {}
+/// State indicating a successful retrieval of the user's workout list.
 final class GetUserWorkoutListSuccess extends WorkoutState {
   final List<UserWorkout> userWorkoutList;
 
@@ -45,6 +49,7 @@ final class GetUserWorkoutListSuccess extends WorkoutState {
 
 final class GetWorkoutByIdFailure extends WorkoutState {}
 final class GetWorkoutByIdLoading extends WorkoutState {}
+/// State indicating a successful retrieval of a specific workout by ID.
 final class GetWorkoutByIdSuccess extends WorkoutState {
   final Workout workout;
 

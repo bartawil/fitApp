@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
+/// A class representing user information in a Firestore document.
 class MyUserEntity extends Equatable {
 	final String id;
 	final String email;
@@ -15,6 +16,7 @@ class MyUserEntity extends Equatable {
   final DateTime registerDate;
 	final String? picture;
 
+  /// Creates a new instance of [MyUserEntity] with the provided values.
 	const MyUserEntity({
 		required this.id,
 		required this.email,
@@ -30,6 +32,7 @@ class MyUserEntity extends Equatable {
 		this.picture,
 	});
 
+  /// Converts the [MyUserEntity] instance to a Firestore document as a map.
 	Map<String, Object?> toDocument() {
     return {
       'id': id,
@@ -47,6 +50,7 @@ class MyUserEntity extends Equatable {
     };
   }
 
+  /// Creates a [MyUserEntity] instance from a Firestore document map.
 	static MyUserEntity fromDocument(Map<String, dynamic> doc) {
     return MyUserEntity(
       id: doc['id'] as String,

@@ -6,7 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:user_repository/user_repository.dart';
 
 class WeightList extends StatefulWidget {
+  // List of weight entries to display
   final List<Weight> weightList;
+  // User ID associated with the weight entries
   final String userId;
  
   const WeightList({Key? key, required this.weightList, required this.userId})
@@ -19,7 +21,7 @@ class WeightList extends StatefulWidget {
 class _WeightListState extends State<WeightList> {
   @override
   Widget build(BuildContext context) {
-    // Sort the weightList by date
+    // Sort the weightList by date in descending order (latest first)
     widget.weightList.sort((a, b) => b.date.compareTo(a.date));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,6 +39,7 @@ class _WeightListState extends State<WeightList> {
                     endActionPane: ActionPane(
                         dismissible: DismissiblePane(
                           onDismissed: () {
+                            // Trigger a weight deletion event when user dismisses an entry
                             context.read<WeightBloc>().add(DeleteWeight(
                                 widget.userId, widget.weightList[i].id));
                           },
@@ -46,6 +49,7 @@ class _WeightListState extends State<WeightList> {
                         children: [
                           SlidableAction(
                             onPressed: (context) {
+                              // Trigger a weight deletion event when the delete action is pressed
                               context.read<WeightBloc>().add(DeleteWeight(
                                   widget.userId, widget.weightList[i].id));
                             },

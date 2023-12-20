@@ -6,6 +6,7 @@ import 'package:notification_repository/notification_repository.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+// Define a Flutter StatefulWidget for creating notifications
 class CreateNotificationScreen extends StatefulWidget {
   final String userId;
   const CreateNotificationScreen(this.userId, {super.key});
@@ -15,28 +16,31 @@ class CreateNotificationScreen extends StatefulWidget {
       _CreateNotificationScreenState();
 }
 
+// Define the state class for the CreateNotificationScreen
 class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
+  // Initialize controllers for input fields
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
 
+  // Initialize variables for date and time
   DateTime dateTime = DateTime.now();
   bool repeatWeekly = false;
 
+  // Initialize notification-related variables
   int counter = 0;
   late MyNotification notification;
-
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
+    // Initialize notification object and set user ID
     notification = MyNotification.empty;
-    // TO-DO: Get the user id from the auth state
     notification.userId = widget.userId;
-    super.initState();
+
+    // Initialize FlutterLocalNotificationsPlugin
     const AndroidInitializationSettings androidInitializationSettings =
         AndroidInitializationSettings('playstore');
 
@@ -60,9 +64,12 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
           (NotificationResponse notificationResponse) async {},
     );
 
+    // Fetch notification size from NotificationBloc
     context.read<NotificationBloc>().add(const GetNotificationsSize());
+    super.initState();
   }
 
+  // Function to show a notification
   showNotification() {
     if (titleController.text.isEmpty ||
         descriptionController.text.isEmpty ||
@@ -72,6 +79,7 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
     }
     FocusManager.instance.primaryFocus?.unfocus();
 
+    // Define notification details for Android and iOS
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       "ScheduleNotification001",
@@ -93,6 +101,7 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
       linux: null,
     );
 
+    // Initialize time zones and schedule the notification
     tz.initializeTimeZones();
     final tz.TZDateTime scheduledAt = tz.TZDateTime.from(dateTime, tz.local);
     final DateTime scheduledDateTime = DateTime(
@@ -122,7 +131,7 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
           notificationDetails,
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.wallClockTime,
-          payload: 'Ths s the data',
+          payload: 'This is the data',
           matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
     } else {
       flutterLocalNotificationsPlugin.zonedSchedule(
@@ -133,11 +142,13 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
           notificationDetails,
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.wallClockTime,
-          payload: 'Ths s the data');
+          payload: 'This is the data');
     }
+    
+    // Dispatch a CreateNotification event to NotificationBloc
     context.read<NotificationBloc>().add(CreateNotification(notification));
 
-    // clear all the text fields after the notification is created
+    // Clear input fields and reset variables after creating the notification
     titleController.clear();
     descriptionController.clear();
     dateController.clear();
@@ -147,16 +158,21 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
       repeatWeekly = false;
     });
 
+    // Fetch notification size from NotificationBloc again
     context.read<NotificationBloc>().add(const GetNotificationsSize());
+
+    // Close the current screen
     Navigator.of(context).pop();
   }
 
+  // Function to cancel a scheduled notification by ID
   Future<void> cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);
   }
 
   @override
   void dispose() {
+    // Dispose of the text controllers when the screen is closed
     titleController.dispose();
     descriptionController.dispose();
     dateController.dispose();
@@ -168,6 +184,7 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
   Widget build(BuildContext context) {
     return BlocListener<NotificationBloc, NotificationState>(
       listener: (context, state) {
+        // Listen to the NotificationBloc for GetNotificationsSizeSuccess events
         if (state is GetNotificationsSizeSuccess) {
           counter = state.size.toInt();
         }
@@ -192,6 +209,7 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    // Input field for notification title
                     TextField(
                       controller: titleController,
                       decoration: InputDecoration(
@@ -202,6 +220,7 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    // Input field for notification description
                     TextField(
                       controller: descriptionController,
                       decoration: InputDecoration(
@@ -212,6 +231,7 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    // Input field for notification date
                     TextField(
                       controller: dateController,
                       decoration: InputDecoration(
@@ -245,6 +265,7 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
                     const SizedBox(
                       height: 16.0,
                     ),
+                    // Input field for notification time
                     TextField(
                       controller: timeController,
                       decoration: InputDecoration(
@@ -256,24 +277,24 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
                               Icons.timer_outlined,
                             ),
                             onTap: () async {
-                              final TimeOfDay? slectedTime =
+                              final TimeOfDay? selectedTime =
                                   await showTimePicker(
                                       context: context,
                                       initialTime: TimeOfDay.now());
 
-                              if (slectedTime == null) {
+                              if (selectedTime == null) {
                                 return;
                               }
 
                               timeController.text =
-                                  "${slectedTime.hour}:${slectedTime.minute}";
+                                  "${selectedTime.hour}:${selectedTime.minute}";
 
                               DateTime newDT = DateTime(
                                 dateTime.year,
                                 dateTime.month,
                                 dateTime.day,
-                                slectedTime.hour,
-                                slectedTime.minute,
+                                selectedTime.hour,
+                                selectedTime.minute,
                               );
                               setState(() {
                                 dateTime = newDT;
@@ -282,6 +303,7 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
                           ),
                           label: const Text("Time")),
                     ),
+                    // Checkbox for repeating the notification weekly
                     CheckboxListTile(
                       title: const Text('Repeat every week'),
                       value: repeatWeekly,
@@ -293,6 +315,7 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
                       contentPadding:
                           const EdgeInsets.only(left: 5.0, right: 100.0),
                     ),
+                    // Button to create the notification
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

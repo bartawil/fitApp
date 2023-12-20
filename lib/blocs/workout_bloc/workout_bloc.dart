@@ -12,11 +12,16 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
   final WorkoutRepository _workoutRepository;
   final UserRepository _userRepository;
 
+  /// Constructs a [WorkoutBloc] instance.
+  ///
+  /// [workoutRepository] is used to interact with workout data.
+  /// [userRepository] is used to interact with user-related data.
   WorkoutBloc({
     required WorkoutRepository workoutRepository,
     required UserRepository userRepository
   }) : _workoutRepository = workoutRepository, _userRepository = userRepository,
     super(WorkoutInitial()) {
+      // Register event handlers
       on<GetWorkoutGif>((event, emit) async {
         emit(GetWorkoutGifLoading());
         try {
@@ -26,6 +31,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
           emit(GetWorkoutGifFailure());
         }
       });
+      
       on<GetWorkoutsList>((event, emit) async {
         emit(GetWorkoutsListLoading());
         try {
@@ -35,6 +41,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
           emit(GetWorkoutsListFailure());
         }
       });
+
       on<UpdateUserWorkout>((event, emit) async {
         emit(GetUpdateWorkoutGifLoading());
         try {
@@ -51,6 +58,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
           emit(GetUpdateWorkoutGifFailure());
         }
       });
+
       on<GetUserWorkoutList>((event, emit) async {
         emit(GetUserWorkoutListLoading());
         try {
@@ -60,6 +68,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
           emit(GetUserWorkoutListFailure());
         }
       });
+      
       on<GetWorkoutById>((event, emit) async {
         emit(GetWorkoutByIdLoading());
         try {

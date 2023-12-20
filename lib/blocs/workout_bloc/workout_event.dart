@@ -7,6 +7,7 @@ sealed class WorkoutEvent extends Equatable {
   List<Object> get props => [];
 }
 
+/// Event to request a workout GIF.
 class GetWorkoutGif extends WorkoutEvent{
   const GetWorkoutGif();
 
@@ -14,6 +15,7 @@ class GetWorkoutGif extends WorkoutEvent{
   List<Object> get props => [];
 }
 
+/// Event to request a list of workouts of a specific type.
 class GetWorkoutsList extends WorkoutEvent{
   final String workoutType;
 
@@ -23,6 +25,7 @@ class GetWorkoutsList extends WorkoutEvent{
   List<Object> get props => [workoutTypes];
 }
 
+/// Event to update a user's workout information.
 class UpdateUserWorkout extends WorkoutEvent{
   final String userId;
   final String workoutId;
@@ -44,6 +47,8 @@ class UpdateUserWorkout extends WorkoutEvent{
   List<Object> get props => [];
 }
 
+
+/// Event to request a list of a user's workouts.
 class GetUserWorkoutList extends WorkoutEvent{
   final String userId;
   final double workoutNumber;
@@ -54,6 +59,8 @@ class GetUserWorkoutList extends WorkoutEvent{
   List<Object> get props => [];
 }
 
+
+/// Event to request a specific workout by its category and ID.
 class GetWorkoutById extends WorkoutEvent{
   final String category;
   final String workoutId;

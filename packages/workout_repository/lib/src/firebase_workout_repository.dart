@@ -5,9 +5,16 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
 import 'package:workout_repository/workout_repository.dart';
 
+/// A repository for accessing and managing workouts using Firebase services.
 class FirebaseWorkoutRepository implements WorkoutRepository {
   final workoutsCollection = FirebaseFirestore.instance.collection('workouts');
 
+  /// Retrieves a workout by its category and ID.
+  ///
+  /// [category] specifies the category of the workout.
+  /// [workoutId] is the unique identifier of the workout.
+  ///
+  /// Returns the retrieved [Workout] object.
   @override
   Future<Workout> getWorkoutById(String category, String workoutId) async {
     try {
@@ -27,6 +34,11 @@ class FirebaseWorkoutRepository implements WorkoutRepository {
     }
   }
 
+  /// Retrieves a list of workouts by their type.
+  ///
+  /// [type] specifies the type of workouts to retrieve.
+  ///
+  /// Returns a list of [Workout] objects.
   @override
   Future<List<Workout>> getWorkoutsList(String type) async {
     try {
@@ -50,6 +62,9 @@ class FirebaseWorkoutRepository implements WorkoutRepository {
     }
   }
 
+  /// Retrieves a URL for a GIF.
+  ///
+  /// Returns a [String] URL of a GIF.
   @override
   Future<String> getGif() async {
     try {
@@ -65,7 +80,7 @@ class FirebaseWorkoutRepository implements WorkoutRepository {
     }
   }
 
-  // helper function to upload all gifs to firestore collection
+  /// Helper function to upload all GIFs to Firestore collection.
   Future<void> uploadAllGifs() async {
     try {
       Reference firebaseStoreRef1 =

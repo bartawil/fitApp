@@ -5,6 +5,7 @@ import 'package:flutter_demo/screens/notifications/notification_details_screen.d
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notification_repository/notification_repository.dart';
 
+// Define a StatefulWidget for managing notification settings
 class NotificationSettingsScreen extends StatefulWidget {
   const NotificationSettingsScreen({super.key});
 
@@ -13,24 +14,28 @@ class NotificationSettingsScreen extends StatefulWidget {
       _NotificationSettingsScreenState();
 }
 
+// Define the state class for the NotificationSettingsScreen
 class _NotificationSettingsScreenState
     extends State<NotificationSettingsScreen> {
+  // Initialize controllers for input fields
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
 
+  // Initialize a list to store notification objects
   List<MyNotification> notificationList = [];
 
   @override
   void initState() {
     super.initState();
+    // Fetch the list of notifications from NotificationBloc
     context.read<NotificationBloc>().add(const GetNotificationsList());
   }
 
   @override
   void dispose() {
+    // Dispose of the text controllers when the screen is closed
     titleController.dispose();
     descriptionController.dispose();
     dateController.dispose();
@@ -43,12 +48,14 @@ class _NotificationSettingsScreenState
     return BlocListener<NotificationBloc, NotificationState>(
       listener: (context, state) {
         if (state is GetNotificationsListSuccess) {
+          // Update the notification list and sort it by serial number
           notificationList = state.notificationList;
           setState(() {
             notificationList
                 .sort((a, b) => b.serialNumber.compareTo(a.serialNumber));
           });
         } else if (state is DeleteNotificationSuccess) {
+          // Update the notification list after deleting a notification
           notificationList = state.notificationList;
           setState(() {
             notificationList
@@ -87,58 +94,61 @@ class _NotificationSettingsScreenState
                 ),
                 const SizedBox(height: 20),
                 Expanded(
-                    child: ListView.builder(
-                        itemCount: notificationList.length,
-                        itemBuilder: (context, int i) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: Colors.grey[300]!,
-                                  width: 0.5,
-                                ),
-                                right: BorderSide(
-                                  color: Colors.grey[300]!,
-                                  width: 0.5,
-                                ),
-                              ),
+                  child: ListView.builder(
+                    itemCount: notificationList.length,
+                    itemBuilder: (context, int i) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.grey[300]!,
+                              width: 0.5,
                             ),
-                            child: ListTile(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0,
-                                  vertical:
-                                      8.0), // Increase the vertical padding.
+                            right: BorderSide(
+                              color: Colors.grey[300]!,
+                              width: 0.5,
+                            ),
+                          ),
+                        ),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                              vertical: 8.0), 
 
-                              title: Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom:
-                                        8.0), // Add padding to the bottom of the title.
-                                child: Text(
-                                  notificationList[i].title,
-                                  style: const TextStyle(fontSize: 18),
+                          title: Padding(
+                            padding: const EdgeInsets.only(
+                                bottom:
+                                    8.0), 
+                            child: Text(
+                              notificationList[i].title,
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                          ),
+                          subtitle: Text(
+                            notificationList[i].description,
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                          onTap: () {
+                            // Navigate to NotificationDetailsScreen with the selected notification
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    BlocProvider<NotificationBloc>(
+                                  create: (context) => NotificationBloc(
+                                      notificationRepository:
+                                          FirebaseNotificationRepository()),
+                                  child: NotificationDetailsScreen(
+                                      notificationList[i]),
                                 ),
                               ),
-                              subtitle: Text(
-                                notificationList[i].description,
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute<void>(
-                                      builder: (BuildContext context) =>
-                                          BlocProvider<NotificationBloc>(
-                                            create: (context) => NotificationBloc(
-                                                notificationRepository:
-                                                    FirebaseNotificationRepository()),
-                                            child: NotificationDetailsScreen(
-                                                notificationList[i]),
-                                          )),
-                                );
-                              },
-                            ),
-                          );
-                        }))
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),

@@ -14,6 +14,7 @@ class UpdateUserInfoBloc extends Bloc<UpdateUserInfoEvent, UpdateUserInfoState> 
 		required UserRepository userRepository
 	}) : 	_userRepository = userRepository, 
 	super(UpdateUserInfoInitial()) {
+    // Define an event handler for the UploadPicture event.
     on<UploadPicture>((event, emit) async {
 			emit(UploadPictureLoading());
       try {
@@ -23,6 +24,8 @@ class UpdateUserInfoBloc extends Bloc<UpdateUserInfoEvent, UpdateUserInfoState> 
         emit(UploadPictureFailure());
       }
     });
+
+    // Define an event handler for the UpdateUser event.
     on<UpdateUserWeight>((event, emit) async {
       emit(UpdateUserWeightLoading());
       try {

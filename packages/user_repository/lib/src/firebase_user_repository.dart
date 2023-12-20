@@ -7,6 +7,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:user_repository/user_repository.dart';
 import 'package:uuid/uuid.dart';
 
+
+/// A Flutter repository implementation for managing user authentication and data
+/// storage using Firebase services.
+///
+/// This class implements the [UserRepository] interface and provides methods for
+/// user sign-up, sign-in, sign-out, password reset, and managing user data, such as
+/// user profile pictures and workout-related data.
 class FirebaseUserRepository implements UserRepository {
   FirebaseUserRepository({
     FirebaseAuth? firebaseAuth,
@@ -14,6 +21,7 @@ class FirebaseUserRepository implements UserRepository {
 
   final FirebaseAuth _firebaseAuth;
   final usersCollection = FirebaseFirestore.instance.collection('users');
+
 
   /// Stream of [MyUser] which will emit the current user when
   /// the authentication state changes.
@@ -27,6 +35,10 @@ class FirebaseUserRepository implements UserRepository {
     });
   }
 
+
+  /// Registers a new user with the provided [myUser] and [password].
+  ///
+  /// Throws a [CustomFirebaseAuthException] if registration fails.
   @override
   Future<MyUser> signUp(MyUser myUser, String password) async {
     try {
@@ -45,6 +57,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+
+  /// Signs in a user with the provided [email] and [password].
+  ///
+  /// Throws an exception if sign-in fails.
   @override
   Future<void> signIn(String email, String password) async {
     try {
@@ -56,6 +72,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+
+  /// Signs out the currently authenticated user.
+  ///
+  /// Throws an exception if sign-out fails.
   @override
   Future<void> logOut() async {
     try {
@@ -66,6 +86,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+
+  /// Sends a password reset email to the user with the provided [email].
+  ///
+  /// Throws a [CustomFirebaseAuthException] if the email cannot be sent.
   @override
   Future<void> resetPassword(String email) async {
     try {
@@ -77,6 +101,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+
+  /// Sets user data in Firestore using the provided [user] object.
+  ///
+  /// Throws an exception if data cannot be set.
   @override
   Future<void> setUserData(MyUser user) async {
     try {
@@ -87,6 +115,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+
+  /// Retrieves user data from Firestore using the provided [myUserId].
+  ///
+  /// Throws an exception if data cannot be retrieved.
   @override
   Future<MyUser> getMyUser(String myUserId) async {
     try {
@@ -98,6 +130,11 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+
+  /// Uploads a user profile picture to Firebase Storage and updates the
+  /// user's Firestore document with the picture URL.
+  ///
+  /// Throws an exception if the upload fails.
   @override
   Future<String> uploadPicture(String file, String userId) async {
     try {
@@ -116,6 +153,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+
+  /// Creates a new weight entry for the user in Firestore.
+  ///
+  /// Throws an exception if the operation fails.
   @override
   Future<void> createWeightCollection(String weightValue, String userId) async {
     try {
@@ -138,6 +179,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+
+  /// Retrieves a list of weight entries for the user from Firestore.
+  ///
+  /// Throws an exception if the operation fails.
   @override
   Future<List<Weight>> getWeightList(String userId) {
     try {
@@ -152,6 +197,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+
+  /// Deletes a weight entry for the user from Firestore and returns the updated list.
+  ///
+  /// Throws an exception if the operation fails.
   @override
   Future<List<Weight>> deleteWeight(String userId, String weightId) async {
     try {
@@ -167,6 +216,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+
+  /// Sets workout data for the user in Firestore.
+  ///
+  /// Throws an exception if data cannot be set.
   @override
   Future<void> setWeightData(String userId, Weight weight) async {
     try {
@@ -181,6 +234,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+
+  /// Retrieves a list of workout entries for the user from Firestore.
+  ///
+  /// Throws an exception if the operation fails.
   @override
   Future<List<UserWorkout>> getWorkoutList(String userId, double workoutNumber) {
     try {
@@ -195,6 +252,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+
+  /// Updates or creates a workout entry for the user in Firestore.
+  ///
+  /// Throws an exception if data cannot be set or updated.
   @override
   Future<void> updateUserWorkoutCollection(String userId, String workoutId,
       String category, double workoutNumber, double sets, double reps) async {
@@ -230,6 +291,8 @@ class FirebaseUserRepository implements UserRepository {
   }
 }
 
+
+/// Custom exception class for Firebase authentication errors.
 class CustomFirebaseAuthException implements Exception {
   final String message;
 

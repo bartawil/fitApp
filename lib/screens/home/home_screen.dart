@@ -18,6 +18,7 @@ import 'package:workout_repository/workout_repository.dart';
 import '../../blocs/my_user_bloc/my_user_bloc.dart';
 import '../../blocs/update_user_info_bloc/update_user_info_bloc.dart';
 
+// Define the state for HomeScreen.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -25,6 +26,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+// Define the state for HomeScreen.
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {

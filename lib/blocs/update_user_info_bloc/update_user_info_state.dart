@@ -9,6 +9,7 @@ abstract class UpdateUserInfoState extends Equatable {
 
 class UpdateUserInfoInitial extends UpdateUserInfoState {}
 
+// Define state classes related to the UploadPicture event.
 class UploadPictureFailure extends UpdateUserInfoState {}
 class UploadPictureLoading extends UpdateUserInfoState {}
 class UploadPictureSuccess extends UpdateUserInfoState {
@@ -20,6 +21,7 @@ class UploadPictureSuccess extends UpdateUserInfoState {
   List<Object> get props => [userImage];
 }
 
+// Define state classes related to the UpdateUserWeight event.
 class UpdateUserWeightFailure extends UpdateUserInfoState {}
 class UpdateUserWeightLoading extends UpdateUserInfoState {}
 class UpdateUserWeightSuccess extends UpdateUserInfoState {}

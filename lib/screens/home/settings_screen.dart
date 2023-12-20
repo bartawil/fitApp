@@ -10,6 +10,7 @@ import 'package:flutter_demo/screens/notifications/notification_settings_screen.
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notification_repository/notification_repository.dart';
 
+/// The `SettingsScreen` widget provides a user interface for managing user settings.
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 

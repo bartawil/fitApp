@@ -7,6 +7,7 @@ sealed class WeightEvent extends Equatable {
   List<Object> get props => [];
 }
 
+// Define an event class for getting the list of user weight data
 class GetWeightList extends WeightEvent{
   final String userId;
 
@@ -16,6 +17,8 @@ class GetWeightList extends WeightEvent{
   List<Object> get props => [userId];
 }
 
+
+// Define an event class for deleting a specific weight entry
 class DeleteWeight extends WeightEvent{
   final String userId;
   final String weightId;
@@ -26,6 +29,8 @@ class DeleteWeight extends WeightEvent{
   List<Object> get props => [userId, weightId];
 }
 
+
+// Define an event class for setting user weight data
 class SetWeight extends WeightEvent{
   final String userId;
   final Weight weight;

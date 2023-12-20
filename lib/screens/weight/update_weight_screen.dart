@@ -12,6 +12,7 @@ import 'package:flutter_demo/screens/weight/weight_graph_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_repository/user_repository.dart';
 
+// Define a StatefulWidget for the UpdateWeightScreen.
 class UpdateWeightScreen extends StatefulWidget {
   const UpdateWeightScreen({super.key});
 
@@ -19,14 +20,18 @@ class UpdateWeightScreen extends StatefulWidget {
   State<UpdateWeightScreen> createState() => _UpdateWeightScreenState();
 }
 
+// State class for UpdateWeightScreen.
 class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
+  // Define a GlobalKey for the Form.
   final _formKey = GlobalKey<FormState>();
+  // Controller for the weight input field.
   final weightController = TextEditingController();
 
   @override
   void dispose() {
     weightController.dispose();
-    _formKey.currentState?.dispose(); // Dispose of FormState if needed
+    // Dispose of FormState if needed
+    _formKey.currentState?.dispose(); 
     super.dispose();
   }
 
@@ -39,6 +44,7 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
           context.read<WeightBloc>().add(GetWeightList(
               context.read<AuthenticationBloc>().state.user!.uid));
         } else if (state is UpdateUserWeightLoading) {
+          // Display a loading indicator if weight update is in progress.
           const Center(
             child: CircularProgressIndicator(),
           );
@@ -55,6 +61,7 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
               onPressed: () async {
                 FocusManager.instance.primaryFocus?.unfocus();
                 await Future.delayed(const Duration(milliseconds: 150));
+                // Navigate back when the back arrow button is pressed.
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
               },
@@ -113,6 +120,7 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                               bmi: bmi,
                             );
                             setState(() {
+                              // Trigger the UpdateUserWeight event when updating weight.
                               context
                                   .read<UpdateUserInfoBloc>()
                                   .add(UpdateUserWeight(

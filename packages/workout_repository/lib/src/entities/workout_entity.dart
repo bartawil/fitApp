@@ -2,13 +2,15 @@
 
 import 'package:equatable/equatable.dart';
 
+
+/// Represents a workout entity with its properties.
 class WorkoutEntity extends Equatable {
   String id;
 	String name;
   String category;
   String gifUrl;
 
-
+  /// Constructs a [WorkoutEntity] object.
 	WorkoutEntity({
     required this.id,
 		required this.name,
@@ -16,6 +18,7 @@ class WorkoutEntity extends Equatable {
     required this.gifUrl,
 	});
 
+  /// Converts the [WorkoutEntity] object to a [Map] for Firestore storage.
 	Map<String, Object?> toDocument() {
     return {
       'id': id,
@@ -25,6 +28,7 @@ class WorkoutEntity extends Equatable {
     };
   }
 
+  /// Creates a [WorkoutEntity] object from a Firestore document [Map].
 	static WorkoutEntity fromDocument(Map<String, dynamic> doc) {
     return WorkoutEntity(
       id: doc['id'] as String,

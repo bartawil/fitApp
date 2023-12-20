@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+/// A class representing user workout information in a Firestore document.
 class UserWorkoutEntity extends Equatable {
   final String id;
   final String workoutId;
@@ -8,6 +9,7 @@ class UserWorkoutEntity extends Equatable {
   final double sets;
   final double reps;
 
+  /// Creates a new instance of [UserWorkoutEntity] with the provided values.
   const UserWorkoutEntity({
     required this.id,
     required this.workoutId,
@@ -17,6 +19,7 @@ class UserWorkoutEntity extends Equatable {
     required this.reps,
   });
 
+  /// Converts the [UserWorkoutEntity] instance to a Firestore document as a map.
   Map<String, Object?> toDocument() {
     return {
       'id': id,
@@ -28,6 +31,7 @@ class UserWorkoutEntity extends Equatable {
     };
   }
 
+  /// Creates a [UserWorkoutEntity] instance from a Firestore document map.
   static UserWorkoutEntity fromDocument(Map<String, dynamic> doc) {
     return UserWorkoutEntity(
       id: doc['id'] as String,

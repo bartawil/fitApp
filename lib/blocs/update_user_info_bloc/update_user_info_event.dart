@@ -7,6 +7,7 @@ abstract class UpdateUserInfoEvent extends Equatable {
   List<Object> get props => [];
 }
 
+// Define an event class UploadPicture that extends UpdateUserInfoEvent.
 class UploadPicture extends UpdateUserInfoEvent {
 	final String file;
 	final String userId;
@@ -17,6 +18,7 @@ class UploadPicture extends UpdateUserInfoEvent {
   List<Object> get props => [file, userId];
 }
 
+// Define an event class UpdateUserWeight that extends UpdateUserInfoEvent.
 class UpdateUserWeight extends UpdateUserInfoEvent {
   final MyUser user;
 

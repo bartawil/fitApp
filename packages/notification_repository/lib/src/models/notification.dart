@@ -1,5 +1,6 @@
 import '../entities/entities.dart';
 
+/// Represents a notification.
 class MyNotification {
   String notificationId;
   double serialNumber;
@@ -9,6 +10,7 @@ class MyNotification {
   bool? repeatWeekly;
 	String userId;
 
+  /// Creates a new instance of [MyNotification].
 	MyNotification({
     required this.notificationId,
     required this.serialNumber,
@@ -19,6 +21,7 @@ class MyNotification {
     required this.userId,
 	});
 
+  /// An empty [MyNotification] object with default values.
   static final empty = MyNotification(
     notificationId: '',
     serialNumber: 0,
@@ -29,7 +32,7 @@ class MyNotification {
     userId: '',
   );
 
-	/// Modify Notifications parameters
+	/// Creates a copy of [MyNotification] with optional property changes.
 	MyNotification copyWith({
     String? notificationId,
     double? serialNumber,
@@ -56,6 +59,8 @@ class MyNotification {
   /// Convenience getter to determine whether the current notification is not empty.
   bool get isNotEmpty => this != MyNotification.empty;
 
+
+  /// Converts [MyNotification] to a [NotificationEntity].
 	NotificationEntity toEntity() {
     return NotificationEntity(
       notificationId: notificationId,
@@ -68,6 +73,7 @@ class MyNotification {
     );
   }
 
+  /// Creates a [MyNotification] object from a [NotificationEntity].
 	static MyNotification fromEntity(NotificationEntity entity) {
     return MyNotification(
       notificationId: entity.notificationId,

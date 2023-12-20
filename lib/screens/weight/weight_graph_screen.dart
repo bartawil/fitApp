@@ -16,8 +16,11 @@ class WeightGraphScreen extends StatefulWidget {
 }
 
 class _WeightGraphScreenState extends State<WeightGraphScreen> {
+  // List to store weight data for chart
   final List<Weight> chartList = [];
+  // Stores the smallest weight for chart axis
   String smallestWeight = '';
+  // Stores the largest weight for chart axis
   String largestWeight = '';
 
   @override
@@ -27,8 +30,9 @@ class _WeightGraphScreenState extends State<WeightGraphScreen> {
         if (state is GetWeightSuccess) {
           setState(() {
             chartList.addAll(state.weightList);
-            // Sort the weightList by date
+            // Sort the weightList by date in ascending order
             chartList.sort((a, b) => a.date.compareTo(b.date));
+            // Find the smallest and largest weight values
             smallestWeight = chartList
                 .reduce((a, b) =>
                     double.parse(a.weight) < double.parse(b.weight) ? a : b)
@@ -61,6 +65,7 @@ class _WeightGraphScreenState extends State<WeightGraphScreen> {
                     double userBMI = 0;
                     // ignore: non_constant_identifier_names
                     String BMIStatus = '';
+                    // Determine BMI status based on BMI value
                     if (state.user != null) {
                       userBMI = state.user?.bmi ?? 0;
                       if (userBMI < 18.5) {
@@ -93,6 +98,7 @@ class _WeightGraphScreenState extends State<WeightGraphScreen> {
                             ),
                           ),
                           const SizedBox(height: 20),
+                          // BMI Gauge
                           SfLinearGauge(
                             interval: 0.5,
                             minimum: 13.5,
@@ -117,6 +123,7 @@ class _WeightGraphScreenState extends State<WeightGraphScreen> {
                             animateAxis: false,
                             labelPosition: LinearLabelPosition.inside,
                             labelFormatterCallback: (label) {
+                              // Label formatting for BMI values
                               if (label == '15.5') {
                                 return 'Under';
                               } else if (label == '18.5') {
@@ -202,6 +209,7 @@ class _WeightGraphScreenState extends State<WeightGraphScreen> {
                                       color: Colors.transparent),
                                   isVisible: false),
                               primaryYAxis: NumericAxis(
+                                // Set the axis range based on weight values
                                 minimum:
                                     (double.parse(smallestWeight) / 10).ceil() *
                                             10 -
@@ -213,7 +221,7 @@ class _WeightGraphScreenState extends State<WeightGraphScreen> {
                                 isVisible: false,
                               ),
                               series: <ChartSeries>[
-                                  // Renders line chart
+                                  // Renders line chart for weight data
                                   LineSeries<Weight, String>(
                                       animationDuration: 1000,
                                       color: Theme.of(context)

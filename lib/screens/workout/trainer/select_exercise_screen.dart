@@ -7,6 +7,8 @@ import 'package:flutter_demo/components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_repository/user_repository.dart';
 
+
+/// This widget represents the screen for selecting and configuring exercises for a workout plan.
 class SelectExerciseScreen extends StatefulWidget {
   final String userId;
   final double workoutNumber;
@@ -26,16 +28,22 @@ class SelectExerciseScreen extends StatefulWidget {
 }
 
 class _SelectExerciseScreenState extends State<SelectExerciseScreen> {
+  // Controllers for managing workout sets and reps
   Map<String, List<TextEditingController>> workoutSetsControllers = {};
   Map<String, List<TextEditingController>> workoutRepsControllers = {};
+
+  // Selected workouts and their IDs
   Map<String, List<bool>> selectedWorkouts = {};
   Map<String, List<String>> selectedId = {};
+
+  // List of user workouts
   List<UserWorkout> userWorkoutsList = [];
 
 
   @override
   void initState() {
     super.initState();
+    // Initialize controllers and lists
     for (var type in workoutTypes) {
       workoutSetsControllers[type] = [];
       workoutRepsControllers[type] = [];
@@ -50,6 +58,7 @@ class _SelectExerciseScreenState extends State<SelectExerciseScreen> {
     }
   }
 
+  // Handle saving user workouts
   void onReturnFromScreen() {
     for (var type in workoutTypes) {
       for (int i = 0; i < 100; i++) {
@@ -129,7 +138,7 @@ class _SelectExerciseScreenState extends State<SelectExerciseScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            // return a drop down list with all types of workouts
+            // Return a drop-down list with all types of workouts
             Expanded(
               child: ListView.builder(
                 itemCount: workoutTypes.length,

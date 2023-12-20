@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:user_repository/user_repository.dart';
 import 'package:workout_repository/workout_repository.dart';
 
+/// This widget represents the screen for building a workout plan.
 class BuildWorkoutScreen extends StatefulWidget {
   const BuildWorkoutScreen({super.key});
 

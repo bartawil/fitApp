@@ -1,6 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// Represents a notification entity that can be stored in Firestore.
 class NotificationEntity {
   String notificationId;
   double serialNumber;
@@ -10,6 +11,7 @@ class NotificationEntity {
   final bool? repeatWeekly;
 	String userId;
 
+  /// Creates a new instance of [NotificationEntity].
 	NotificationEntity({
     required this.notificationId,
     required this.serialNumber,
@@ -19,7 +21,9 @@ class NotificationEntity {
     this.repeatWeekly,
     required this.userId,
   });
+  
 
+  /// An empty [NotificationEntity] object with default values.
   static final empty = NotificationEntity(
     notificationId: '',
     serialNumber: 0,
@@ -31,6 +35,7 @@ class NotificationEntity {
   );
 	
 
+  /// Converts [NotificationEntity] to a map suitable for Firestore.
 	Map<String, Object?> toDocument() {
     return {
       'notificationId': notificationId,
@@ -43,6 +48,8 @@ class NotificationEntity {
     };
   }
 
+
+  /// Creates a [NotificationEntity] object from a Firestore document.
 	static NotificationEntity fromDocument(Map<String, dynamic> doc) {
     return NotificationEntity(
       notificationId: doc['notificationId'] as String,
