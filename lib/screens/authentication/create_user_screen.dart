@@ -228,8 +228,8 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
                             return 'Please fill in this field';
                           } else {
                             try {
-                              double age = double.parse(val);
-                              if (age < 120 || age > 250) {
+                              double height = double.parse(val);
+                              if (height < 120 || height > 250) {
                                 return 'Please enter a valid height';
                               }
                             } catch (e) {
