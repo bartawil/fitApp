@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/notification_bloc/notification_bloc.dart';
+import 'package:flutter_demo/components/constants.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notification_repository/notification_repository.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -18,6 +19,7 @@ class CreateNotificationScreen extends StatefulWidget {
 
 // Define the state class for the CreateNotificationScreen
 class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
+  final _formKey = GlobalKey<FormState>();
   // Initialize controllers for input fields
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -203,136 +205,170 @@ class _CreateNotificationScreenState extends State<CreateNotificationScreen> {
           ),
           body: Scaffold(
             backgroundColor: Theme.of(context).colorScheme.background,
-            body: Center(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
+            body: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Input field for notification title
-                    TextField(
-                      controller: titleController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        label: const Text("Notification Title"),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    // Input field for notification description
-                    TextField(
-                      controller: descriptionController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        label: const Text("Notification Description"),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    // Input field for notification date
-                    TextField(
-                      controller: dateController,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          suffixIcon: InkWell(
-                            child: const Icon(Icons.date_range),
-                            onTap: () async {
-                              final DateTime? newlySelectedDate =
-                                  await showDatePicker(
-                                context: context,
-                                initialDate: dateTime,
-                                firstDate: DateTime.now(),
-                                lastDate: DateTime(2095),
-                              );
-
-                              if (newlySelectedDate == null) {
-                                return;
-                              }
-
-                              setState(() {
-                                dateTime = newlySelectedDate;
-                                dateController.text =
-                                    "${dateTime.year}/${dateTime.month}/${dateTime.day}";
-                              });
-                            },
-                          ),
-                          label: const Text("Date")),
-                    ),
-                    const SizedBox(
-                      height: 16.0,
-                    ),
-                    // Input field for notification time
-                    TextField(
-                      controller: timeController,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          suffixIcon: InkWell(
-                            child: const Icon(
-                              Icons.timer_outlined,
+                    const SizedBox(height: 150,),
+                    Center(
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // Input field for notification title
+                            TextFormField(
+                              controller: titleController,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                label: const Text("Notification Title"),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please fill in this field';
+                                } else if  (value.length > 30) {
+                                  return 'Please enter a shorter title';
+                                } else if (specialCharRexExp.hasMatch(value)) {
+                                  return 'Please enter a valid title';
+                                }
+                                return null;
+                              },
                             ),
-                            onTap: () async {
-                              final TimeOfDay? selectedTime =
-                                  await showTimePicker(
-                                      context: context,
-                                      initialTime: TimeOfDay.now());
-
-                              if (selectedTime == null) {
-                                return;
-                              }
-
-                              timeController.text =
-                                  "${selectedTime.hour}:${selectedTime.minute}";
-
-                              DateTime newDT = DateTime(
-                                dateTime.year,
-                                dateTime.month,
-                                dateTime.day,
-                                selectedTime.hour,
-                                selectedTime.minute,
-                              );
-                              setState(() {
-                                dateTime = newDT;
-                              });
-                            },
-                          ),
-                          label: const Text("Time")),
-                    ),
-                    // Checkbox for repeating the notification weekly
-                    CheckboxListTile(
-                      title: const Text('Repeat every week'),
-                      value: repeatWeekly,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          repeatWeekly = value ?? false;
-                        });
-                      },
-                      contentPadding:
-                          const EdgeInsets.only(left: 5.0, right: 100.0),
-                    ),
-                    // Button to create the notification
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          minimumSize: const Size(double.infinity, 55),
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primary,
+                            const SizedBox(height: 16),
+                            // Input field for notification description
+                            TextFormField(
+                              controller: descriptionController,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                label: const Text("Notification Description"),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please fill in this field';
+                                } else if  (value.length > 30) {
+                                  return 'Please enter a shorter title';
+                                } else if (specialCharRexExp.hasMatch(value)) {
+                                  return 'Please enter a valid description';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            // Input field for notification date
+                            TextField(
+                              controller: dateController,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  suffixIcon: InkWell(
+                                    child: const Icon(Icons.date_range),
+                                    onTap: () async {
+                                      final DateTime? newlySelectedDate =
+                                          await showDatePicker(
+                                        context: context,
+                                        initialDate: dateTime,
+                                        firstDate: DateTime.now(),
+                                        lastDate: DateTime(2095),
+                                      );
+                          
+                                      if (newlySelectedDate == null) {
+                                        return;
+                                      }
+                          
+                                      setState(() {
+                                        dateTime = newlySelectedDate;
+                                        dateController.text =
+                                            "${dateTime.year}/${dateTime.month}/${dateTime.day}";
+                                      });
+                                    },
+                                  ),
+                                  label: const Text("Date")),
+                            ),
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                            // Input field for notification time
+                            TextField(
+                              controller: timeController,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  suffixIcon: InkWell(
+                                    child: const Icon(
+                                      Icons.timer_outlined,
+                                    ),
+                                    onTap: () async {
+                                      final TimeOfDay? selectedTime =
+                                          await showTimePicker(
+                                              context: context,
+                                              initialTime: TimeOfDay.now());
+                          
+                                      if (selectedTime == null) {
+                                        return;
+                                      }
+                          
+                                      timeController.text =
+                                          "${selectedTime.hour}:${selectedTime.minute}";
+                          
+                                      DateTime newDT = DateTime(
+                                        dateTime.year,
+                                        dateTime.month,
+                                        dateTime.day,
+                                        selectedTime.hour,
+                                        selectedTime.minute,
+                                      );
+                                      setState(() {
+                                        dateTime = newDT;
+                                      });
+                                    },
+                                  ),
+                                  label: const Text("Time")),
+                            ),
+                            // Checkbox for repeating the notification weekly
+                            CheckboxListTile(
+                              title: const Text('Repeat every week'),
+                              value: repeatWeekly,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  repeatWeekly = value ?? false;
+                                });
+                              },
+                              contentPadding:
+                                  const EdgeInsets.only(left: 5.0, right: 100.0),
+                            ),
+                            // Button to create the notification
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  minimumSize: const Size(double.infinity, 55),
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.primary,
+                                ),
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    showNotification();
+                                  }
+                                },
+                                child: Text(
+                                  "Create Notification",
+                                  style: TextStyle(
+                                      color: Theme.of(context).colorScheme.onPrimary,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w900),
+                                )),
+                          ],
                         ),
-                        onPressed: showNotification,
-                        child: Text(
-                          "Create Notification",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w900),
-                        )),
+                      ),
+                    ),
                   ],
                 ),
               ),
