@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:flutter_demo/blocs/notification_bloc/notification_bloc.dart';
 import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
 import 'package:flutter_demo/components/pick_image.dart';
+import 'package:flutter_demo/screens/home/edit_user_info_screen.dart';
 import 'package:flutter_demo/screens/notifications/create_notification_screen.dart';
 import 'package:flutter_demo/screens/notifications/notification_settings_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +21,33 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  // helper function for navigating to the EditUserInfoScreen
+  void navigateToEditUserInfoScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<MyUserBloc>(
+              create: (context) => MyUserBloc(
+                  myUserRepository:
+                      context.read<AuthenticationBloc>().userRepository)
+                ..add(GetMyUser(
+                    myUserId:
+                        context.read<AuthenticationBloc>().state.user!.uid)),
+            ),
+            BlocProvider(
+              create: (context) => UpdateUserInfoBloc(
+                  userRepository:
+                      context.read<AuthenticationBloc>().userRepository),
+            ),
+          ],
+          child: const EditUserInfoScreen(),
+        );
+      }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<UpdateUserInfoBloc, UpdateUserInfoState>(
@@ -105,7 +134,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             title: Text(
                                 "${state.user!.firstName} ${state.user!.lastName}"),
                             subtitle: const Text("Edit your profile"),
-                            onTap: () {},
+                            onTap: () {
+                              navigateToEditUserInfoScreen();
+                            },
                           ),
                         );
                       } else {
@@ -133,7 +164,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             title: const Text("Profile"),
                             subtitle: const Text("Edit your profile"),
-                            onTap: () {},
+                            onTap: () {
+                              navigateToEditUserInfoScreen();
+                            },
                           ),
                         );
                       }
@@ -153,13 +186,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       leading: const Icon(Icons.notification_add_rounded),
                       title: const Text("Create Notifications"),
                       onTap: () {
-                        Navigator.push( 
+                        Navigator.push(
                           context,
                           MaterialPageRoute<void>(
                             builder: (BuildContext context) =>
                                 BlocProvider<NotificationBloc>(
                               create: (context) => NotificationBloc(
-                                  notificationRepository: FirebaseNotificationRepository()),
+                                  notificationRepository:
+                                      FirebaseNotificationRepository()),
                               child: CreateNotificationScreen(state.user!.id),
                             ),
                           ),
@@ -178,13 +212,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       leading: const Icon(Icons.notifications_off),
                       title: const Text("Notifications Settings"),
                       onTap: () {
-                        Navigator.push( 
+                        Navigator.push(
                           context,
                           MaterialPageRoute<void>(
                             builder: (BuildContext context) =>
                                 BlocProvider<NotificationBloc>(
                               create: (context) => NotificationBloc(
-                                  notificationRepository: FirebaseNotificationRepository()),
+                                  notificationRepository:
+                                      FirebaseNotificationRepository()),
                               child: const NotificationSettingsScreen(),
                             ),
                           ),

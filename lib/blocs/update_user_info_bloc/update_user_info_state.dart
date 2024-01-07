@@ -26,3 +26,7 @@ class UpdateUserWeightFailure extends UpdateUserInfoState {}
 class UpdateUserWeightLoading extends UpdateUserInfoState {}
 class UpdateUserWeightSuccess extends UpdateUserInfoState {}
 
+// Define state classes related to the UpdateUserInfo event.
+class UpdateUserInfoFailure extends UpdateUserInfoState {}
+class UpdateUserInfoLoading extends UpdateUserInfoState {}
+class UpdateUserInfoSuccess extends UpdateUserInfoState {}

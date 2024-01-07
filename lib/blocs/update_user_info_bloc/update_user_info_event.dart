@@ -27,3 +27,14 @@ class UpdateUserWeight extends UpdateUserInfoEvent {
   @override
   List<Object> get props => [user];
 }
+
+// Define an event class UpdateUserInfo that extends UpdateUserInfoEvent.
+class UpdateUserInfo extends UpdateUserInfoEvent {
+  final MyUser user;
+  final bool updateWeightFlg;
+
+  const UpdateUserInfo(this.user, this.updateWeightFlg);
+
+  @override
+  List<Object> get props => [user];
+}

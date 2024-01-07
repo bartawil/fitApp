@@ -217,7 +217,7 @@ class FirebaseUserRepository implements UserRepository {
   }
 
 
-  /// Sets workout data for the user in Firestore.
+  /// Sets weight data for the user in Firestore.
   ///
   /// Throws an exception if data cannot be set.
   @override

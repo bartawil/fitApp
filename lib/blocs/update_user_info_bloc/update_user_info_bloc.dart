@@ -36,5 +36,20 @@ class UpdateUserInfoBloc extends Bloc<UpdateUserInfoEvent, UpdateUserInfoState> 
         emit(UpdateUserWeightFailure());
       }
     });
+
+    // Define an event handler for the UpdateUser event.
+    on<UpdateUserInfo>((event, emit) async {
+      emit(UpdateUserInfoLoading());
+      try {
+        await _userRepository.setUserData(event.user);
+        if (event.updateWeightFlg) {
+          // update the wight if and only if the user has updated the weight
+          await _userRepository.createWeightCollection(event.user.weight, event.user.id);
+        }
+        emit(UpdateUserInfoSuccess());
+      } catch (e) {
+        emit(UpdateUserInfoFailure());
+      }
+    });
   }
 }
