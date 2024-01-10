@@ -7,6 +7,7 @@ import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
 import 'package:flutter_demo/blocs/workout_bloc/workout_bloc.dart';
 import 'package:flutter_demo/components/menu_button.dart';
 import 'package:flutter_demo/screens/home/settings_screen.dart';
+import 'package:flutter_demo/screens/user_info/metrics_screen.dart';
 import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
 import 'package:flutter_demo/screens/weight/weight_graph_screen.dart';
 import 'package:flutter_demo/screens/workout/trainer/build_workout_screen.dart';
@@ -153,6 +154,63 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
+              // Update Weight shortcut
+              ListTile(
+                leading: Icon(
+                  Icons.scale,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onBackground
+                      .withOpacity(0.5),
+                ),
+                title: Text(
+                  "Update Weight",
+                  style: GoogleFonts.caveat(
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontSize: 24,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return MultiBlocProvider(
+                      providers: [
+                        BlocProvider<MyUserBloc>(
+                          create: (context) => MyUserBloc(
+                              myUserRepository: context
+                                  .read<AuthenticationBloc>()
+                                  .userRepository)
+                            ..add(GetMyUser(
+                                myUserId: context
+                                    .read<AuthenticationBloc>()
+                                    .state
+                                    .user!
+                                    .uid)),
+                        ),
+                        BlocProvider(
+                          create: (context) => UpdateUserInfoBloc(
+                              userRepository: context
+                                  .read<AuthenticationBloc>()
+                                  .userRepository),
+                        ),
+                        BlocProvider(
+                          create: (context) => WeightBloc(
+                              userRepository: context
+                                  .read<AuthenticationBloc>()
+                                  .userRepository)
+                            ..add(GetWeightList(context
+                                .read<AuthenticationBloc>()
+                                .state
+                                .user!
+                                .uid)),
+                        ),
+                      ],
+                      child: const UpdateWeightScreen(),
+                    );
+                  }));
+                },
+              ),
+              // Settings shortcut
               ListTile(
                 leading: Icon(
                   CupertinoIcons.settings_solid,
@@ -244,6 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }));
                 },
               ),
+              // Sign - out
               ListTile(
                 leading: Icon(
                   CupertinoIcons.square_arrow_right,
@@ -372,8 +431,10 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               MyMenuButton(
                 title: "Metrics",
-                icon: 'assets/images/weight.png',
+                icon: 'assets/images/growth.png',
                 iconColor: Theme.of(context).colorScheme.secondary,
+                // backgroundColor: Theme.of(context).colorScheme.secondary,
+                fontColor: Theme.of(context).colorScheme.secondary,
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return MultiBlocProvider(
@@ -390,25 +451,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     .user!
                                     .uid)),
                         ),
-                        BlocProvider(
-                          create: (context) => UpdateUserInfoBloc(
-                              userRepository: context
-                                  .read<AuthenticationBloc>()
-                                  .userRepository),
-                        ),
-                        BlocProvider(
-                          create: (context) => WeightBloc(
-                              userRepository: context
-                                  .read<AuthenticationBloc>()
-                                  .userRepository)
-                            ..add(GetWeightList(context
-                                .read<AuthenticationBloc>()
-                                .state
-                                .user!
-                                .uid)),
-                        ),
                       ],
-                      child: const UpdateWeightScreen(),
+                      child: const MetricsScreen(),
                     );
                   }));
                 },

@@ -359,7 +359,7 @@ class _UpdateUserInfoScreenState extends State<UpdateUserInfoScreen> {
                                       if (widget.user.weight != myUser.weight) {
                                         updateWeight = true;
                                       }
-                                      // Create user by email and password.
+                                      // call Bloc to update the user info
                                       setState(() {
                                         context
                                             .read<UpdateUserInfoBloc>()

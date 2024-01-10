@@ -289,6 +289,95 @@ class FirebaseUserRepository implements UserRepository {
       rethrow;
     }
   }
+
+
+  /// Creates a new measurements entry for the user in Firestore.
+  ///
+  /// Throws an exception if the operation fails.
+  @override
+  Future<void> createMeasurementsCollection(Measurements measurement, String userId) async {
+    try {
+      String newId = const Uuid().v1();
+      measurement = measurement.copyWith(id: newId);
+
+      await usersCollection
+          .doc(userId)
+          .collection('measurements')
+          .doc(measurement.id)
+          .set({
+            'id': measurement.id,
+            'date': DateTime.now(),
+            'weight': measurement.weight,
+            'bodyFat': measurement.bodyFat,
+            'neckCircumference': measurement.neckCircumference,
+            'armCircumference': measurement.armCircumference,
+            'waistCircumference': measurement.waistCircumference,
+            'hipCircumference': measurement.hipCircumference,
+            'thighCircumference': measurement.thighCircumference,
+            'backHand': measurement.backHand,
+            'abdomen': measurement.abdomen,
+            'lowerBack': measurement.lowerBack,
+            'leg': measurement.leg,
+          });
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  /// Retrieves a list of measurements entries for the user from Firestore.
+  ///
+  /// Throws an exception if the operation fails.
+  @override
+  Future<List<Measurements>> getMeasurementsList(String userId) {
+    try {
+      return usersCollection.doc(userId).collection('measurements').get().then(
+          (value) => value.docs
+              .map(
+                  (e) => Measurements.fromEntity(MeasurementsEntity.fromDocument(e.data())))
+              .toList());
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  /// Sets user measurements record in Firestore using the provided [measurments] object.
+  ///
+  /// Throws an exception if data cannot be set.
+  @override
+  Future<List<Measurements>> setMeasurements(String userId, Measurements record) async {
+    try {
+      await usersCollection
+        .doc(userId)
+        .collection('measurements')
+        .doc(record.id)
+        .set(record.toEntity().toDocument());
+      
+      return getMeasurementsList(userId);
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  /// Deletes a measurements entry for the user from Firestore and returns the updated list.
+  ///
+  /// Throws an exception if the operation fails.
+  @override
+  Future<List<Measurements>> deleteMeasurements(String userId, String recordId) async {
+    try {
+      await usersCollection
+          .doc(userId)
+          .collection('measurements')
+          .doc(recordId)
+          .delete();
+      return getMeasurementsList(userId);
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }
 
 

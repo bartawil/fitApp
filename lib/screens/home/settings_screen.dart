@@ -7,10 +7,12 @@ import 'package:flutter_demo/blocs/notification_bloc/notification_bloc.dart';
 import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
 import 'package:flutter_demo/components/pick_image.dart';
 import 'package:flutter_demo/screens/home/edit_user_info_screen.dart';
+import 'package:flutter_demo/screens/home/update_user_info_screen.dart';
 import 'package:flutter_demo/screens/notifications/create_notification_screen.dart';
 import 'package:flutter_demo/screens/notifications/notification_settings_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notification_repository/notification_repository.dart';
+import 'package:user_repository/user_repository.dart';
 
 /// The `SettingsScreen` widget provides a user interface for managing user settings.
 class SettingsScreen extends StatefulWidget {
@@ -43,6 +45,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ],
           child: const EditUserInfoScreen(),
+        );
+      }),
+    );
+  }
+
+  /// Navigates to the [UpdateUserInfoScreen] for editing user information.
+  ///
+  /// [user] - The user whose information is being edited.
+  void navigateToUpdateUserInfoScreen(MyUser user) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<MyUserBloc>(
+              create: (context) => MyUserBloc(
+                  myUserRepository:
+                      context.read<AuthenticationBloc>().userRepository)
+                ..add(GetMyUser(
+                    myUserId:
+                        context.read<AuthenticationBloc>().state.user!.uid)),
+            ),
+            BlocProvider(
+              create: (context) => UpdateUserInfoBloc(
+                  userRepository:
+                      context.read<AuthenticationBloc>().userRepository),
+            ),
+          ],
+          child: UpdateUserInfoScreen(user),
         );
       }),
     );
@@ -135,7 +166,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 "${state.user!.firstName} ${state.user!.lastName}"),
                             subtitle: const Text("Edit your profile"),
                             onTap: () {
-                              navigateToEditUserInfoScreen();
+                              navigateToUpdateUserInfoScreen(state.user!);
                             },
                           ),
                         );
@@ -165,7 +196,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             title: const Text("Profile"),
                             subtitle: const Text("Edit your profile"),
                             onTap: () {
-                              navigateToEditUserInfoScreen();
+                              navigateToUpdateUserInfoScreen(state.user!);
                             },
                           ),
                         );
@@ -174,6 +205,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   const SizedBox(
                     height: 20,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    margin: const EdgeInsets.only(
+                        left: 16.0, right: 16.0, bottom: 8.0),
+                    child: ListTile(
+                      leading: const Icon(Icons.person),
+                      title: const Text("Basic Information"),
+                      onTap: navigateToEditUserInfoScreen,
+                    ),
                   ),
                   Container(
                     decoration: BoxDecoration(

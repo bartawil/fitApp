@@ -54,4 +54,16 @@ abstract class UserRepository {
 
   /// Retrieves a list of workout entries for a user from the data storage.
   Future<List<UserWorkout>> getWorkoutList(String userId, double workoutNumber);
+
+  // Creates a new measurements entry for the user in Firestore.
+  Future<void> createMeasurementsCollection(Measurements measurement, String userId);
+
+  /// Retrieves a list of measurements entries for the user from Firestore.
+  Future<List<Measurements>> getMeasurementsList(String userId);
+
+  // Update measurements entry for the user in Firestore.
+  Future<List<Measurements>> setMeasurements(String userId, Measurements record);
+
+  // Deletes measurements entry for the user in Firestore.
+  Future<List<Measurements>> deleteMeasurements(String userId, String recordId);
 }
