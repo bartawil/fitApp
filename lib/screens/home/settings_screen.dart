@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:flutter_demo/blocs/measurements_bloc/measurements_bloc.dart';
 import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
 import 'package:flutter_demo/blocs/notification_bloc/notification_bloc.dart';
 import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_demo/screens/home/edit_user_info_screen.dart';
 import 'package:flutter_demo/screens/home/update_user_info_screen.dart';
 import 'package:flutter_demo/screens/notifications/create_notification_screen.dart';
 import 'package:flutter_demo/screens/notifications/notification_settings_screen.dart';
+import 'package:flutter_demo/screens/user_info/measurements_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notification_repository/notification_repository.dart';
 import 'package:user_repository/user_repository.dart';
@@ -217,6 +219,45 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       leading: const Icon(Icons.person),
                       title: const Text("Basic Information"),
                       onTap: navigateToEditUserInfoScreen,
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    margin: const EdgeInsets.only(
+                        left: 16.0, right: 16.0, bottom: 8.0),
+                    child: ListTile(
+                      leading: const Icon(Icons.trending_up),
+                      title: const Text("Measurements Records"),
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (context) => MeasurementsBloc(
+                                    userRepository: context
+                                        .read<AuthenticationBloc>()
+                                        .userRepository)
+                                  ..add(GetMeasurementsList(
+                                      userId: context
+                                          .read<AuthenticationBloc>()
+                                          .state
+                                          .user!
+                                          .uid)),
+                              ),
+                            ],
+                            child: MeasurementsScreen(
+                                userId: context
+                                    .read<AuthenticationBloc>()
+                                    .state
+                                    .user!
+                                    .uid),
+                          );
+                        }));
+                      },
                     ),
                   ),
                   Container(

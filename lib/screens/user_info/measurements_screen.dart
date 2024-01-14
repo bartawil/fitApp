@@ -33,6 +33,7 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       floatingActionButton: FloatingActionButton(
+        // Add New Measurements record
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return MultiBlocProvider(
@@ -174,28 +175,6 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
                       ),
                     ],
                   ),
-                  // Positioned(
-                  //   left: 20,
-                  //   right: 0,
-                  //   bottom: 20,
-                  //   child: Align(
-                  //     alignment: Alignment.bottomLeft,
-                  //     child: ColorFiltered(
-                  //       colorFilter: ColorFilter.mode(
-                  //         Theme.of(context)
-                  //             .colorScheme
-                  //             .onBackground
-                  //             .withOpacity(0.5),
-                  //         BlendMode.srcIn,
-                  //       ),
-                  //       child: Image.asset(
-                  //         'assets/images/measuring.png',
-                  //         width: 100,
-                  //         height: 100,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             );

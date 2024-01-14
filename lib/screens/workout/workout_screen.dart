@@ -8,7 +8,8 @@ import 'package:user_repository/user_repository.dart';
 import 'package:workout_repository/workout_repository.dart';
 
 class WorkoutScreen extends StatefulWidget {
-  const WorkoutScreen({super.key});
+  // ignore: use_key_in_widget_constructors
+  const WorkoutScreen({Key? key});
 
   @override
   State<WorkoutScreen> createState() => _WorkoutScreenState();
@@ -21,13 +22,11 @@ class _WorkoutScreenState extends State<WorkoutScreen>
   @override
   void initState() {
     super.initState();
-    // Create a TabController with the desired length (number of tabs)
     _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
   void dispose() {
-    // Dispose of the TabController to release resources
     _tabController?.dispose();
     super.dispose();
   }
@@ -37,7 +36,10 @@ class _WorkoutScreenState extends State<WorkoutScreen>
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme
+            .of(context)
+            .colorScheme
+            .background,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () async {
@@ -51,52 +53,43 @@ class _WorkoutScreenState extends State<WorkoutScreen>
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: DefaultTabController(
           length: 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'Choose your workout plan',
                     style: GoogleFonts.caveat(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onBackground,
                       fontSize: 25,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                          Theme.of(context).colorScheme.primary,
-                          BlendMode.srcIn),
-                      child: Image.asset('assets/images/biceps.png',
-                          width: 50, height: 50),
-                    ),
+                  const SizedBox(width: 16.0),
+                  Image.asset(
+                    'assets/images/biceps.png',
+                    width: 50,
+                    height: 50,// Apply a custom color filter
                   ),
                 ],
               ),
               const SizedBox(height: 20),
               TabBar(
                 controller: _tabController,
-                labelColor: Theme.of(context).colorScheme.error,
+                labelColor: const Color.fromARGB(255, 202, 99, 99), // Set a custom label color
                 labelStyle: GoogleFonts.playfairDisplay(
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: Colors.white, // Set a custom label font color
                   fontSize: 22,
                 ),
                 tabs: const [
-                  Tab(
-                    text: 'I',
-                  ),
-                  Tab(
-                    text: 'II',
-                  ),
-                  Tab(
-                    text: 'III',
-                  ),
+                  Tab(text: 'I'),
+                  Tab(text: 'II'),
+                  Tab(text: 'III'),
                 ],
               ),
               const SizedBox(height: 20),
@@ -104,47 +97,50 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                 builder: (context, state) {
                   if (state.status == MyUserStatus.success) {
                     return Expanded(
-                      child: TabBarView(controller: _tabController, children: [
-                        // Workout 1
-                        MultiBlocProvider(
-                          providers: [
-                            BlocProvider(
-                              create: (context) => WorkoutBloc(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          // Workout 1
+                          MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (context) => WorkoutBloc(
                                   userRepository: FirebaseUserRepository(),
                                   workoutRepository:
-                                      FirebaseWorkoutRepository())
-                                ..add(GetUserWorkoutList(state.user!.id, 1)),
-                            ),
-                          ],
-                          child: ExerciseList(),
-                        ),
-                        // Workout 2
-                        MultiBlocProvider(
-                          providers: [
-                            BlocProvider(
-                              create: (context) => WorkoutBloc(
+                                      FirebaseWorkoutRepository(),
+                                )..add(GetUserWorkoutList(state.user!.id, 1)),
+                              ),
+                            ],
+                            child: ExerciseList(),
+                          ),
+                          // Workout 2
+                          MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (context) => WorkoutBloc(
                                   userRepository: FirebaseUserRepository(),
                                   workoutRepository:
-                                      FirebaseWorkoutRepository())
-                                ..add(GetUserWorkoutList(state.user!.id, 2)),
-                            ),
-                          ],
-                          child: ExerciseList(),
-                        ),
-                        // Workout 3
-                        MultiBlocProvider(
-                          providers: [
-                            BlocProvider(
-                              create: (context) => WorkoutBloc(
+                                      FirebaseWorkoutRepository(),
+                                )..add(GetUserWorkoutList(state.user!.id, 2)),
+                              ),
+                            ],
+                            child: ExerciseList(),
+                          ),
+                          // Workout 3
+                          MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (context) => WorkoutBloc(
                                   userRepository: FirebaseUserRepository(),
                                   workoutRepository:
-                                      FirebaseWorkoutRepository())
-                                ..add(GetUserWorkoutList(state.user!.id, 3)),
-                            ),
-                          ],
-                          child: ExerciseList(),
-                        ),
-                      ]),
+                                      FirebaseWorkoutRepository(),
+                                )..add(GetUserWorkoutList(state.user!.id, 3)),
+                              ),
+                            ],
+                            child: ExerciseList(),
+                          ),
+                        ],
+                      ),
                     );
                   }
                   return const Center(

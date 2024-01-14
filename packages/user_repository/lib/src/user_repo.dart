@@ -66,4 +66,11 @@ abstract class UserRepository {
 
   // Deletes measurements entry for the user in Firestore.
   Future<List<Measurements>> deleteMeasurements(String userId, String recordId);
+
+  /// Retrieves a goals entry for the user from Firestore.
+  Future<Goals> getGoals(String userId);
+
+  // Update goals entry for the user in Firestore.
+  Future<Goals> setGoals(String userId, Goals goals);
+
 }

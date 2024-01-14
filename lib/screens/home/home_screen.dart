@@ -2,11 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:flutter_demo/blocs/goals_bloc/goals_bloc.dart';
+import 'package:flutter_demo/blocs/measurements_bloc/measurements_bloc.dart';
 import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
 import 'package:flutter_demo/blocs/workout_bloc/workout_bloc.dart';
 import 'package:flutter_demo/components/menu_button.dart';
 import 'package:flutter_demo/screens/home/settings_screen.dart';
+import 'package:flutter_demo/screens/nutrition/nutrition_screen.dart';
+import 'package:flutter_demo/screens/user_info/add_measurements_screen.dart';
 import 'package:flutter_demo/screens/user_info/metrics_screen.dart';
 import 'package:flutter_demo/screens/weight/update_weight_screen.dart';
 import 'package:flutter_demo/screens/weight/weight_graph_screen.dart';
@@ -29,6 +33,7 @@ class HomeScreen extends StatefulWidget {
 
 // Define the state for HomeScreen.
 class _HomeScreenState extends State<HomeScreen> {
+  String userId = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: BlocBuilder<MyUserBloc, MyUserState>(
           builder: (context, state) {
             if (state.status == MyUserStatus.success) {
+              userId = state.user!.id;
               return Row(
                 children: [
                   const SizedBox(width: 12),
@@ -105,6 +111,45 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
+              ),
+
+              // Add new measurements meeting record
+              ListTile(
+                leading: Icon(
+                  Icons.trending_up,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onBackground
+                      .withOpacity(0.5),
+                ),
+                title: Text(
+                  "Add Measurements",
+                  style: GoogleFonts.caveat(
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontSize: 24,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create: (context) => MeasurementsBloc(
+                              userRepository: context
+                                  .read<AuthenticationBloc>()
+                                  .userRepository),
+                        ),
+                      ],
+                      child: AddMeasurementsScreen(
+                          userId: context
+                              .read<AuthenticationBloc>()
+                              .state
+                              .user!
+                              .uid),
+                    );
+                  }));
+                },
               ),
               ListTile(
                 leading: Icon(
@@ -210,6 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }));
                 },
               ),
+
               // Settings shortcut
               ListTile(
                 leading: Icon(
@@ -359,7 +405,10 @@ class _HomeScreenState extends State<HomeScreen> {
               MyMenuButton(
                 title: "Workouts",
                 icon: 'assets/images/muscle.png',
-                iconColor: Theme.of(context).colorScheme.onBackground,
+                fontColor: Theme.of(context)
+                    .colorScheme
+                    .onBackground
+                    .withOpacity(0.25),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return MultiBlocProvider(
@@ -459,10 +508,35 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(width: 30),
               MyMenuButton(
-                title: "Nutrintion",
+                title: "Nutrition",
                 icon: 'assets/images/nutritional.png',
-                iconColor: Theme.of(context).colorScheme.tertiary,
-                onTap: () {},
+                iconColor:
+                    Theme.of(context).colorScheme.onBackground.withOpacity(0.9),
+                fontColor: Theme.of(context)
+                    .colorScheme
+                    .onBackground
+                    .withOpacity(0.55),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create: (context) => GoalsBloc(
+                              userRepository: context
+                                  .read<AuthenticationBloc>()
+                                  .userRepository)
+                            ..add(GetGoals(
+                                userId: context
+                                    .read<AuthenticationBloc>()
+                                    .state
+                                    .user!
+                                    .uid)),
+                        ),
+                      ],
+                      child: NutritionScreen(userId),
+                    );
+                  }));
+                },
               ),
             ],
           ),

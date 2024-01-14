@@ -102,7 +102,7 @@ class _AddMeasurementsScreenState extends State<AddMeasurementsScreen> {
                               Text(
                                 'RECORD',
                                 style: GoogleFonts.playfairDisplay(
-                                  color: Theme.of(context).colorScheme.tertiary,
+                                  color: Theme.of(context).colorScheme.error,
                                   fontSize: 42,
                                 ),
                               ),
@@ -488,7 +488,7 @@ class _AddMeasurementsScreenState extends State<AddMeasurementsScreen> {
                                   ),
                                   minimumSize: const Size(double.infinity, 55),
                                   backgroundColor:
-                                      Theme.of(context).colorScheme.error,
+                                      Theme.of(context).colorScheme.tertiary,
                                 ),
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {

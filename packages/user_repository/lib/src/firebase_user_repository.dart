@@ -7,7 +7,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:user_repository/user_repository.dart';
 import 'package:uuid/uuid.dart';
 
-
 /// A Flutter repository implementation for managing user authentication and data
 /// storage using Firebase services.
 ///
@@ -22,7 +21,6 @@ class FirebaseUserRepository implements UserRepository {
   final FirebaseAuth _firebaseAuth;
   final usersCollection = FirebaseFirestore.instance.collection('users');
 
-
   /// Stream of [MyUser] which will emit the current user when
   /// the authentication state changes.
   ///
@@ -34,7 +32,6 @@ class FirebaseUserRepository implements UserRepository {
       return user;
     });
   }
-
 
   /// Registers a new user with the provided [myUser] and [password].
   ///
@@ -57,7 +54,6 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
-
   /// Signs in a user with the provided [email] and [password].
   ///
   /// Throws an exception if sign-in fails.
@@ -72,7 +68,6 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
-
   /// Signs out the currently authenticated user.
   ///
   /// Throws an exception if sign-out fails.
@@ -85,7 +80,6 @@ class FirebaseUserRepository implements UserRepository {
       rethrow;
     }
   }
-
 
   /// Sends a password reset email to the user with the provided [email].
   ///
@@ -101,7 +95,6 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
-
   /// Sets user data in Firestore using the provided [user] object.
   ///
   /// Throws an exception if data cannot be set.
@@ -114,7 +107,6 @@ class FirebaseUserRepository implements UserRepository {
       rethrow;
     }
   }
-
 
   /// Retrieves user data from Firestore using the provided [myUserId].
   ///
@@ -129,7 +121,6 @@ class FirebaseUserRepository implements UserRepository {
       rethrow;
     }
   }
-
 
   /// Uploads a user profile picture to Firebase Storage and updates the
   /// user's Firestore document with the picture URL.
@@ -152,7 +143,6 @@ class FirebaseUserRepository implements UserRepository {
       rethrow;
     }
   }
-
 
   /// Creates a new weight entry for the user in Firestore.
   ///
@@ -179,7 +169,6 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
-
   /// Retrieves a list of weight entries for the user from Firestore.
   ///
   /// Throws an exception if the operation fails.
@@ -196,7 +185,6 @@ class FirebaseUserRepository implements UserRepository {
       rethrow;
     }
   }
-
 
   /// Deletes a weight entry for the user from Firestore and returns the updated list.
   ///
@@ -216,7 +204,6 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
-
   /// Sets weight data for the user in Firestore.
   ///
   /// Throws an exception if data cannot be set.
@@ -234,24 +221,26 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
-
   /// Retrieves a list of workout entries for the user from Firestore.
   ///
   /// Throws an exception if the operation fails.
   @override
-  Future<List<UserWorkout>> getWorkoutList(String userId, double workoutNumber) {
+  Future<List<UserWorkout>> getWorkoutList(
+      String userId, double workoutNumber) {
     try {
-      return usersCollection.doc(userId).collection('workouts ${workoutNumber.toInt()}').get().then(
-          (value) => value.docs
-              .map(
-                  (e) => UserWorkout.fromEntity(UserWorkoutEntity.fromDocument(e.data())))
+      return usersCollection
+          .doc(userId)
+          .collection('workouts ${workoutNumber.toInt()}')
+          .get()
+          .then((value) => value.docs
+              .map((e) => UserWorkout.fromEntity(
+                  UserWorkoutEntity.fromDocument(e.data())))
               .toList());
     } catch (e) {
       log(e.toString());
       rethrow;
     }
   }
-
 
   /// Updates or creates a workout entry for the user in Firestore.
   ///
@@ -260,16 +249,16 @@ class FirebaseUserRepository implements UserRepository {
   Future<void> updateUserWorkoutCollection(String userId, String workoutId,
       String category, double workoutNumber, double sets, double reps) async {
     try {
-          // Delete the existing collection
-    await usersCollection
-        .doc(userId)
-        .collection('workouts ${workoutNumber.toInt()}')
-        .get()
-        .then((snapshot) {
-      for (DocumentSnapshot doc in snapshot.docs) {
-        doc.reference.delete();
-      }
-    });
+      // Delete the existing collection
+      await usersCollection
+          .doc(userId)
+          .collection('workouts ${workoutNumber.toInt()}')
+          .get()
+          .then((snapshot) {
+        for (DocumentSnapshot doc in snapshot.docs) {
+          doc.reference.delete();
+        }
+      });
 
       String id = const Uuid().v1();
       await usersCollection
@@ -290,12 +279,12 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
-
   /// Creates a new measurements entry for the user in Firestore.
   ///
   /// Throws an exception if the operation fails.
   @override
-  Future<void> createMeasurementsCollection(Measurements measurement, String userId) async {
+  Future<void> createMeasurementsCollection(
+      Measurements measurement, String userId) async {
     try {
       String newId = const Uuid().v1();
       measurement = measurement.copyWith(id: newId);
@@ -305,20 +294,20 @@ class FirebaseUserRepository implements UserRepository {
           .collection('measurements')
           .doc(measurement.id)
           .set({
-            'id': measurement.id,
-            'date': DateTime.now(),
-            'weight': measurement.weight,
-            'bodyFat': measurement.bodyFat,
-            'neckCircumference': measurement.neckCircumference,
-            'armCircumference': measurement.armCircumference,
-            'waistCircumference': measurement.waistCircumference,
-            'hipCircumference': measurement.hipCircumference,
-            'thighCircumference': measurement.thighCircumference,
-            'backHand': measurement.backHand,
-            'abdomen': measurement.abdomen,
-            'lowerBack': measurement.lowerBack,
-            'leg': measurement.leg,
-          });
+        'id': measurement.id,
+        'date': DateTime.now(),
+        'weight': measurement.weight,
+        'bodyFat': measurement.bodyFat,
+        'neckCircumference': measurement.neckCircumference,
+        'armCircumference': measurement.armCircumference,
+        'waistCircumference': measurement.waistCircumference,
+        'hipCircumference': measurement.hipCircumference,
+        'thighCircumference': measurement.thighCircumference,
+        'backHand': measurement.backHand,
+        'abdomen': measurement.abdomen,
+        'lowerBack': measurement.lowerBack,
+        'leg': measurement.leg,
+      });
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -333,8 +322,8 @@ class FirebaseUserRepository implements UserRepository {
     try {
       return usersCollection.doc(userId).collection('measurements').get().then(
           (value) => value.docs
-              .map(
-                  (e) => Measurements.fromEntity(MeasurementsEntity.fromDocument(e.data())))
+              .map((e) => Measurements.fromEntity(
+                  MeasurementsEntity.fromDocument(e.data())))
               .toList());
     } catch (e) {
       log(e.toString());
@@ -346,14 +335,15 @@ class FirebaseUserRepository implements UserRepository {
   ///
   /// Throws an exception if data cannot be set.
   @override
-  Future<List<Measurements>> setMeasurements(String userId, Measurements record) async {
+  Future<List<Measurements>> setMeasurements(
+      String userId, Measurements record) async {
     try {
       await usersCollection
-        .doc(userId)
-        .collection('measurements')
-        .doc(record.id)
-        .set(record.toEntity().toDocument());
-      
+          .doc(userId)
+          .collection('measurements')
+          .doc(record.id)
+          .set(record.toEntity().toDocument());
+
       return getMeasurementsList(userId);
     } catch (e) {
       log(e.toString());
@@ -365,7 +355,8 @@ class FirebaseUserRepository implements UserRepository {
   ///
   /// Throws an exception if the operation fails.
   @override
-  Future<List<Measurements>> deleteMeasurements(String userId, String recordId) async {
+  Future<List<Measurements>> deleteMeasurements(
+      String userId, String recordId) async {
     try {
       await usersCollection
           .doc(userId)
@@ -378,8 +369,45 @@ class FirebaseUserRepository implements UserRepository {
       rethrow;
     }
   }
-}
 
+  /// Retrieves a goals entry for the user from Firestore.
+  ///
+  /// Throws an exception if the operation fails.
+  @override
+  Future<Goals> getGoals(String userId) {
+    try {
+      return usersCollection
+          .doc(userId)
+          .collection('goals')
+          .doc('goals')
+          .get()
+          .then((value) =>
+              Goals.fromEntity(GoalsEntity.fromDocument(value.data()!)));
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  /// Sets user goals record in Firestore using the provided [goals] object.
+  ///
+  /// Throws an exception if data cannot be set.
+  @override
+  Future<Goals> setGoals(String userId, Goals goals) async {
+    try {
+      await usersCollection
+          .doc(userId)
+          .collection('goals')
+          .doc('goals')
+          .set(goals.toEntity().toDocument());
+
+      return goals;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+}
 
 /// Custom exception class for Firebase authentication errors.
 class CustomFirebaseAuthException implements Exception {
