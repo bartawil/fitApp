@@ -39,9 +39,13 @@ class _WeightListState extends State<WeightList> {
                     endActionPane: ActionPane(
                         dismissible: DismissiblePane(
                           onDismissed: () {
+                            String prvWeight = widget.weightList[i].weight;
+                            if (i + 1 < widget.weightList.length) {
+                              prvWeight = widget.weightList[i + 1].weight;
+                            }
                             // Trigger a weight deletion event when user dismisses an entry
                             context.read<WeightBloc>().add(DeleteWeight(
-                                widget.userId, widget.weightList[i].id));
+                                widget.userId, widget.weightList[i].id, prvWeight));
                           },
                         ),
                         extentRatio: 0.2,
@@ -49,9 +53,13 @@ class _WeightListState extends State<WeightList> {
                         children: [
                           SlidableAction(
                             onPressed: (context) {
+                              String prvWeight = widget.weightList[i].weight;
+                            if (i + 1 < widget.weightList.length) {
+                              prvWeight = widget.weightList[i + 1].weight;
+                            }
                               // Trigger a weight deletion event when the delete action is pressed
                               context.read<WeightBloc>().add(DeleteWeight(
-                                  widget.userId, widget.weightList[i].id));
+                                  widget.userId, widget.weightList[i].id, prvWeight));
                             },
                             icon: Icons.delete,
                             backgroundColor: Colors.red,

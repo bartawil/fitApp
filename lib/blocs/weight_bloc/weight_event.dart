@@ -22,11 +22,12 @@ class GetWeightList extends WeightEvent{
 class DeleteWeight extends WeightEvent{
   final String userId;
   final String weightId;
+  final String prvWeight;
 
-  const DeleteWeight(this.userId, this.weightId);
+  const DeleteWeight(this.userId, this.weightId, this.prvWeight);
 
   @override
-  List<Object> get props => [userId, weightId];
+  List<Object> get props => [userId, weightId, prvWeight];
 }
 
 

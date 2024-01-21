@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +33,7 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
   void dispose() {
     weightController.dispose();
     // Dispose of FormState if needed
-    _formKey.currentState?.dispose(); 
+    _formKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -43,10 +45,51 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
           // make the list render after adding a new weight
           context.read<WeightBloc>().add(GetWeightList(
               context.read<AuthenticationBloc>().state.user!.uid));
+
+          // call algorithm to predict next weight
+          setState(() {
+            context
+                .read<UpdateUserInfoBloc>() 
+                .add(PredictWeight(userId: context.read<AuthenticationBloc>().state.user!.uid));
+          });
         } else if (state is UpdateUserWeightLoading) {
           // Display a loading indicator if weight update is in progress.
           const Center(
             child: CircularProgressIndicator(),
+          );
+        } else if (state is PredictWeightSuccess) {
+          // Display a snackbar when the weight is updated successfully.
+          showDialog(
+            context: context,
+            builder: (BuildContext dialogContext) {
+              return AlertDialog(
+                backgroundColor: Theme.of(context).colorScheme.background,
+                title: Text('Great job! You are on track!',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.caveat(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 27,
+                        fontWeight: FontWeight.w900)),
+                content: Text(
+                    "By keeping track of your progress, your next weight will be ${state.prediction}",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.caveat(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontSize: 20,
+                    )),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop();
+                    },
+                    icon: Icon(
+                      Icons.thumb_up_alt,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  )
+                ],
+              );
+            },
           );
         }
       },
@@ -112,6 +155,8 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             MyUser? user = state.user;
+                            log(state.user!.weight);
+                            log(weightController.text);
                             double bmi = double.parse(weightController.text) /
                                 ((double.parse(user!.height) / 100) *
                                     (double.parse(user.height) / 100));
@@ -220,14 +265,6 @@ class _UpdateWeightScreenState extends State<UpdateWeightScreen> {
                       } else if (state is DeleteWeightLoading) {
                         return const CircularProgressIndicator();
                       } else if (state is DeleteWeightSuccess) {
-                        return Expanded(
-                            child: WeightList(
-                                weightList: state.weightList,
-                                userId:
-                                    context.read<MyUserBloc>().state.user!.id));
-                      } else if (state is SetWeightLoading) {
-                        return const CircularProgressIndicator();
-                      } else if (state is SetWeightSuccess) {
                         return Expanded(
                             child: WeightList(
                                 weightList: state.weightList,

@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:user_repository/user_repository.dart';
@@ -49,6 +50,19 @@ class UpdateUserInfoBloc extends Bloc<UpdateUserInfoEvent, UpdateUserInfoState> 
         emit(UpdateUserInfoSuccess());
       } catch (e) {
         emit(UpdateUserInfoFailure());
+      }
+    });
+
+
+
+    // call python script to predict next weight
+    on<PredictWeight>((event, emit) async {
+      emit(PredictWeightLoading());
+      try {
+        String prediction =  await _userRepository.predictWeight(event.userId);
+        emit(PredictWeightSuccess(prediction: prediction));
+      } catch (e) {
+        emit(PredictWeightFailure());
       }
     });
   }

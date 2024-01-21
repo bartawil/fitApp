@@ -37,10 +37,7 @@ abstract class UserRepository {
   Future<List<Weight>> getWeightList(String userId);
 
   /// Deletes a weight entry for a user from the data storage and returns the updated list.
-  Future<List<Weight>> deleteWeight(String userId, String weightId);
-
-  /// Sets workout data for a user in the data storage.
-  Future<void> setWeightData(String userId, Weight weight);
+  Future<List<Weight>> deleteWeight(String userId, String weightId, String prvWeight);
 
   /// Updates or creates a workout entry for a user in the data storage.
   Future<void> updateUserWorkoutCollection(
@@ -73,4 +70,6 @@ abstract class UserRepository {
   // Update goals entry for the user in Firestore.
   Future<Goals> setGoals(String userId, Goals goals);
 
+  // Calls a Python script to predict the next weight for the user.
+  Future<String> predictWeight(String userId);
 }

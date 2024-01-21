@@ -6,12 +6,14 @@ class WeightEntity extends Equatable {
   final String id;
   final String weight;
   final DateTime date;
+  final String? deficit;
 
   /// Creates a new instance of [WeightEntity] with the provided values.
   const WeightEntity({
     required this.id,
     required this.weight,
     required this.date,
+    this.deficit,
   });
 
   /// Converts the [WeightEntity] instance to a Firestore document as a map.
@@ -20,6 +22,7 @@ class WeightEntity extends Equatable {
       'id': id,
       'weight': weight,
       'date': date,
+      'deficit': deficit ?? '0',
     };
   }
 
@@ -29,18 +32,20 @@ class WeightEntity extends Equatable {
       id: doc['id'] as String,
       weight: doc['weight'] as String,
       date: (doc['date'] as Timestamp).toDate(),
+      deficit: doc['deficit'] as String?,
     );
   }
 
   @override
-  List<Object> get props => [id, weight, date];
+  List<Object> get props => [id, weight, date, deficit ?? '0'];
 
   @override
   String toString() {
     return '''WeightEntity { 
       id: $id,
       weight: $weight, 
-      date: $date 
+      date: $date ,
+      deficit: $deficit
     }''';
   }
 }

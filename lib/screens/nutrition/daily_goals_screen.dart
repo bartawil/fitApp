@@ -266,28 +266,32 @@ class _DailyGoalsScreenState extends State<DailyGoalsScreen> {
                                       userId: widget.userId, goals: newGoals));
                                 });
                               }
+                              // pop the screen
                               Navigator.of(context).pop();
                               Navigator.of(context).pop();
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return MultiBlocProvider(
-                                  providers: [
-                                    BlocProvider(
-                                      create: (context) => GoalsBloc(
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider(
+                                        create: (context) => GoalsBloc(
                                           userRepository: context
                                               .read<AuthenticationBloc>()
-                                              .userRepository)
-                                        ..add(GetGoals(
+                                              .userRepository,
+                                        )..add(GetGoals(
                                             userId: context
                                                 .read<AuthenticationBloc>()
                                                 .state
                                                 .user!
-                                                .uid)),
-                                    ),
-                                  ],
-                                  child: NutritionScreen(widget.userId),
-                                );
-                              }));
+                                                .uid,
+                                          )),
+                                      ),
+                                    ],
+                                    child: NutritionScreen(widget.userId),
+                                  );
+                                }),
+                              );
                             }
                           },
                           child: Text(

@@ -29,21 +29,10 @@ class WeightBloc extends Bloc<WeightEvent, WeightState> {
       emit(DeleteWeightLoading());
       try {
          // Delete a specific weight entry using the repository
-        List<Weight> weightList = await _userRepository.deleteWeight(event.userId, event.weightId);
+        List<Weight> weightList = await _userRepository.deleteWeight(event.userId, event.weightId, event.prvWeight);
         emit(DeleteWeightSuccess(weightList));
       } catch (e) {
         emit(DeleteWeightFailure());
-      }
-    });
-    on<SetWeight>((event, emit) async {
-      emit(SetWeightLoading());
-      try {
-        // Set user weight data using the repository
-        await _userRepository.setWeightData(event.userId, event.weight);
-        List<Weight> weightList = await _userRepository.getWeightList(event.userId);
-        emit(SetWeightSuccess(weightList));
-      } catch (e) {
-        emit(SetWeightFailure());
       }
     });
   }

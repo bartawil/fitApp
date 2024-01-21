@@ -27,13 +27,3 @@ final class DeleteWeightSuccess extends WeightState {
 
   const DeleteWeightSuccess(this.weightList);
 }
-
-
-// Define a state class for setting user weight data
-final class SetWeightFailure extends WeightState {}
-final class SetWeightLoading extends WeightState {}
-final class SetWeightSuccess extends WeightState {
-  final List<Weight> weightList;
-
-  const SetWeightSuccess(this.weightList);
-}

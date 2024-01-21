@@ -11,3 +11,5 @@ RegExp doubleRexExp = RegExp(r'^\d+\.\d+$');
 String defaultAvater = 'https://banner2.cleanpng.com/20180410/bbw/kisspng-avatar-user-medicine-surgery-patient-avatar-5acc9f7a7cb983.0104600115233596105109.jpg';
 
 List<String> workoutTypes = ['Abs', 'Arms', 'Back', 'Chest', 'FullBody', 'Glute', 'Legs', 'Shoulders'];
+
+double totalCaloriesInKG = 7700;

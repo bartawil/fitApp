@@ -15,6 +15,7 @@ class MyUserEntity extends Equatable {
   final String gender;
   final DateTime registerDate;
 	final String? picture;
+  final String? activeScore;
 
   /// Creates a new instance of [MyUserEntity] with the provided values.
 	const MyUserEntity({
@@ -30,6 +31,7 @@ class MyUserEntity extends Equatable {
     required this.gender,
     required this.registerDate,
 		this.picture,
+    this.activeScore,
 	});
 
   /// Converts the [MyUserEntity] instance to a Firestore document as a map.
@@ -47,6 +49,7 @@ class MyUserEntity extends Equatable {
       'gender': gender,
       'register_date': registerDate,
       'picture': picture,
+      'active_score': activeScore,
     };
   }
 
@@ -64,14 +67,15 @@ class MyUserEntity extends Equatable {
       bmi: doc['bmi'] as double,
       gender: doc['gender'] as String,
       registerDate: (doc['register_date'] as Timestamp).toDate(),
-      picture: doc['picture'] as String?
+      picture: doc['picture'] as String?,
+      activeScore: doc['active_score'] as String?,
     );
   }
 	
 	@override
 	List<Object?> get props => [
     id, email, firstName, lastName, phoneNumber, 
-    age, height, weight, bmi, gender, registerDate, picture];
+    age, height, weight, bmi, gender, registerDate, picture, activeScore];
 
 	@override
   String toString() {
@@ -88,6 +92,7 @@ class MyUserEntity extends Equatable {
       gender: $gender
       register_date: $registerDate
       picture: $picture
+      active_score: $activeScore
     }''';
   }
 }

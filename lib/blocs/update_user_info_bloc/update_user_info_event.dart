@@ -38,3 +38,13 @@ class UpdateUserInfo extends UpdateUserInfoEvent {
   @override
   List<Object> get props => [user];
 }
+
+// Define an event class for predicting next weight
+class PredictWeight extends UpdateUserInfoEvent{
+  final String userId;
+
+  const PredictWeight({required this.userId});
+
+  @override
+  List<Object> get props => [userId];
+}

@@ -17,6 +17,7 @@ class MyUser extends Equatable {
   final String gender;
   final DateTime registerDate;
 	String? picture;
+  String? activeScore;
 
   /// Creates a new instance of [MyUser] with the provided values.
 	MyUser({
@@ -32,6 +33,7 @@ class MyUser extends Equatable {
     required this.gender,
     required this.registerDate,
 		this.picture,
+    this.activeScore,
 	});
 
 	/// An empty user which represents an unauthenticated user.
@@ -47,7 +49,8 @@ class MyUser extends Equatable {
     bmi: 0.0,
     gender: '',
     registerDate: DateTime.now(),
-		picture: ''
+		picture: '',
+    activeScore: '2',
 	);
 
 	/// Modifies the parameters of the current [MyUser] instance and returns a new instance.
@@ -64,6 +67,7 @@ class MyUser extends Equatable {
     String? gender,
     DateTime? registerDate,
     String? picture,
+    String? activeScore,
   }) {
     return MyUser(
       id: id ?? this.id,
@@ -78,6 +82,7 @@ class MyUser extends Equatable {
       gender: gender ?? this.gender,
       registerDate: registerDate ?? this.registerDate,
       picture: picture ?? this.picture,
+      activeScore: activeScore ?? this.activeScore,
     );
   }
 
@@ -102,6 +107,7 @@ class MyUser extends Equatable {
       gender: gender,
       registerDate: registerDate,
       picture: picture,
+      activeScore: activeScore,
     );
   }
 
@@ -120,6 +126,7 @@ class MyUser extends Equatable {
       gender: entity.gender,
       registerDate: entity.registerDate,
       picture: entity.picture,
+      activeScore: entity.activeScore,
     );
   }
 
@@ -127,6 +134,6 @@ class MyUser extends Equatable {
 	@override
 	List<Object?> get props => [
     id, email, firstName, lastName, phoneNumber, 
-    age, height, weight, bmi, gender, registerDate, picture];
+    age, height, weight, bmi, gender, registerDate, picture, activeScore];
 	
 }

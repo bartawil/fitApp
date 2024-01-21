@@ -7,12 +7,14 @@ class Weight extends Equatable {
   String id;
   final String weight;
   final DateTime date;
+  String? deficit;
 
   /// Creates a new instance of [Weight] with the provided values.
   Weight({
     required this.id,
     required this.weight,
     required this.date,
+    this.deficit,
   });
 
   /// An empty weight entry, which represents an uninitialized or empty weight record.
@@ -20,6 +22,7 @@ class Weight extends Equatable {
     id: '',
     weight: '',
     date: DateTime.now(),
+    deficit: '0'
   );
 
   /// Modifies the parameters of the current [Weight] instance and returns a new instance.
@@ -27,11 +30,13 @@ class Weight extends Equatable {
     String? id,
     String? weight,
     DateTime? date,
+    String? deficit,
   }) {
     return Weight(
       id: id ?? this.id,
       weight: weight ?? this.weight,
       date: date ?? this.date,
+      deficit: deficit ?? this.deficit,
     );
   }
 
@@ -47,6 +52,7 @@ class Weight extends Equatable {
       id: id,
       weight: weight,
       date: date,
+      deficit: deficit,
     );
   } 
 
@@ -56,9 +62,10 @@ class Weight extends Equatable {
       id: entity.id,
       weight: entity.weight,
       date: entity.date,
+      deficit: entity.deficit,
     );
   }
 
   @override
-  List<Object> get props => [id, weight, date];
+  List<Object> get props => [id, weight, date, deficit ?? '0'];
 }

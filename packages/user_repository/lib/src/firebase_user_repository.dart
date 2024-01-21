@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -6,6 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:user_repository/user_repository.dart';
 import 'package:uuid/uuid.dart';
+
+// ignore: depend_on_referenced_packages
+import 'package:http/http.dart' as http;
 
 /// A Flutter repository implementation for managing user authentication and data
 /// storage using Firebase services.
@@ -45,6 +49,16 @@ class FirebaseUserRepository implements UserRepository {
       myUser = myUser.copyWith(id: user.user!.uid);
 
       createWeightCollection(myUser.weight, myUser.id);
+      // Create a goals collection for the user
+      Goals newGoals = Goals.empty;
+      newGoals = newGoals.copyWith(
+        calories: '2000',
+        water: '2.5',
+        protein: '120',
+        carbs: '100',
+        fat: '40',
+      );
+      setGoals(myUser.id, newGoals);
 
       return myUser;
     } on FirebaseAuthException catch (e) {
@@ -162,6 +176,7 @@ class FirebaseUserRepository implements UserRepository {
         'id': newWeight.id,
         'weight': weightValue,
         'date': DateTime.now(),
+        'deficit': newWeight.deficit,
       });
     } catch (e) {
       log(e.toString());
@@ -190,31 +205,18 @@ class FirebaseUserRepository implements UserRepository {
   ///
   /// Throws an exception if the operation fails.
   @override
-  Future<List<Weight>> deleteWeight(String userId, String weightId) async {
+  Future<List<Weight>> deleteWeight(
+      String userId, String weightId, String prvWeight) async {
     try {
+      MyUser user = await getMyUser(userId);
+      user = user.copyWith(weight: prvWeight);
+      await setUserData(user);
       await usersCollection
           .doc(userId)
           .collection('weights')
           .doc(weightId)
           .delete();
       return getWeightList(userId);
-    } catch (e) {
-      log(e.toString());
-      rethrow;
-    }
-  }
-
-  /// Sets weight data for the user in Firestore.
-  ///
-  /// Throws an exception if data cannot be set.
-  @override
-  Future<void> setWeightData(String userId, Weight weight) async {
-    try {
-      await usersCollection
-          .doc(userId)
-          .collection('weights')
-          .doc(weight.id)
-          .set(weight.toEntity().toDocument());
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -404,6 +406,62 @@ class FirebaseUserRepository implements UserRepository {
       return goals;
     } catch (e) {
       log(e.toString());
+      rethrow;
+    }
+  }
+
+  /// Calls a Python script to predict the user's next weight.
+  /// Throws an exception if the operation fails.
+  @override
+  Future<String> predictWeight(String userId) async {
+    try {
+      MyUser user = await getMyUser(userId);
+      Goals goals = await getGoals(userId);
+
+      List<Weight> weights = await getWeightList(userId);
+      weights.sort((a, b) => a.date.compareTo(b.date));
+      List<String> weightValues =
+          weights.map((weight) => weight.weight).toList();
+      List<String> deficitValues =
+          weights.map((weight) => weight.deficit!).toList();
+      log(name: 'Check API!!!!!!', 'weights: $weightValues');
+      log(name: 'Check API!!!!!!', 'deficit: $deficitValues');
+
+      String url = 'http://192.168.1.238:5000/api';
+
+      //sending a post request to the url
+      await http.post(Uri.parse(url),
+          body: json.encode({
+            'gender': user.gender,
+            'height': user.height,
+            'age': user.age,
+            'active': user.activeScore,
+            'daily_calories': goals.calories,
+            'weight_list': weightValues,
+            'deficit_list': deficitValues,
+          }));
+
+      http.Response response = await http.get(Uri.parse(url));
+      // log(name: 'Check API', 'response: ${response.body}');
+      final decoded = json.decode(response.body) as Map<String, dynamic>;
+      // return response.body;
+      // return decoded['height'];
+      log(name: 'Check API', 'response: ${decoded['new_deficit']}');
+      // update user new deficit
+      await usersCollection
+          .doc(userId)
+          .collection('weights')
+          .doc(weights.last.id)
+          .set({
+        'id': weights.last.id,
+        'weight': weights.last.weight,
+        'date': weights.last.date,
+        'deficit': decoded['new_deficit'],
+      });
+
+      return decoded['prediction'];
+    } catch (e) {
+      log(name: 'Check API', e.toString());
       rethrow;
     }
   }

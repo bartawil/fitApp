@@ -30,3 +30,15 @@ class UpdateUserWeightSuccess extends UpdateUserInfoState {}
 class UpdateUserInfoFailure extends UpdateUserInfoState {}
 class UpdateUserInfoLoading extends UpdateUserInfoState {}
 class UpdateUserInfoSuccess extends UpdateUserInfoState {}
+
+// Define a state class for predicting next weight
+final class PredictWeightFailure extends UpdateUserInfoState {}
+final class PredictWeightLoading extends UpdateUserInfoState {}
+final class PredictWeightSuccess extends UpdateUserInfoState {
+  final String prediction;
+
+  const PredictWeightSuccess({required this.prediction});
+
+  @override
+  List<Object> get props => [prediction];
+}
