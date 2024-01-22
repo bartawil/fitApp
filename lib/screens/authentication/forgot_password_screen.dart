@@ -45,9 +45,32 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             resetPasswordRequired = false;
             showDialog(
               context: context,
-              builder: (context) {
-                return const AlertDialog(
-                  content: Text("Password reset link sent! Check your email!"),
+              builder: (BuildContext dialogContext) {
+                return AlertDialog(
+                  content: Text("Check your email...",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.caveat(
+                        color: Theme.of(context).colorScheme.onBackground,
+                        fontSize: 20,
+                      )),
+                  title: Text('Password reset link sent!',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.caveat(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontSize: 27,
+                          fontWeight: FontWeight.w900)),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(dialogContext).pop();
+                      },
+                      icon: Icon(
+                        Icons.thumb_up_alt,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    )
+                  ],
                 );
               },
             );
@@ -66,9 +89,32 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             }
             showDialog(
               context: context,
-              builder: (context) {
+              builder: (BuildContext dialogContext) {
                 return AlertDialog(
-                  content: Text(_errorMsg!),
+                  content: Text(_errorMsg!,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.caveat(
+                        color: Theme.of(context).colorScheme.onBackground,
+                        fontSize: 20,
+                      )),
+                  title: Text('ERROR!',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.caveat(
+                          color: Theme.of(context).colorScheme.error,
+                          fontSize: 27,
+                          fontWeight: FontWeight.w900)),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(dialogContext).pop();
+                      },
+                      icon: Icon(
+                        Icons.thumb_up_alt,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    )
+                  ],
                 );
               },
             );
@@ -160,8 +206,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               'Reset Password',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color:
-                                    Theme.of(context).colorScheme.onPrimary,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w900,
                               ),
