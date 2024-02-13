@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/weight_bloc/weight_bloc.dart';
+import 'package:fitapp/blocs/weight_bloc/weight_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:user_repository/user_repository.dart';

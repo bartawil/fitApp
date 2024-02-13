@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
-import 'package:flutter_demo/blocs/workout_bloc/workout_bloc.dart';
-import 'package:flutter_demo/screens/workout/trainer/select_exercise_screen.dart';
+import 'package:fitapp/blocs/my_user_bloc/my_user_bloc.dart';
+import 'package:fitapp/blocs/workout_bloc/workout_bloc.dart';
+import 'package:fitapp/screens/workout/trainer/select_exercise_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_repository/user_repository.dart';
 import 'package:workout_repository/workout_repository.dart';

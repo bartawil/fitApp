@@ -1,4 +1,4 @@
-# flutter_demo
+# fitapp
 
 A new Flutter project.
 

@@ -1,4 +1,4 @@
-import 'package:flutter_demo/components/constants.dart';
+import 'package:fitapp/components/constants.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 String? validateName(String name) {

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/reset_password_bloc/reset_password_bloc.dart';
-import 'package:flutter_demo/components/constants.dart';
-import 'package:flutter_demo/components/text_field.dart';
+import 'package:fitapp/blocs/reset_password_bloc/reset_password_bloc.dart';
+import 'package:fitapp/components/constants.dart';
+import 'package:fitapp/components/text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// This is the `ForgotPasswordScreen` widget, which allows users to reset their password.

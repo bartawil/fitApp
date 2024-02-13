@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:flutter_demo/blocs/goals_bloc/goals_bloc.dart';
-import 'package:flutter_demo/screens/nutrition/daily_goals_screen.dart';
+import 'package:fitapp/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:fitapp/blocs/goals_bloc/goals_bloc.dart';
+import 'package:fitapp/screens/nutrition/daily_goals_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:user_repository/user_repository.dart';

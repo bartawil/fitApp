@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:flutter_demo/screens/authentication/create_user_screen.dart';
+import 'package:fitapp/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:fitapp/screens/authentication/create_user_screen.dart';
 
 import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
 import '../../components/constants.dart';

@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
-import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
+import 'package:fitapp/blocs/my_user_bloc/my_user_bloc.dart';
+import 'package:fitapp/blocs/update_user_info_bloc/update_user_info_bloc.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 

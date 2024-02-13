@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:flutter_demo/blocs/measurements_bloc/measurements_bloc.dart';
-import 'package:flutter_demo/screens/user_info/add_measurements_screen.dart';
-import 'package:flutter_demo/screens/user_info/edit_measurements_screen.dart';
+import 'package:fitapp/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:fitapp/blocs/measurements_bloc/measurements_bloc.dart';
+import 'package:fitapp/screens/user_info/add_measurements_screen.dart';
+import 'package:fitapp/screens/user_info/edit_measurements_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:user_repository/user_repository.dart';

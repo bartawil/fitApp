@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/notification_bloc/notification_bloc.dart';
-import 'package:flutter_demo/components/constants.dart';
+import 'package:fitapp/blocs/notification_bloc/notification_bloc.dart';
+import 'package:fitapp/components/constants.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notification_repository/notification_repository.dart';
 import 'package:timezone/data/latest.dart' as tz;

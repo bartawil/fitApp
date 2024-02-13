@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
-import 'package:flutter_demo/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
-import 'package:flutter_demo/screens/authentication/welcome_screen.dart';
+import 'package:fitapp/blocs/my_user_bloc/my_user_bloc.dart';
+import 'package:fitapp/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:fitapp/blocs/update_user_info_bloc/update_user_info_bloc.dart';
+import 'package:fitapp/screens/authentication/welcome_screen.dart';
 
 import 'blocs/authentication_bloc/authentication_bloc.dart';
 import 'screens/home/home_screen.dart';

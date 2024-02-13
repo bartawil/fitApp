@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/screens/authentication/sign_in_screen.dart';
-import 'package:flutter_demo/screens/authentication/sign_up_screen.dart';
+import 'package:fitapp/screens/authentication/sign_in_screen.dart';
+import 'package:fitapp/screens/authentication/sign_up_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../blocs/authentication_bloc/authentication_bloc.dart';

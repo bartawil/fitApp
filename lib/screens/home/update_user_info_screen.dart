@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/blocs/my_user_bloc/my_user_bloc.dart';
-import 'package:flutter_demo/blocs/update_user_info_bloc/update_user_info_bloc.dart';
-import 'package:flutter_demo/components/constants.dart';
-import 'package:flutter_demo/components/text_field.dart';
+import 'package:fitapp/blocs/my_user_bloc/my_user_bloc.dart';
+import 'package:fitapp/blocs/update_user_info_bloc/update_user_info_bloc.dart';
+import 'package:fitapp/components/constants.dart';
+import 'package:fitapp/components/text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_repository/user_repository.dart';
 

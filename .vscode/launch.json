@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "flutter_demo",
+            "name": "fitapp",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "flutter_demo (profile mode)",
+            "name": "fitapp (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "flutter_demo (release mode)",
+            "name": "fitapp (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
