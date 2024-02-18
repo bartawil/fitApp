@@ -2,24 +2,7 @@
 
 Welcome to the repository for FitApp, a comprehensive fitness application designed to enhance and personalize your health journey. Leveraging Flutter for cross-platform functionality, FitApp integrates a suite of features to provide a seamless and intuitive user experience. This README offers a detailed look into the application's architecture, key features, and the innovative integration of a machine learning algorithm for predictive weight management.
 
-<p>
-  <img src="README/register .PNG" width="200">
-  <img src="README/home.PNG" width="200">
-  <img src="README/home2.PNG" width="200">
-  <img src="README/charts.PNG" width="200">
-</p>
-<p>
-  <img src="README/build_workout_screen.PNG" width="200">
-  <img src="README/choose_workout2.PNG" width="200">
-  <img src="README/workouts1.PNG" width="200">
-  <img src="README/nutritions.PNG" width="200">
-</p>
-<p>
-  <img src="README/basic_info.PNG" width="200">
-  <img src="README/notification.PNG" width="200">
-  <img src="README/weight_his.PNG" width="200">
-  <img src="README/predict_weight.PNG" width="200">
-</p>
+[![FitApp Promo Video](http://img.youtube.com/vi/KT7_-bLirI8/0.jpg)](http://www.youtube.com/watch?v=KT7_-bLirI8)
 
 ## Key Features
 
@@ -67,3 +50,21 @@ The machine learning component employs linear regression to predict the user's w
 
 
 
+<p>
+  <img src="README/register .PNG" width="200">
+  <img src="README/home.PNG" width="200">
+  <img src="README/home2.PNG" width="200">
+  <img src="README/charts.PNG" width="200">
+</p>
+<p>
+  <img src="README/build_workout_screen.PNG" width="200">
+  <img src="README/choose_workout2.PNG" width="200">
+  <img src="README/workouts1.PNG" width="200">
+  <img src="README/nutritions.PNG" width="200">
+</p>
+<p>
+  <img src="README/basic_info.PNG" width="200">
+  <img src="README/notification.PNG" width="200">
+  <img src="README/weight_his.PNG" width="200">
+  <img src="README/predict_weight.PNG" width="200">
+</p>
